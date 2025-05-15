@@ -15,8 +15,8 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const isReset = useRef(false)
-  const hasInitialized = useRef(false)
+  const cyclesCompleted = useRef(0)
+  const maxCycles = 3 // Number of complete cycles before stopping
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -51,54 +51,58 @@ const useInfiniteAutoScroll = (
       setTimeout(() => setIsPaused(false), 1500)
     }
 
-    const setupClones = () => {
-      // Get the container that holds all team cards
+    // Make sure we have enough content for 3 full cycles
+    const setupContent = () => {
       const contentContainer = scrollContainer.firstElementChild as HTMLElement
-      if (!contentContainer || hasInitialized.current) return
-      
-      // Clone all original items again and append them to create a true infinite loop
+      if (!contentContainer) return
+
+      // Clone the original items twice more to ensure we have enough content for 3 cycles
       const children = Array.from(contentContainer.children)
-      const originalCardsCount = children.length
+      const originalCount = children.length
+
+      // First, determine how many are original vs clones
+      // We'll assume the first originalCount/3 elements are the originals
+      const originalElements = children.slice(0, originalCount / 3)
       
-      // We'll create a perfect clone of our original items
-      for (let i = 0; i < originalCardsCount; i++) {
-        const clone = children[i].cloneNode(true) as HTMLElement
-        contentContainer.appendChild(clone)
+      // Clear existing clones if any
+      while (contentContainer.children.length > originalElements.length) {
+        contentContainer.removeChild(contentContainer.lastChild as Node)
       }
       
-      hasInitialized.current = true
+      // Add the clones for 3 complete cycles
+      for (let cycle = 0; cycle < 3; cycle++) {
+        originalElements.forEach(element => {
+          const clone = element.cloneNode(true) as HTMLElement
+          contentContainer.appendChild(clone)
+        })
+      }
     }
     
-    // Initialize by ensuring we have duplicated items
-    setupClones()
-
+    // Set up the content for smooth scrolling
+    setupContent()
+    
     const animate = () => {
-      if (!scrollContainer || isReset.current || isPaused) {
-        animationRef.current = requestAnimationFrame(animate)
-        return
+      if (scrollContainer && !isPaused) {
+        // Increment scroll position
+        scrollContainer.scrollLeft += speed
+        
+        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
+        
+        // Check if we've reached the end
+        if (scrollContainer.scrollLeft >= maxScroll) {
+          // We've completed the last cycle, stop the animation
+          if (cyclesCompleted.current >= maxCycles - 1) {
+            if (animationRef.current) {
+              cancelAnimationFrame(animationRef.current)
+            }
+            return
+          }
+          
+          // Reset to beginning for next cycle
+          scrollContainer.scrollLeft = 0
+          cyclesCompleted.current += 1
+        }
       }
-      
-      // Get the content container
-      const contentContainer = scrollContainer.firstElementChild as HTMLElement
-      if (!contentContainer) {
-        animationRef.current = requestAnimationFrame(animate)
-        return
-      }
-
-      // Increment scroll position
-      scrollContainer.scrollLeft += speed
-      
-      // Calculate the width of all original items
-      const originalItemsWidth = contentContainer.scrollWidth / 2
-
-      // If we've scrolled to the clone section
-      if (scrollContainer.scrollLeft >= originalItemsWidth) {
-        // Reset to the equivalent position at the start without the user seeing it
-        isReset.current = true
-        scrollContainer.scrollLeft = scrollContainer.scrollLeft - originalItemsWidth
-        isReset.current = false
-      }
-      
       animationRef.current = requestAnimationFrame(animate)
     }
 
