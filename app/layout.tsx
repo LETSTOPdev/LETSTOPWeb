@@ -25,10 +25,10 @@ export const metadata: Metadata = {
     siteName: "LETSTOP",
     images: [
       {
-        url: "/images/letstop-logo.png",
+        url: "/images/preload.png",
         width: 1200,
         height: 630,
-        alt: "LETSTOP Logo",
+        alt: "LETSTOP - Drive. Earn. Repeat.",
       },
     ],
   },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: "LETSTOP - Earn While Driving Safely",
     description:
       "Explore LETSTOP: Revolutionize Your Driving Experience. LETSTOP is the gateway to safer, smarter driving, utilizing advanced AI to reward responsible driving behavior. Engage with our dynamic platform to improve road safety and earn rewards. Learn more about how LETSTOP is transforming the journey towards safer roads through innovative technology and community engagement.",
-    images: ["/images/letstop-logo.png"],
+    images: ["/images/preload.png"],
   },
   verification: {
     other: {
@@ -48,7 +48,6 @@ export const metadata: Metadata = {
   other: {
     "apple-itunes-app": "app-id=6477782403, app-argument=https://apps.apple.com/app/letstop/id6477782403",
   },
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -304,6 +303,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-import './globals.css'

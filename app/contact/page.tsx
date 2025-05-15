@@ -156,13 +156,13 @@ export default function ContactPage() {
                 <h2 className="text-3xl font-bold mb-4 flex flex-col text-gray-800 dark:text-white">
                   <span>Need Help With</span>
                   <span className={`${activeTab === "support" ? "text-primary" : ""} transition-colors duration-300`}>
-                    Your Vehicle?
+                    LETSTOP?
                   </span>
                 </h2>
 
                 <div className="flex flex-col h-[120px] justify-between">
                   <p className="text-gray-600 dark:text-gray-400">
-                    Our support team is here to help you every step of the way with your automotive technology needs.
+                    Our support team is here to help you every step of the way with your safe driving and mobility needs.
                   </p>
 
                   <a
