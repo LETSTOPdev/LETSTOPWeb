@@ -15,8 +15,8 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const hasSetup = useRef(false)
-
+  const initialized = useRef(false)
+  
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
     if (!scrollContainer) return
@@ -50,46 +50,62 @@ const useInfiniteAutoScroll = (
       setTimeout(() => setIsPaused(false), 1500)
     }
 
-    // Properly setup the content for infinite scrolling
-    const setupInfiniteScroll = () => {
-      if (hasSetup.current) return
+    // Setup proper infinite scrolling
+    const setupScrolling = () => {
+      if (initialized.current) return
       
       const contentContainer = scrollContainer.firstElementChild as HTMLElement
       if (!contentContainer) return
-
-      // Identify all original team cards
-      const allCards = Array.from(contentContainer.children)
       
-      // We'll duplicate all cards twice to ensure smooth looping
-      allCards.forEach(card => {
-        const clone = card.cloneNode(true) as HTMLElement
-        contentContainer.appendChild(clone)
+      // Clear any existing clones first
+      const originalCards = Array.from(contentContainer.children).slice(0, 7) // Assuming 7 team members
+      
+      // Remove any existing elements
+      while (contentContainer.firstChild) {
+        contentContainer.removeChild(contentContainer.firstChild)
+      }
+      
+      // Add original cards back
+      originalCards.forEach(card => {
+        contentContainer.appendChild(card.cloneNode(true))
       })
       
-      hasSetup.current = true
+      // Then add duplicates of each card
+      originalCards.forEach(card => {
+        contentContainer.appendChild(card.cloneNode(true))
+      })
+      
+      initialized.current = true
     }
     
-    // Setup the infinite scroll
-    setupInfiniteScroll()
+    // Call setup function
+    setupScrolling()
 
     const animate = () => {
       if (scrollContainer && !isPaused) {
-        // Get the content container
-        const contentContainer = scrollContainer.firstElementChild as HTMLElement
-        if (!contentContainer) {
-          animationRef.current = requestAnimationFrame(animate)
-          return
-        }
-
         // Increment scroll position
         scrollContainer.scrollLeft += speed
         
-        // Calculate the width of original set of cards
-        const halfwayPoint = contentContainer.scrollWidth / 2
+        // Calculate card width (assuming all cards have same width)
+        const firstCard = scrollContainer.querySelector('div > div') as HTMLElement
+        if (!firstCard) {
+          animationRef.current = requestAnimationFrame(animate)
+          return
+        }
         
-        // If we've scrolled past the original set, loop back
-        if (scrollContainer.scrollLeft >= halfwayPoint) {
-          // Seamless reset - jump back to the beginning
+        const cardStyle = window.getComputedStyle(firstCard)
+        const cardWidth = firstCard.offsetWidth + 
+                          parseInt(cardStyle.marginLeft || '0') + 
+                          parseInt(cardStyle.marginRight || '0')
+        
+        // Calculate the number of original cards
+        const numOriginalCards = 7 // Hardcoded for simplicity - total number of unique team members
+        
+        // Check if we need to reset
+        const totalOriginalWidth = numOriginalCards * cardWidth
+        
+        if (scrollContainer.scrollLeft >= totalOriginalWidth) {
+          // Reset to beginning
           scrollContainer.scrollLeft = 0
         }
       }
