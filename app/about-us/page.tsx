@@ -5,15 +5,18 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Shield, Heart, Globe, Award, ChevronRight } from "lucide-react"
+import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
-// Add this new hook for auto-scrolling
-const useAutoScroll = (scrollContainerRef: React.RefObject<HTMLDivElement>, speed = 0.5, pauseOnHover = true) => {
+// Enhanced auto-scroll hook with infinite scrolling
+const useInfiniteAutoScroll = (
+  scrollContainerRef: React.RefObject<HTMLDivElement>,
+  speed = 0.5,
+  pauseOnHover = true,
+) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const lastScrollPos = useRef(0)
-  const direction = useRef(1) // 1 for right, -1 for left
+  const resetScrollTimeout = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -27,18 +30,40 @@ const useAutoScroll = (scrollContainerRef: React.RefObject<HTMLDivElement>, spee
       setIsPaused(false)
     }
 
+    // Touch event handlers for swipe functionality
+    let touchStartX = 0
+    let touchEndX = 0
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX
+      setIsPaused(true) // Pause auto-scroll when user touches
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX
+      const diffX = touchStartX - touchEndX
+      scrollContainer.scrollLeft += diffX / 5 // Divide for smoother scrolling
+      touchStartX = touchEndX
+    }
+
+    const handleTouchEnd = () => {
+      // Resume auto-scroll after a short delay
+      setTimeout(() => setIsPaused(false), 1500)
+    }
+
     const animate = () => {
       if (scrollContainer && !isPaused) {
-        // Check if we've reached the end or beginning
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 2) {
-          direction.current = -1 // Change direction to left
-        } else if (scrollContainer.scrollLeft <= 2) {
-          direction.current = 1 // Change direction to right
-        }
+        // Increment scroll position
+        scrollContainer.scrollLeft += speed
 
-        // Scroll by the speed amount in the current direction
-        scrollContainer.scrollLeft += speed * direction.current
-        lastScrollPos.current = scrollContainer.scrollLeft
+        // Check if we've reached the end
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 10) {
+          // Reset to beginning (with a small delay to avoid visual glitch)
+          if (resetScrollTimeout.current) clearTimeout(resetScrollTimeout.current)
+          resetScrollTimeout.current = setTimeout(() => {
+            scrollContainer.scrollLeft = 0
+          }, 50)
+        }
       }
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -46,6 +71,9 @@ const useAutoScroll = (scrollContainerRef: React.RefObject<HTMLDivElement>, spee
     // Add event listeners
     scrollContainer.addEventListener("mouseenter", handleMouseEnter)
     scrollContainer.addEventListener("mouseleave", handleMouseLeave)
+    scrollContainer.addEventListener("touchstart", handleTouchStart)
+    scrollContainer.addEventListener("touchmove", handleTouchMove)
+    scrollContainer.addEventListener("touchend", handleTouchEnd)
 
     // Start animation
     animationRef.current = requestAnimationFrame(animate)
@@ -55,9 +83,15 @@ const useAutoScroll = (scrollContainerRef: React.RefObject<HTMLDivElement>, spee
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
+      if (resetScrollTimeout.current) {
+        clearTimeout(resetScrollTimeout.current)
+      }
       if (scrollContainer) {
         scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
         scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+        scrollContainer.removeEventListener("touchstart", handleTouchStart)
+        scrollContainer.removeEventListener("touchmove", handleTouchMove)
+        scrollContainer.removeEventListener("touchend", handleTouchEnd)
       }
     }
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
@@ -73,7 +107,7 @@ export default function AboutPage() {
   const teamScrollRef = useRef<HTMLDivElement>(null)
 
   // Add this hook call after the other hooks in the component
-  useAutoScroll(teamScrollRef, 0.5)
+  useInfiniteAutoScroll(teamScrollRef, 0.5)
 
   // Animation for elements as they come into view
   useEffect(() => {
@@ -303,6 +337,15 @@ export default function AboutPage() {
                         height={300}
                         className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                       />
+                      <a
+                        href="https://www.linkedin.com/in/levy-dor/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                        aria-label="Dor's LinkedIn Profile"
+                      >
+                        <Linkedin className="h-5 w-5 text-white" />
+                      </a>
                     </div>
                     <div className="flex-1">
                       <h4 className="text-2xl font-bold mb-1 text-white">Dor</h4>
@@ -336,6 +379,15 @@ export default function AboutPage() {
                         height={300}
                         className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                       />
+                      <a
+                        href="https://www.linkedin.com/in/almog-nissan/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                        aria-label="Almog's LinkedIn Profile"
+                      >
+                        <Linkedin className="h-5 w-5 text-white" />
+                      </a>
                     </div>
                     <div className="flex-1">
                       <h4 className="text-2xl font-bold mb-1 text-white">Almog</h4>
@@ -379,7 +431,7 @@ export default function AboutPage() {
 
               <div
                 ref={teamScrollRef}
-                className="overflow-x-auto scrollbar-hide pb-6"
+                className="overflow-x-auto scrollbar-hide pb-6 touch-pan-x"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 <div className="flex space-x-6 px-4 min-w-max">
@@ -388,7 +440,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/nikita.png"
@@ -397,6 +449,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/evisu/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Nikita's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Nikita</h4>
@@ -416,7 +477,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/itay.png"
@@ -425,6 +486,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/itay-shaked/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Itay's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Itay</h4>
@@ -444,7 +514,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/tom.png"
@@ -453,6 +523,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/tom-amar-b2494a25a/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Tom's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Tom</h4>
@@ -472,7 +551,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/yakir.png"
@@ -481,6 +560,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/yakir-m-a19619212/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Yakir's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Yakir</h4>
@@ -501,7 +589,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/cfir.png"
@@ -510,6 +598,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/cfir-shor/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Cfir's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Cfir</h4>
@@ -529,7 +626,7 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/ore.png"
@@ -538,6 +635,15 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        <a
+                          href="https://www.linkedin.com/in/oregoldgamer/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Ore's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Ore</h4>
@@ -552,12 +658,12 @@ export default function AboutPage() {
                     </div>
                   </div>
 
-                  {/* Tomer */}
+                  {/* Tomer - No LinkedIn */}
                   <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 w-[280px] transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                     <div className="relative">
-                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                         <Image
                           src="/images/tomer.png"
@@ -566,6 +672,7 @@ export default function AboutPage() {
                           height={400}
                           className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                         />
+                        {/* No LinkedIn icon for Tomer */}
                       </div>
                       <div className="p-6">
                         <h4 className="text-xl font-bold text-white mb-1">Tomer</h4>
@@ -579,16 +686,81 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Scroll indicator */}
-              <div className="mt-4 text-center text-gray-400 text-sm flex items-center justify-center">
-                <span className="mr-2">Auto-scrolling</span>
-                <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent relative">
-                  <div className="absolute top-0 left-0 w-4 h-px bg-primary animate-scroll-hint"></div>
+                  {/* Clone of first few cards for infinite scrolling effect */}
+                  <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 w-[280px] transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
+                    <div className="relative">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                        <Image
+                          src="/images/nikita.png"
+                          alt="Nikita"
+                          width={300}
+                          height={400}
+                          className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <a
+                          href="https://www.linkedin.com/in/evisu/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Nikita's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
+                      </div>
+                      <div className="p-6">
+                        <h4 className="text-xl font-bold text-white mb-1">Nikita</h4>
+                        <p className="text-primary font-medium mb-3">DEVELOPER TEAM LEAD</p>
+                        <div className="text-gray-300 text-sm transition-all duration-500 max-h-0 group-hover:max-h-[200px] overflow-hidden">
+                          <p className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            In the development field for over 10 years, with expertise in server, frontend, mobile
+                            applications, security, and application architecture.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Itay (clone) */}
+                  <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 w-[280px] transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
+                    <div className="relative">
+                      <div className="aspect-[3/4] w-full overflow-hidden border-b border-primary/30 relative">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                        <Image
+                          src="/images/itay.png"
+                          alt="Itay"
+                          width={300}
+                          height={400}
+                          className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <a
+                          href="https://www.linkedin.com/in/itay-shaked/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 w-10 h-10 bg-[#000000]/90 rounded-full flex items-center justify-center z-20 hover:bg-[#000000] transition-all duration-300 shadow-lg"
+                          aria-label="Itay's LinkedIn Profile"
+                        >
+                          <Linkedin className="h-5 w-5 text-white" />
+                        </a>
+                      </div>
+                      <div className="p-6">
+                        <h4 className="text-xl font-bold text-white mb-1">Itay</h4>
+                        <p className="text-primary font-medium mb-3">HEAD OF MARKETING</p>
+                        <div className="text-gray-300 text-sm transition-all duration-500 max-h-0 group-hover:max-h-[200px] overflow-hidden">
+                          <p className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                            In the marketing and management field since 2018, with expertise in Web3, investments, and
+                            trading.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <span className="ml-2">Hover to pause</span>
               </div>
             </div>
           </div>
