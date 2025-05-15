@@ -195,15 +195,15 @@ export default function Home() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {/* Solana Foundation */}
-                <div className="group relative">
+                <a
+                  href="https://x.com/solana/status/1900239740244549993"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block cursor-pointer"
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#9945FF] to-[#14F195] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
-                    <a
-                      href="https://x.com/solana/status/1900239740244549993"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform hover:scale-105"
-                    >
+                    <div className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform group-hover:scale-105">
                       <Image
                         src="/images/solana-logo.png"
                         alt="Solana Foundation"
@@ -211,24 +211,24 @@ export default function Home() {
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
                       />
-                    </a>
+                    </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Solana Foundation</h3>
                     <p className="text-gray-300 text-sm text-center">
                       Leveraging Solana's high-performance blockchain for fast, secure token transactions.
                     </p>
                   </div>
-                </div>
+                </a>
 
                 {/* VeChain */}
-                <div className="group relative">
+                <a
+                  href="https://x.com/vechainofficial/status/1868675260301689053"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative block cursor-pointer"
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#1976D2] to-[#4CAF50] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
-                    <a
-                      href="https://x.com/vechainofficial/status/1868675260301689053"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform hover:scale-105"
-                    >
+                    <div className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform group-hover:scale-105">
                       <Image
                         src="/images/vechain-logo.svg"
                         alt="VeChain"
@@ -236,13 +236,13 @@ export default function Home() {
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
                       />
-                    </a>
+                    </div>
                     <h3 className="text-xl font-bold mb-3 text-white">VeChain</h3>
                     <p className="text-gray-300 text-sm text-center">
                       Utilizing VeChain's supply chain expertise to enhance vehicle data tracking and verification.
                     </p>
                   </div>
-                </div>
+                </a>
 
                 {/* Beitar Jerusalem */}
                 <div className="group relative">
