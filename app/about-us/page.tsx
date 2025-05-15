@@ -15,8 +15,7 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const cyclesCompleted = useRef(0)
-  const maxCycles = 3 // Number of complete cycles before stopping
+  const hasSetup = useRef(false)
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -51,56 +50,47 @@ const useInfiniteAutoScroll = (
       setTimeout(() => setIsPaused(false), 1500)
     }
 
-    // Make sure we have enough content for 3 full cycles
-    const setupContent = () => {
+    // Properly setup the content for infinite scrolling
+    const setupInfiniteScroll = () => {
+      if (hasSetup.current) return
+      
       const contentContainer = scrollContainer.firstElementChild as HTMLElement
       if (!contentContainer) return
 
-      // Clone the original items twice more to ensure we have enough content for 3 cycles
-      const children = Array.from(contentContainer.children)
-      const originalCount = children.length
-
-      // First, determine how many are original vs clones
-      // We'll assume the first originalCount/3 elements are the originals
-      const originalElements = children.slice(0, originalCount / 3)
+      // Identify all original team cards
+      const allCards = Array.from(contentContainer.children)
       
-      // Clear existing clones if any
-      while (contentContainer.children.length > originalElements.length) {
-        contentContainer.removeChild(contentContainer.lastChild as Node)
-      }
+      // We'll duplicate all cards twice to ensure smooth looping
+      allCards.forEach(card => {
+        const clone = card.cloneNode(true) as HTMLElement
+        contentContainer.appendChild(clone)
+      })
       
-      // Add the clones for 3 complete cycles
-      for (let cycle = 0; cycle < 3; cycle++) {
-        originalElements.forEach(element => {
-          const clone = element.cloneNode(true) as HTMLElement
-          contentContainer.appendChild(clone)
-        })
-      }
+      hasSetup.current = true
     }
     
-    // Set up the content for smooth scrolling
-    setupContent()
-    
+    // Setup the infinite scroll
+    setupInfiniteScroll()
+
     const animate = () => {
       if (scrollContainer && !isPaused) {
+        // Get the content container
+        const contentContainer = scrollContainer.firstElementChild as HTMLElement
+        if (!contentContainer) {
+          animationRef.current = requestAnimationFrame(animate)
+          return
+        }
+
         // Increment scroll position
         scrollContainer.scrollLeft += speed
         
-        const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth
+        // Calculate the width of original set of cards
+        const halfwayPoint = contentContainer.scrollWidth / 2
         
-        // Check if we've reached the end
-        if (scrollContainer.scrollLeft >= maxScroll) {
-          // We've completed the last cycle, stop the animation
-          if (cyclesCompleted.current >= maxCycles - 1) {
-            if (animationRef.current) {
-              cancelAnimationFrame(animationRef.current)
-            }
-            return
-          }
-          
-          // Reset to beginning for next cycle
+        // If we've scrolled past the original set, loop back
+        if (scrollContainer.scrollLeft >= halfwayPoint) {
+          // Seamless reset - jump back to the beginning
           scrollContainer.scrollLeft = 0
-          cyclesCompleted.current += 1
         }
       }
       animationRef.current = requestAnimationFrame(animate)
