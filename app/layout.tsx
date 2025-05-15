@@ -48,7 +48,14 @@ export const metadata: Metadata = {
   other: {
     "apple-itunes-app": "app-id=6477782403, app-argument=https://apps.apple.com/app/letstop/id6477782403",
   },
+<<<<<<< HEAD
     generator: 'v0.dev'
+=======
+  metadataBase: new URL("https://letstop.io"),
+  alternates: {
+    canonical: "/",
+  },
+>>>>>>> 5ec1092 (updatepreload)
 }
 
 export default function RootLayout({
