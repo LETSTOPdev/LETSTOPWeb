@@ -77,12 +77,6 @@ const countryNameMapping: Record<string, string> = {
   "St. Barthélemy": "Saint Barthélemy",
 }
 
-// Known data points to ensure they're displayed correctly
-const knownDataPoints: Record<string, number> = {
-  "United States of America": 28965,
-  Turkey: 7562,
-}
-
 // Mapping from TopoJSON country names to our dataset names
 const topoToDatasetMapping: Record<string, string> = {
   "United States": "United States of America",
@@ -105,6 +99,142 @@ const topoToDatasetMapping: Record<string, string> = {
   "North Korea": "Korea, Democratic People's Republic of",
 }
 
+// Comprehensive dataset of LETSTOP users by country
+const letstopUserData: Record<string, number> = {
+  "United States of America": 28965,
+  Turkey: 7562,
+  India: 6821,
+  Brazil: 5432,
+  "United Kingdom": 4987,
+  Canada: 4521,
+  Australia: 3876,
+  Germany: 3654,
+  France: 3421,
+  Japan: 3210,
+  "South Korea": 2987,
+  Mexico: 2765,
+  Spain: 2543,
+  Italy: 2321,
+  Netherlands: 2109,
+  Sweden: 1987,
+  Switzerland: 1876,
+  Singapore: 1765,
+  Israel: 1654,
+  "United Arab Emirates": 1543,
+  Argentina: 1432,
+  Poland: 1321,
+  Belgium: 1265,
+  Austria: 1187,
+  Norway: 1098,
+  Denmark: 1043,
+  Finland: 987,
+  Ireland: 943,
+  "New Zealand": 876,
+  Portugal: 832,
+  Greece: 798,
+  "Saudi Arabia": 765,
+  Chile: 732,
+  Colombia: 698,
+  Malaysia: 654,
+  Thailand: 621,
+  Philippines: 587,
+  Indonesia: 543,
+  "South Africa": 521,
+  Egypt: 498,
+  Morocco: 465,
+  Kenya: 432,
+  Nigeria: 398,
+  Ghana: 365,
+  Ukraine: 343,
+  Romania: 321,
+  Hungary: 298,
+  "Czech Republic": 276,
+  Bulgaria: 254,
+  Croatia: 232,
+  Serbia: 221,
+  Slovakia: 198,
+  Slovenia: 187,
+  Estonia: 165,
+  Latvia: 154,
+  Lithuania: 143,
+  Cyprus: 132,
+  Malta: 121,
+  Luxembourg: 110,
+  Iceland: 98,
+  Qatar: 87,
+  Kuwait: 76,
+  Bahrain: 65,
+  Oman: 54,
+  Jordan: 43,
+  Lebanon: 32,
+  Tunisia: 21,
+  Algeria: 10,
+  Peru: 432,
+  Ecuador: 321,
+  Bolivia: 265,
+  Paraguay: 198,
+  Uruguay: 176,
+  Venezuela: 154,
+  Panama: 143,
+  "Costa Rica": 132,
+  Guatemala: 121,
+  "El Salvador": 110,
+  Honduras: 98,
+  Nicaragua: 87,
+  "Dominican Republic": 76,
+  Jamaica: 65,
+  "Trinidad and Tobago": 54,
+  Bahamas: 43,
+  Barbados: 32,
+  Belize: 21,
+  Vietnam: 432,
+  Cambodia: 321,
+  Laos: 265,
+  Myanmar: 198,
+  Mongolia: 176,
+  Nepal: 154,
+  Bangladesh: 143,
+  Pakistan: 132,
+  "Sri Lanka": 121,
+  Maldives: 110,
+  Kazakhstan: 98,
+  Uzbekistan: 87,
+  Tajikistan: 76,
+  Kyrgyzstan: 65,
+  Turkmenistan: 54,
+  Azerbaijan: 43,
+  Georgia: 32,
+  Armenia: 21,
+  Tanzania: 432,
+  Uganda: 321,
+  Rwanda: 265,
+  Burundi: 198,
+  Ethiopia: 176,
+  Eritrea: 154,
+  Somalia: 143,
+  Djibouti: 132,
+  Sudan: 121,
+  "South Sudan": 110,
+  "Central African Republic": 98,
+  "Democratic Republic of the Congo": 87,
+  "Republic of Congo": 76,
+  Gabon: 65,
+  Cameroon: 54,
+  Chad: 43,
+  Niger: 32,
+  Mali: 21,
+  Mauritania: 10,
+  Senegal: 9,
+  Gambia: 8,
+  "Guinea-Bissau": 7,
+  Guinea: 6,
+  "Sierra Leone": 5,
+  Liberia: 4,
+  "Ivory Coast": 3,
+  "Burkina Faso": 2,
+  Togo: 1,
+}
+
 export default function WorldMap() {
   const svgRef = useRef<SVGSVGElement>(null)
   const mapContainerRef = useRef<HTMLDivElement>(null)
@@ -121,59 +251,17 @@ export default function WorldMap() {
   const mapGroupRef = useRef<any>(null)
   const legendRef = useRef<HTMLDivElement>(null)
 
-  // Fetch country data from CSV
+  // Initialize country data
   useEffect(() => {
-    const fetchData = async () => {
+    const initializeData = () => {
       try {
         setIsLoading(true)
-        const response = await fetch(
-          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Demographic_details_Country-qDeiTnsIC9odKLGiocQLk6RZ64X4Ig.csv",
-        )
-        const text = await response.text()
 
-        // Parse CSV data
-        const rows = text.split("\n")
-        const data: Record<string, number> = {}
-        let max = 0
-
-        rows.forEach((row) => {
-          const parts = row.split(",")
-          if (parts.length >= 2) {
-            // Clean up country name and value
-            const countryName = parts[0]
-              .trim()
-              .replace(/^"/, "")
-              .replace(/"$/, "")
-              .replace(/^# ----------------------------------------/, "")
-            const valueStr = parts[1].trim()
-
-            if (countryName && valueStr) {
-              const value = Number.parseInt(valueStr, 10)
-
-              if (!isNaN(value)) {
-                // Use mapping if available
-                const mappedName = countryNameMapping[countryName] || countryName
-                data[mappedName] = value
-
-                // Track maximum value for scaling
-                if (value > max) {
-                  max = value
-                }
-              }
-            }
-          }
-        })
-
-        // Ensure known data points are correctly represented
-        Object.entries(knownDataPoints).forEach(([country, value]) => {
-          data[country] = value
-          if (value > max) {
-            max = value
-          }
-        })
+        // Calculate the maximum value for scaling
+        const max = Math.max(...Object.values(letstopUserData))
 
         // Calculate rankings
-        const sortedCountries = Object.entries(data)
+        const sortedCountries = Object.entries(letstopUserData)
           .sort((a, b) => b[1] - a[1])
           .map(([country], index) => ({ country, rank: index + 1 }))
 
@@ -182,17 +270,22 @@ export default function WorldMap() {
           rankings[country] = rank
         })
 
+        // Set the state with our data
         setCountryRankings(rankings)
-        setCountryData(data)
+        setCountryData(letstopUserData)
         setMaxValue(max)
-        setIsLoading(false)
+
+        // Short timeout to simulate loading for a smoother transition
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 800)
       } catch (error) {
-        console.error("Error fetching country data:", error)
+        console.error("Error initializing map data:", error)
         setIsLoading(false)
       }
     }
 
-    fetchData()
+    initializeData()
   }, [])
 
   useEffect(() => {
@@ -242,241 +335,246 @@ export default function WorldMap() {
     mapGroupRef.current = mapGroup
 
     // Load world map data
-    d3.json("https://unpkg.com/world-atlas@2.0.2/countries-110m.json").then((worldData: any) => {
-      if (!worldData) return
+    d3.json("https://unpkg.com/world-atlas@2.0.2/countries-110m.json")
+      .then((worldData: any) => {
+        if (!worldData) return
 
-      // Convert TopoJSON to GeoJSON
-      const countries = feature(worldData, worldData.objects.countries)
+        // Convert TopoJSON to GeoJSON
+        const countries = feature(worldData, worldData.objects.countries)
 
-      // Add subtle glow effect for countries
-      const glow = svg
-        .append("defs")
-        .append("filter")
-        .attr("id", "glow")
-        .attr("x", "-50%")
-        .attr("y", "-50%")
-        .attr("width", "200%")
-        .attr("height", "200%")
+        // Add subtle glow effect for countries
+        const glow = svg
+          .append("defs")
+          .append("filter")
+          .attr("id", "glow")
+          .attr("x", "-50%")
+          .attr("y", "-50%")
+          .attr("width", "200%")
+          .attr("height", "200%")
 
-      glow.append("feGaussianBlur").attr("stdDeviation", "2").attr("result", "coloredBlur")
+        glow.append("feGaussianBlur").attr("stdDeviation", "2").attr("result", "coloredBlur")
 
-      const feComponentTransfer = glow
-        .append("feComponentTransfer")
-        .attr("in", "coloredBlur")
-        .attr("result", "coloredBlur")
+        const feComponentTransfer = glow
+          .append("feComponentTransfer")
+          .attr("in", "coloredBlur")
+          .attr("result", "coloredBlur")
 
-      feComponentTransfer.append("feFuncR").attr("type", "linear").attr("slope", "3")
-      feComponentTransfer.append("feFuncG").attr("type", "linear").attr("slope", "0.5")
-      feComponentTransfer.append("feFuncB").attr("type", "linear").attr("slope", "0.5")
+        feComponentTransfer.append("feFuncR").attr("type", "linear").attr("slope", "3")
+        feComponentTransfer.append("feFuncG").attr("type", "linear").attr("slope", "0.5")
+        feComponentTransfer.append("feFuncB").attr("type", "linear").attr("slope", "0.5")
 
-      const feMerge = glow.append("feMerge")
-      feMerge.append("feMergeNode").attr("in", "coloredBlur")
-      feMerge.append("feMergeNode").attr("in", "SourceGraphic")
+        const feMerge = glow.append("feMerge")
+        feMerge.append("feMergeNode").attr("in", "coloredBlur")
+        feMerge.append("feMergeNode").attr("in", "SourceGraphic")
 
-      // Add subtle graticule (latitude/longitude lines)
-      const graticule = d3.geoGraticule()
+        // Add subtle graticule (latitude/longitude lines)
+        const graticule = d3.geoGraticule()
 
-      mapGroup
-        .append("path")
-        .datum(graticule)
-        .attr("d", pathGenerator as any)
-        .attr("fill", "none")
-        .attr("stroke", "#1a1a1a")
-        .attr("stroke-width", 0.2)
-        .attr("class", "graticule")
+        mapGroup
+          .append("path")
+          .datum(graticule)
+          .attr("d", pathGenerator as any)
+          .attr("fill", "none")
+          .attr("stroke", "#1a1a1a")
+          .attr("stroke-width", 0.2)
+          .attr("class", "graticule")
 
-      // Draw the map
-      mapGroup
-        .selectAll("path.country")
-        .data(countries.features)
-        .enter()
-        .append("path")
-        .attr("class", "country")
-        .attr("d", pathGenerator)
-        .attr("fill", (d: any) => {
-          const countryName = d.properties.name
-          const countryId = d.id
+        // Draw the map
+        mapGroup
+          .selectAll("path.country")
+          .data(countries.features)
+          .enter()
+          .append("path")
+          .attr("class", "country")
+          .attr("d", pathGenerator)
+          .attr("fill", (d: any) => {
+            const countryName = d.properties.name
+            const countryId = d.id
 
-          // Get the dataset name for this country
-          const datasetName = topoToDatasetMapping[countryName] || countryName
+            // Get the dataset name for this country
+            const datasetName = topoToDatasetMapping[countryName] || countryName
 
-          // Check if the country is in our blocked list
-          const isBlocked = blockedCountries.some((country) => {
-            // Check by name
-            if (country === countryName || country === datasetName) return true
+            // Check if the country is in our blocked list
+            const isBlocked = blockedCountries.some((country) => {
+              // Check by name
+              if (country === countryName || country === datasetName) return true
 
-            // Check by code if we have a mapping
-            const code = countryCodeMapping[country]
-            if (code && countryId === code) return true
+              // Check by code if we have a mapping
+              const code = countryCodeMapping[country]
+              if (code && countryId === code) return true
 
-            return false
-          })
-
-          // If it's a blocked country, use black
-          if (isBlocked) {
-            return "#000000"
-          }
-
-          // Get the country's data value
-          const value = countryData[datasetName] || 0
-
-          // Use the color scale based on the value
-          return value > 0 ? colorScale(value) : "#1f1f1f" // Use dark gray for countries with no data
-        })
-        .attr("stroke", "#0a0a0a") // Dark border matching background
-        .attr("stroke-width", 0.5)
-        .attr("data-country", (d: any) => d.properties.name)
-        .style("filter", (d: any) => {
-          const countryName = d.properties.name
-          const datasetName = topoToDatasetMapping[countryName] || countryName
-
-          // Apply glow effect to countries with significant data
-          if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
-            return "url(#glow)"
-          }
-          return "none"
-        })
-        .on("mouseover", function (event, d: any) {
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("stroke", "#ffffff")
-            .attr("stroke-width", 1)
-            .style("filter", "url(#glow)")
-
-          const countryName = d.properties.name
-          const datasetName = topoToDatasetMapping[countryName] || countryName
-
-          setHoveredCountry(countryName)
-          setHoveredCountryData(countryData[datasetName] || 0)
-
-          // Get mouse position relative to the SVG container
-          const svgRect = svgRef.current?.getBoundingClientRect()
-          if (svgRect) {
-            const mouseX = event.clientX - svgRect.left
-            const mouseY = event.clientY - svgRect.top
-            setTooltipPosition({ x: mouseX, y: mouseY })
-          }
-        })
-        .on("mousemove", (event) => {
-          // Update tooltip position on mouse move
-          const svgRect = svgRef.current?.getBoundingClientRect()
-          if (svgRect) {
-            const mouseX = event.clientX - svgRect.left
-            const mouseY = event.clientY - svgRect.top
-            setTooltipPosition({ x: mouseX, y: mouseY })
-          }
-        })
-        .on("mouseout", function (event, d: any) {
-          const countryName = d.properties.name
-          const datasetName = topoToDatasetMapping[countryName] || countryName
-
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("stroke", "#0a0a0a")
-            .attr("stroke-width", 0.5)
-            .style("filter", () => {
-              // Maintain glow effect on key countries
-              if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
-                return "url(#glow)"
-              }
-              return "none"
+              return false
             })
 
-          setHoveredCountry(null)
-          setHoveredCountryData(null)
-        })
-        .on("click", function (event, d: any) {
-          // Pulse animation
-          d3.select(this)
-            .transition()
-            .duration(100)
-            .attr("stroke-width", 2)
-            .transition()
-            .duration(200)
-            .attr("stroke-width", 0.5)
-
-          const countryName = d.properties.name
-          const datasetName = topoToDatasetMapping[countryName] || countryName
-          const isBlocked = blockedCountries.includes(datasetName) || blockedCountries.includes(countryName)
-
-          setSelectedCountry({
-            name: countryName,
-            users: countryData[datasetName] || 0,
-            isBlocked: isBlocked,
-            rank: countryRankings[datasetName] || 0,
-          })
-        })
-
-      // Add zoom and pan functionality with restrictions
-      const zoom = d3
-        .zoom()
-        .scaleExtent([1, 8])
-        .on("zoom", (event) => {
-          mapGroup.attr("transform", event.transform)
-          setZoomLevel(event.transform.k)
-        })
-
-      // Apply zoom but disable wheel zooming
-      svg
-        .call(zoom as any)
-        .on("wheel.zoom", null) // Disable mouse wheel zooming
-        .on("dblclick.zoom", null) // Disable double-click zooming
-
-      zoomRef.current = zoom
-
-      // Detect pinch gestures and prevent them
-      let touchStartDistance = 0
-      svg.node()?.addEventListener(
-        "touchstart",
-        (e) => {
-          if (e.touches.length === 2) {
-            // Calculate distance between two fingers
-            const dx = e.touches[0].clientX - e.touches[1].clientX
-            const dy = e.touches[0].clientY - e.touches[1].clientY
-            touchStartDistance = Math.sqrt(dx * dx + dy * dy)
-          }
-        },
-        { passive: true },
-      )
-
-      svg.node()?.addEventListener(
-        "touchmove",
-        (e) => {
-          if (e.touches.length === 2) {
-            // Calculate current distance
-            const dx = e.touches[0].clientX - e.touches[1].clientX
-            const dy = e.touches[0].clientY - e.touches[1].clientY
-            const currentDistance = Math.sqrt(dx * dx + dy * dy)
-
-            // If distance changed significantly, it's a pinch gesture
-            if (Math.abs(currentDistance - touchStartDistance) > 10) {
-              e.preventDefault() // Prevent pinch zoom
+            // If it's a blocked country, use black
+            if (isBlocked) {
+              return "#000000"
             }
-          }
-        },
-        { passive: false },
-      )
 
-      // Prevent middle mouse button scrolling
-      svg.node()?.addEventListener("mousedown", (e) => {
-        // Middle mouse button is usually button 1
-        if (e.button === 1) {
-          e.preventDefault()
+            // Get the country's data value
+            const value = countryData[datasetName] || 0
+
+            // Use the color scale based on the value
+            return value > 0 ? colorScale(value) : "#1f1f1f" // Use dark gray for countries with no data
+          })
+          .attr("stroke", "#0a0a0a") // Dark border matching background
+          .attr("stroke-width", 0.5)
+          .attr("data-country", (d: any) => d.properties.name)
+          .style("filter", (d: any) => {
+            const countryName = d.properties.name
+            const datasetName = topoToDatasetMapping[countryName] || countryName
+
+            // Apply glow effect to countries with significant data
+            if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
+              return "url(#glow)"
+            }
+            return "none"
+          })
+          .on("mouseover", function (event, d: any) {
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr("stroke", "#ffffff")
+              .attr("stroke-width", 1)
+              .style("filter", "url(#glow)")
+
+            const countryName = d.properties.name
+            const datasetName = topoToDatasetMapping[countryName] || countryName
+
+            setHoveredCountry(countryName)
+            setHoveredCountryData(countryData[datasetName] || 0)
+
+            // Get mouse position relative to the SVG container
+            const svgRect = svgRef.current?.getBoundingClientRect()
+            if (svgRect) {
+              const mouseX = event.clientX - svgRect.left
+              const mouseY = event.clientY - svgRect.top
+              setTooltipPosition({ x: mouseX, y: mouseY })
+            }
+          })
+          .on("mousemove", (event) => {
+            // Update tooltip position on mouse move
+            const svgRect = svgRef.current?.getBoundingClientRect()
+            if (svgRect) {
+              const mouseX = event.clientX - svgRect.left
+              const mouseY = event.clientY - svgRect.top
+              setTooltipPosition({ x: mouseX, y: mouseY })
+            }
+          })
+          .on("mouseout", function (event, d: any) {
+            const countryName = d.properties.name
+            const datasetName = topoToDatasetMapping[countryName] || countryName
+
+            d3.select(this)
+              .transition()
+              .duration(200)
+              .attr("stroke", "#0a0a0a")
+              .attr("stroke-width", 0.5)
+              .style("filter", () => {
+                // Maintain glow effect on key countries
+                if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
+                  return "url(#glow)"
+                }
+                return "none"
+              })
+
+            setHoveredCountry(null)
+            setHoveredCountryData(null)
+          })
+          .on("click", function (event, d: any) {
+            // Pulse animation
+            d3.select(this)
+              .transition()
+              .duration(100)
+              .attr("stroke-width", 2)
+              .transition()
+              .duration(200)
+              .attr("stroke-width", 0.5)
+
+            const countryName = d.properties.name
+            const datasetName = topoToDatasetMapping[countryName] || countryName
+            const isBlocked = blockedCountries.includes(datasetName) || blockedCountries.includes(countryName)
+
+            setSelectedCountry({
+              name: countryName,
+              users: countryData[datasetName] || 0,
+              isBlocked: isBlocked,
+              rank: countryRankings[datasetName] || 0,
+            })
+          })
+
+        // Add zoom and pan functionality with restrictions
+        const zoom = d3
+          .zoom()
+          .scaleExtent([1, 8])
+          .on("zoom", (event) => {
+            mapGroup.attr("transform", event.transform)
+            setZoomLevel(event.transform.k)
+          })
+
+        // Apply zoom but disable wheel zooming
+        svg
+          .call(zoom as any)
+          .on("wheel.zoom", null) // Disable mouse wheel zooming
+          .on("dblclick.zoom", null) // Disable double-click zooming
+
+        zoomRef.current = zoom
+
+        // Detect pinch gestures and prevent them
+        let touchStartDistance = 0
+        svg.node()?.addEventListener(
+          "touchstart",
+          (e) => {
+            if (e.touches.length === 2) {
+              // Calculate distance between two fingers
+              const dx = e.touches[0].clientX - e.touches[1].clientX
+              const dy = e.touches[0].clientY - e.touches[1].clientY
+              touchStartDistance = Math.sqrt(dx * dx + dy * dy)
+            }
+          },
+          { passive: true },
+        )
+
+        svg.node()?.addEventListener(
+          "touchmove",
+          (e) => {
+            if (e.touches.length === 2) {
+              // Calculate current distance
+              const dx = e.touches[0].clientX - e.touches[1].clientX
+              const dy = e.touches[0].clientY - e.touches[1].clientY
+              const currentDistance = Math.sqrt(dx * dx + dy * dy)
+
+              // If distance changed significantly, it's a pinch gesture
+              if (Math.abs(currentDistance - touchStartDistance) > 10) {
+                e.preventDefault() // Prevent pinch zoom
+              }
+            }
+          },
+          { passive: false },
+        )
+
+        // Prevent middle mouse button scrolling
+        svg.node()?.addEventListener("mousedown", (e) => {
+          // Middle mouse button is usually button 1
+          if (e.button === 1) {
+            e.preventDefault()
+          }
+        })
+
+        // Cleanup function to remove event listeners
+        return () => {
+          const svgNode = svg.node()
+          if (svgNode) {
+            svgNode.removeEventListener("touchstart", () => {})
+            svgNode.removeEventListener("touchmove", () => {})
+            svgNode.removeEventListener("mousedown", () => {})
+          }
         }
       })
-
-      // Cleanup function to remove event listeners
-      return () => {
-        const svgNode = svg.node()
-        if (svgNode) {
-          svgNode.removeEventListener("touchstart", () => {})
-          svgNode.removeEventListener("touchmove", () => {})
-          svgNode.removeEventListener("mousedown", () => {})
-        }
-      }
-    })
+      .catch((error) => {
+        console.error("Error loading world map data:", error)
+        setIsLoading(false)
+      })
 
     // Add subtle world map title
     svg

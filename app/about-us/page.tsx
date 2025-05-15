@@ -8,7 +8,7 @@ import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
-// Enhanced auto-scroll hook with infinite scrolling
+// Replace the entire useInfiniteAutoScroll hook with this improved version
 const useInfiniteAutoScroll = (
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   speed = 0.5,
@@ -16,7 +16,8 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const resetScrollTimeout = useRef<NodeJS.Timeout>()
+  const lastScrollLeft = useRef<number>(0)
+  const resetInProgress = useRef<boolean>(false)
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -52,17 +53,31 @@ const useInfiniteAutoScroll = (
     }
 
     const animate = () => {
-      if (scrollContainer && !isPaused) {
+      if (scrollContainer && !isPaused && !resetInProgress.current) {
+        // The threshold at which we start the reset process - 
+        // when we're 1/3 of the way through the cloned items
+        const resetThreshold = scrollContainer.scrollWidth - scrollContainer.clientWidth - 
+          (scrollContainer.scrollWidth * 0.15);
+        
         // Increment scroll position
         scrollContainer.scrollLeft += speed
-
-        // Check if we've reached the end
-        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 10) {
-          // Reset to beginning (with a small delay to avoid visual glitch)
-          if (resetScrollTimeout.current) clearTimeout(resetScrollTimeout.current)
-          resetScrollTimeout.current = setTimeout(() => {
-            scrollContainer.scrollLeft = 0
-          }, 50)
+        lastScrollLeft.current = scrollContainer.scrollLeft
+        
+        // Check if we've reached near the end
+        if (scrollContainer.scrollLeft >= resetThreshold) {
+          resetInProgress.current = true
+          
+          // Calculate where to reset to - essentially, we want to jump back to the 
+          // position that corresponds to the start of the duplicated content
+          // For a typical setup with full duplicated content, this would be around 1/2 of the scroll width
+          const jumpToPosition = scrollContainer.scrollLeft * 0.25;
+          
+          // Use requestAnimationFrame to ensure the reset happens during the next paint cycle
+          requestAnimationFrame(() => {
+            // Set scroll position to the calculated jump position
+            scrollContainer.scrollLeft = jumpToPosition;
+            resetInProgress.current = false;
+          });
         }
       }
       animationRef.current = requestAnimationFrame(animate)
@@ -82,9 +97,6 @@ const useInfiniteAutoScroll = (
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
-      }
-      if (resetScrollTimeout.current) {
-        clearTimeout(resetScrollTimeout.current)
       }
       if (scrollContainer) {
         scrollContainer.removeEventListener("mouseenter", handleMouseEnter)

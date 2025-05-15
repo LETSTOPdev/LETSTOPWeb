@@ -1,9 +1,43 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import type React from "react"
+
+import { useEffect, useRef, useState, Component, type ReactNode } from "react"
 import { AlertTriangle, PhoneOff, Car, Globe, Download, Activity, Users } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 import WorldMap from "@/components/world-map"
+
+interface ErrorBoundaryProps {
+  fallback: ReactNode
+  children: ReactNode
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError(_: Error) {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("Map error caught by boundary:", error, errorInfo)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback
+    }
+
+    return this.props.children
+  }
+}
 
 // Calculate base values based on the current date
 function calculateBaseValuesForDate() {
@@ -41,6 +75,7 @@ export default function InsightsPage() {
   // Get base values based on current date
   const baseValues = calculateBaseValuesForDate()
 
+  // Set the stats directly without animation
   const [animatedStats, setAnimatedStats] = useState({
     downloads: baseValues.downloads,
     kilometers: baseValues.kilometers,
@@ -53,7 +88,7 @@ export default function InsightsPage() {
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
   const lastUpdateTimeRef = useRef(Date.now())
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false) // Set to false to skip loading state
 
   // Animation for counting up statistics - initial visibility detection
   useEffect(() => {
@@ -76,69 +111,7 @@ export default function InsightsPage() {
     }
   }, [])
 
-  // Initial animation
-  useEffect(() => {
-    // Show loading is complete after a short delay
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
-
-    // Animation duration and settings
-    const duration = 1500 // 1.5 seconds for the animation
-    const interval = 16 // Update every 16ms for smoother animation (approx 60fps)
-    const steps = duration / interval
-
-    // Start with zero values
-    const startValues = {
-      downloads: 0,
-      kilometers: 0,
-      countries: 0,
-      deaths: 0,
-      phoneUsers: 0,
-      fatalities: 0,
-      risk: 0,
-    }
-
-    // Target values from base calculation
-    const targetValues = {
-      downloads: baseValues.downloads,
-      kilometers: baseValues.kilometers,
-      countries: 180,
-      deaths: 1.35,
-      phoneUsers: 40,
-      fatalities: 9,
-      risk: 6,
-    }
-
-    let step = 0
-    const animationTimer = setInterval(() => {
-      step++
-      const progress = step / steps
-
-      // Use easeOutQuad for smoother animation
-      const easeOutProgress = 1 - (1 - progress) * (1 - progress)
-
-      setAnimatedStats({
-        downloads: Math.floor(easeOutProgress * targetValues.downloads),
-        kilometers: Math.floor(easeOutProgress * targetValues.kilometers),
-        countries: Math.floor(easeOutProgress * targetValues.countries),
-        deaths: Number.parseFloat((easeOutProgress * targetValues.deaths).toFixed(2)),
-        phoneUsers: Math.floor(easeOutProgress * targetValues.phoneUsers),
-        fatalities: Math.floor(easeOutProgress * targetValues.fatalities),
-        risk: Math.floor(easeOutProgress * targetValues.risk),
-      })
-
-      if (step >= steps) {
-        clearInterval(animationTimer)
-      }
-    }, interval)
-
-    return () => {
-      clearInterval(animationTimer)
-    }
-  }, [baseValues.downloads, baseValues.kilometers])
-
-  // Set up counter updates
+  // Set up counter updates for downloads and kilometers only
   useEffect(() => {
     // Clear any existing interval
     if (intervalRef.current) {
@@ -320,7 +293,23 @@ export default function InsightsPage() {
           <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 group-hover:bg-primary/20 transition-all duration-500"></div>
             <div className="relative w-full">
-              <WorldMap />
+              {/* Add error handling wrapper */}
+              <ErrorBoundary
+                fallback={
+                  <div className="flex items-center justify-center h-[480px] bg-black/80">
+                    <div className="text-center p-8">
+                      <AlertTriangle className="h-12 w-12 text-primary mx-auto mb-4" />
+                      <h3 className="text-xl font-bold text-white mb-2">Map Visualization Unavailable</h3>
+                      <p className="text-gray-400 max-w-md">
+                        We're experiencing issues loading the global map data. Our team is working to resolve this
+                        issue.
+                      </p>
+                    </div>
+                  </div>
+                }
+              >
+                <WorldMap />
+              </ErrorBoundary>
             </div>
           </div>
         </div>
