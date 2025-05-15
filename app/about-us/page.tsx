@@ -15,7 +15,8 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const isResetting = useRef(false)
+  const isReset = useRef(false)
+  const hasInitialized = useRef(false)
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -50,41 +51,54 @@ const useInfiniteAutoScroll = (
       setTimeout(() => setIsPaused(false), 1500)
     }
 
-    // Calculate the width of a single team card plus its margin
-    const getItemWidth = () => {
-      // Get the first child element (team card)
-      const childElement = scrollContainer.firstElementChild?.firstElementChild as HTMLElement
-      if (!childElement) return 300 // Default width if no child is found
+    const setupClones = () => {
+      // Get the container that holds all team cards
+      const contentContainer = scrollContainer.firstElementChild as HTMLElement
+      if (!contentContainer || hasInitialized.current) return
       
-      // Get the computed style to include margins
-      const style = window.getComputedStyle(childElement)
-      const marginRight = parseInt(style.marginRight, 10) || 0
-      const marginLeft = parseInt(style.marginLeft, 10) || 0
+      // Clone all original items again and append them to create a true infinite loop
+      const children = Array.from(contentContainer.children)
+      const originalCardsCount = children.length
       
-      // Return total width including margins
-      return childElement.offsetWidth + marginRight + marginLeft
+      // We'll create a perfect clone of our original items
+      for (let i = 0; i < originalCardsCount; i++) {
+        const clone = children[i].cloneNode(true) as HTMLElement
+        contentContainer.appendChild(clone)
+      }
+      
+      hasInitialized.current = true
     }
+    
+    // Initialize by ensuring we have duplicated items
+    setupClones()
 
     const animate = () => {
-      if (scrollContainer && !isPaused && !isResetting.current) {
-        // Increment scroll position
-        scrollContainer.scrollLeft += speed
-
-        // Calculate the point at which to reset
-        // We want to reset when the first cloned item is fully visible
-        const itemWidth = getItemWidth() 
-        const originalItemsWidth = (scrollContainer.children[0]?.childElementCount / 2) * itemWidth
-        
-        // Check if we've scrolled past the original items
-        if (scrollContainer.scrollLeft >= originalItemsWidth) {
-          // Reset to beginning - without the sudden jump
-          isResetting.current = true
-          
-          // Reset to the beginning but maintain the visual position
-          scrollContainer.scrollLeft = scrollContainer.scrollLeft - originalItemsWidth
-          isResetting.current = false
-        }
+      if (!scrollContainer || isReset.current || isPaused) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
       }
+      
+      // Get the content container
+      const contentContainer = scrollContainer.firstElementChild as HTMLElement
+      if (!contentContainer) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+
+      // Increment scroll position
+      scrollContainer.scrollLeft += speed
+      
+      // Calculate the width of all original items
+      const originalItemsWidth = contentContainer.scrollWidth / 2
+
+      // If we've scrolled to the clone section
+      if (scrollContainer.scrollLeft >= originalItemsWidth) {
+        // Reset to the equivalent position at the start without the user seeing it
+        isReset.current = true
+        scrollContainer.scrollLeft = scrollContainer.scrollLeft - originalItemsWidth
+        isReset.current = false
+      }
+      
       animationRef.current = requestAnimationFrame(animate)
     }
 
