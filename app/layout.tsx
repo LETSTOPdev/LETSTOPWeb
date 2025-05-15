@@ -48,6 +48,7 @@ export const metadata: Metadata = {
   other: {
     "apple-itunes-app": "app-id=6477782403, app-argument=https://apps.apple.com/app/letstop/id6477782403",
   },
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -303,3 +304,6 @@ export default function RootLayout({
     </html>
   )
 }
+
+
+import './globals.css'
