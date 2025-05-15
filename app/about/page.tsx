@@ -1,14 +1,79 @@
 "use client"
 
+import type React from "react"
+
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
+// Add this new hook for auto-scrolling
+const useAutoScroll = (scrollContainerRef: React.RefObject<HTMLDivElement>, speed = 0.5, pauseOnHover = true) => {
+  const [isPaused, setIsPaused] = useState(false)
+  const animationRef = useRef<number>()
+  const lastScrollPos = useRef(0)
+  const direction = useRef(1) // 1 for right, -1 for left
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current
+    if (!scrollContainer) return
+
+    const handleMouseEnter = () => {
+      if (pauseOnHover) setIsPaused(true)
+    }
+
+    const handleMouseLeave = () => {
+      setIsPaused(false)
+    }
+
+    const animate = () => {
+      if (scrollContainer && !isPaused) {
+        // Check if we've reached the end or beginning
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 2) {
+          direction.current = -1 // Change direction to left
+        } else if (scrollContainer.scrollLeft <= 2) {
+          direction.current = 1 // Change direction to right
+        }
+
+        // Scroll by the speed amount in the current direction
+        scrollContainer.scrollLeft += speed * direction.current
+        lastScrollPos.current = scrollContainer.scrollLeft
+      }
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    // Add event listeners
+    scrollContainer.addEventListener("mouseenter", handleMouseEnter)
+    scrollContainer.addEventListener("mouseleave", handleMouseLeave)
+
+    // Start animation
+    animationRef.current = requestAnimationFrame(animate)
+
+    // Cleanup
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+      if (scrollContainer) {
+        scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+        scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+      }
+    }
+  }, [isPaused, pauseOnHover, speed, scrollContainerRef])
+
+  return { isPaused, setIsPaused }
+}
+
 export default function AboutPage() {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
   const observerRefs = useRef<Map<string, HTMLElement>>(new Map())
+
+  // Now, add this ref in the component
+  const teamScrollRef = useRef<HTMLDivElement>(null)
+
+  // Add this hook call after the other hooks in the component
+  useAutoScroll(teamScrollRef, 0.5)
 
   // Animation for elements as they come into view
   useEffect(() => {
@@ -224,17 +289,19 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               {/* Dor */}
-              <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-300">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 group-hover:bg-primary/20 transition-all duration-500"></div>
+              <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                 <div className="relative p-6">
                   <div className="flex flex-col gap-6">
-                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30">
+                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30 relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                       <Image
                         src="/images/dor.png"
                         alt="Dor"
                         width={400}
                         height={300}
-                        className="w-full h-full object-contain bg-black"
+                        className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     <div className="flex-1">
@@ -255,17 +322,19 @@ export default function AboutPage() {
               </div>
 
               {/* Almog */}
-              <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-300">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 group-hover:bg-primary/20 transition-all duration-500"></div>
+              <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
                 <div className="relative p-6">
                   <div className="flex flex-col gap-6">
-                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30">
+                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30 relative">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
                       <Image
                         src="/images/almog.png"
                         alt="Almog"
                         width={400}
                         height={300}
-                        className="w-full h-full object-contain bg-black"
+                        className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
                     <div className="flex-1">
@@ -308,7 +377,11 @@ export default function AboutPage() {
               {/* Right shadow gradient */}
               <div className="absolute right-0 top-0 bottom-0 w-12 z-10 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
 
-              <div className="overflow-x-auto hide-scrollbar pb-6">
+              <div
+                ref={teamScrollRef}
+                className="overflow-x-auto scrollbar-hide pb-6"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
                 <div className="flex space-x-6 px-4 min-w-max">
                   {/* Nikita */}
                   <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 w-[280px] transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
@@ -511,91 +584,11 @@ export default function AboutPage() {
 
               {/* Scroll indicator */}
               <div className="mt-4 text-center text-gray-400 text-sm flex items-center justify-center">
-                <span className="mr-2">Scroll</span>
+                <span className="mr-2">Auto-scrolling</span>
                 <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent relative">
-                  <div className="absolute top-0 left-0 w-4 h-px bg-primary scroll-hint"></div>
+                  <div className="absolute top-0 left-0 w-4 h-px bg-primary animate-scroll-hint"></div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            id="leadership"
-            ref={(el) => registerAnimationRef("leadership", el)}
-            className={`mb-20 transition-all duration-1000 transform ${
-              animatedElements.includes("leadership") ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-            }`}
-          >
-            <h3 className="text-2xl font-bold mb-8 text-white">Leadership</h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              {/* Dor */}
-              <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
-                <div className="relative p-6">
-                  <div className="flex flex-col gap-6">
-                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30 relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
-                      <Image
-                        src="/images/dor.png"
-                        alt="Dor"
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-2xl font-bold mb-1 text-white">Dor</h4>
-                      <p className="text-primary font-medium mb-4">Co-Founder & CEO</p>
-                      <div className="text-gray-300 space-y-2 mb-4">
-                        <p>• Leads an investment community of ~20,000 members</p>
-                        <p>• A trader and investor in the crypto industry for 6 years</p>
-                        <p>• Founder of an NFT company</p>
-                      </div>
-                      <p className="text-gray-300">
-                        Dor has been actively involved in the cryptocurrency and blockchain space, bringing valuable
-                        expertise to LETSTOP's innovative approach to road safety rewards.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Almog */}
-              <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 transition-all duration-500 -z-10"></div>
-                <div className="relative p-6">
-                  <div className="flex flex-col gap-6">
-                    <div className="w-full aspect-[4/3] overflow-hidden border border-primary/30 relative">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
-                      <Image
-                        src="/images/almog.png"
-                        alt="Almog"
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-contain bg-black transition-transform duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-2xl font-bold mb-1 text-white">Almog</h4>
-                      <p className="text-primary font-medium mb-4">Co-Founder & VP</p>
-                      <div className="text-gray-300 space-y-2 mb-4">
-                        <p>• Dean's List honoree in Economics and Business Management</p>
-                        <p>• Trader and investor in the stock market for 5 years</p>
-                      </div>
-                      <p className="text-gray-300">
-                        Almog stood out during his studies of Economics and Business Administration at the university.
-                        Apart from his main coursework, he furthered his education with courses in marketing, financial
-                        analysis, and software development. He holds an Internal Audit Diploma and possesses significant
-                        programming capabilities. After enduring a severe vehicle accident, Almog's personal experience
-                        became the driving force behind the inception and passion for this project, emphasizing his
-                        profound commitment to road safety.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                <span className="ml-2">Hover to pause</span>
               </div>
             </div>
           </div>

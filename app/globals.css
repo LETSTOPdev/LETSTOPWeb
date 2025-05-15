@@ -382,17 +382,20 @@ body {
 
 /* Add subtle scroll indicator animation */
 @keyframes scroll-hint {
-  0%,
-  100% {
-    transform: translateX(0);
+  0% {
+    left: 0;
   }
-  50% {
-    transform: translateX(10px);
+  100% {
+    left: calc(100% - 16px);
   }
 }
 
 .scroll-hint {
   animation: scroll-hint 1.5s ease-in-out infinite;
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 2s infinite linear;
 }
 
 /* Modern, subtle hover effects */
