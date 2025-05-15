@@ -8,7 +8,6 @@ import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
-// Replace the entire useInfiniteAutoScroll hook with this improved version
 const useInfiniteAutoScroll = (
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   speed = 0.5,
@@ -16,8 +15,7 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const lastScrollLeft = useRef<number>(0)
-  const resetInProgress = useRef<boolean>(false)
+  const isResetting = useRef(false)
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
@@ -52,32 +50,39 @@ const useInfiniteAutoScroll = (
       setTimeout(() => setIsPaused(false), 1500)
     }
 
+    // Calculate the width of a single team card plus its margin
+    const getItemWidth = () => {
+      // Get the first child element (team card)
+      const childElement = scrollContainer.firstElementChild?.firstElementChild as HTMLElement
+      if (!childElement) return 300 // Default width if no child is found
+      
+      // Get the computed style to include margins
+      const style = window.getComputedStyle(childElement)
+      const marginRight = parseInt(style.marginRight, 10) || 0
+      const marginLeft = parseInt(style.marginLeft, 10) || 0
+      
+      // Return total width including margins
+      return childElement.offsetWidth + marginRight + marginLeft
+    }
+
     const animate = () => {
-      if (scrollContainer && !isPaused && !resetInProgress.current) {
-        // The threshold at which we start the reset process - 
-        // when we're 1/3 of the way through the cloned items
-        const resetThreshold = scrollContainer.scrollWidth - scrollContainer.clientWidth - 
-          (scrollContainer.scrollWidth * 0.15);
-        
+      if (scrollContainer && !isPaused && !isResetting.current) {
         // Increment scroll position
         scrollContainer.scrollLeft += speed
-        lastScrollLeft.current = scrollContainer.scrollLeft
+
+        // Calculate the point at which to reset
+        // We want to reset when the first cloned item is fully visible
+        const itemWidth = getItemWidth() 
+        const originalItemsWidth = (scrollContainer.children[0]?.childElementCount / 2) * itemWidth
         
-        // Check if we've reached near the end
-        if (scrollContainer.scrollLeft >= resetThreshold) {
-          resetInProgress.current = true
+        // Check if we've scrolled past the original items
+        if (scrollContainer.scrollLeft >= originalItemsWidth) {
+          // Reset to beginning - without the sudden jump
+          isResetting.current = true
           
-          // Calculate where to reset to - essentially, we want to jump back to the 
-          // position that corresponds to the start of the duplicated content
-          // For a typical setup with full duplicated content, this would be around 1/2 of the scroll width
-          const jumpToPosition = scrollContainer.scrollLeft * 0.25;
-          
-          // Use requestAnimationFrame to ensure the reset happens during the next paint cycle
-          requestAnimationFrame(() => {
-            // Set scroll position to the calculated jump position
-            scrollContainer.scrollLeft = jumpToPosition;
-            resetInProgress.current = false;
-          });
+          // Reset to the beginning but maintain the visual position
+          scrollContainer.scrollLeft = scrollContainer.scrollLeft - originalItemsWidth
+          isResetting.current = false
         }
       }
       animationRef.current = requestAnimationFrame(animate)
@@ -110,7 +115,6 @@ const useInfiniteAutoScroll = (
 
   return { isPaused, setIsPaused }
 }
-
 export default function AboutPage() {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
   const observerRefs = useRef<Map<string, HTMLElement>>(new Map())
