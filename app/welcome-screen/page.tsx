@@ -208,6 +208,10 @@ export default function Home() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#9945FF] to-[#14F195] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
+                    {/* Backed by badge */}
+                    <div className="absolute top-2 left-2 bg-white text-black text-sm font-medium px-2 py-1 rounded-md z-10">
+                      Backed by
+                    </div>
                     <div className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform group-hover:scale-105">
                       <Image
                         src="/images/solana-logo.png"
@@ -233,6 +237,10 @@ export default function Home() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#1976D2] to-[#4CAF50] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
+                    {/* Backed by badge */}
+                    <div className="absolute top-2 left-2 bg-white text-black text-sm font-medium px-2 py-1 rounded-md z-10">
+                      Backed by
+                    </div>
                     <div className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform group-hover:scale-105">
                       <Image
                         src="/images/vechain-logo.png"
