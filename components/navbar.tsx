@@ -5,38 +5,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X, Search, ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { type SearchResultItem, coreSearchIndex, extractContentFromDOM, searchIndex } from "@/lib/search-index"
+import { type SearchResultItem, coreSearchIndex, searchIndex as performSearch } from "@/lib/search-index"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
-  const [searchData, setSearchData] = useState<SearchResultItem[]>(coreSearchIndex)
   const router = useRouter()
-
-  // Initialize search index with dynamic content when component mounts
-  useEffect(() => {
-    // Only run in browser environment
-    if (typeof window !== "undefined") {
-      // Add event listener for content changes
-      const observer = new MutationObserver(() => {
-        // Update search index when DOM changes
-        const dynamicContent = extractContentFromDOM()
-        setSearchData([...coreSearchIndex, ...dynamicContent])
-      })
-
-      // Start observing the document with the configured parameters
-      observer.observe(document.body, { childList: true, subtree: true })
-
-      // Initial extraction
-      const dynamicContent = extractContentFromDOM()
-      setSearchData([...coreSearchIndex, ...dynamicContent])
-
-      // Cleanup observer on component unmount
-      return () => observer.disconnect()
-    }
-  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -47,22 +23,19 @@ export default function Navbar() {
     if (isSearchOpen) {
       setSearchQuery("")
       setSearchResults([])
-    } else {
-      // Update search index when opening search
-      const dynamicContent = extractContentFromDOM()
-      setSearchData([...coreSearchIndex, ...dynamicContent])
     }
   }
 
   // Search function that runs on each keystroke
   useEffect(() => {
     if (searchQuery.trim().length > 1) {
-      const results = searchIndex(searchQuery, searchData)
+      // Use the imported search function with the core index
+      const results = performSearch(searchQuery, coreSearchIndex)
       setSearchResults(results)
     } else {
       setSearchResults([])
     }
-  }, [searchQuery, searchData])
+  }, [searchQuery])
 
   const navigateToResult = (path: string, external = false) => {
     toggleSearch()

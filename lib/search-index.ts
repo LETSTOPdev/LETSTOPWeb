@@ -13,99 +13,341 @@ export interface SearchResultItem {
   score?: number
 }
 
-// Core search index - this is a smaller set of key pages and sections
-// The dynamic search will supplement this with content from the actual pages
+// Comprehensive search index covering all website content
 export const coreSearchIndex: SearchResultItem[] = [
-  // Main sections
+  // HOME PAGE CONTENT
   {
-    title: "Home",
+    title: "LETSTOP - Drive Safe, Earn Crypto",
     path: "/",
-    section: "Main",
-    content: "LETSTOP is a revolutionary road safety app that rewards safe driving with cryptocurrency tokens.",
+    section: "Home",
+    content:
+      "LETSTOP is a revolutionary road safety app that rewards safe driving with cryptocurrency tokens. Our mission is to make roads safer worldwide through incentivized safe driving behavior.",
   },
   {
-    title: "App",
-    path: "/app",
-    section: "Main",
-    content: "The LETSTOP app tracks your driving behavior and rewards you with STOP tokens for safe driving habits.",
+    title: "Welcome to LETSTOP",
+    path: "/",
+    section: "Home",
+    content:
+      "LETSTOP is the world's first app that rewards safe driving with cryptocurrency. Drive safely, earn STOP tokens, and join our global community of safe drivers.",
   },
   {
-    title: "Token",
-    path: "/token",
-    section: "Main",
-    content: "The STOP token is the native cryptocurrency of the LETSTOP ecosystem, built on Solana blockchain.",
+    title: "How LETSTOP Works",
+    path: "/",
+    section: "Home",
+    content:
+      "The LETSTOP app tracks your driving behavior using advanced AI technology. Safe driving earns you STOP tokens that can be exchanged for real-world rewards or traded on cryptocurrency exchanges.",
   },
   {
-    title: "Insights",
-    path: "/insights",
-    section: "Main",
-    content: "Explore global road safety statistics and how LETSTOP is making a difference.",
+    title: "STOP Token Utility",
+    path: "/",
+    section: "Home",
+    content:
+      "STOP tokens can be used for in-app purchases, exchanged for rewards, or traded on cryptocurrency exchanges. The token is built on the Solana blockchain for fast and low-cost transactions.",
   },
   {
-    title: "About Us",
-    path: "/about",
-    section: "Main",
-    content: "Learn about our mission, vision, and the team behind LETSTOP.",
+    title: "LETSTOP Partners",
+    path: "/",
+    section: "Home",
+    content:
+      "LETSTOP has partnered with leading organizations including Solana, VeChain, Beitar Jerusalem FC, NVIDIA, TEN, Airalo, and IBC Group to expand our ecosystem and provide more value to our users.",
   },
   {
-    title: "FAQ",
-    path: "/faq",
-    section: "Main",
-    content: "Find answers to common questions about LETSTOP, the app, and the STOP token.",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-    section: "Main",
-    content: "Get in touch with the LETSTOP team for support, partnerships, or general inquiries.",
-  },
-  {
-    title: "Whitepaper",
-    path: "https://whitepaper.letstop.io",
-    section: "Documentation",
-    external: true,
-    content: "Read our comprehensive whitepaper detailing the LETSTOP ecosystem, tokenomics, and roadmap.",
+    title: "Download LETSTOP App",
+    path: "/",
+    section: "Home",
+    content:
+      "Download the LETSTOP app from the App Store or Google Play Store and start earning rewards for safe driving today.",
   },
 
-  // Team members
+  // APP PAGE CONTENT
+  {
+    title: "LETSTOP Mobile App",
+    path: "/app",
+    section: "App",
+    content:
+      "The LETSTOP app tracks your driving behavior and rewards you with STOP tokens for safe driving habits. Download now from App Store or Google Play.",
+  },
+  {
+    title: "App Features",
+    path: "/app",
+    section: "App",
+    content:
+      "Discover the features of the LETSTOP app including real-time tracking, rewards system, social features, and more.",
+  },
+  {
+    title: "LETSTOP Rewards and Features",
+    path: "/app",
+    section: "App",
+    content: "Earn rewards for safe driving, compete with friends, and track your progress with the LETSTOP app.",
+  },
+  {
+    title: "Mobile App Download",
+    path: "/app",
+    section: "App",
+    content:
+      "Download the LETSTOP app from the App Store or Google Play Store and start earning cryptocurrency for safe driving.",
+  },
+
+  // TOKEN PAGE CONTENT
+  {
+    title: "STOP Token",
+    path: "/token",
+    section: "Token",
+    content:
+      "The STOP token is the native cryptocurrency of the LETSTOP ecosystem, built on Solana blockchain for fast and low-cost transactions.",
+  },
+  {
+    title: "Solana Blockchain",
+    path: "/token",
+    section: "Token",
+    content:
+      "LETSTOP is built on the Solana blockchain, offering fast and low-cost transactions for STOP token holders.",
+  },
+  {
+    title: "VeChain Integration",
+    path: "/token",
+    section: "Token",
+    content: "LETSTOP leverages VeChain technology for supply chain transparency and verification in our ecosystem.",
+  },
+  {
+    title: "Token Utility",
+    path: "/token",
+    section: "Token",
+    content:
+      "STOP tokens can be used for in-app purchases, exchanged for rewards, or traded on cryptocurrency exchanges.",
+  },
+  {
+    title: "Token Economics",
+    path: "/token",
+    section: "Token",
+    content: "Learn about the supply, distribution, and economic model of the STOP token ecosystem.",
+  },
+
+  // INSIGHTS PAGE CONTENT
+  {
+    title: "Road Safety Insights",
+    path: "/insights",
+    section: "Insights",
+    content:
+      "Explore global road safety statistics and how LETSTOP is making a difference in reducing accidents worldwide.",
+  },
+  {
+    title: "Global Road Safety Statistics",
+    path: "/insights",
+    section: "Insights",
+    content:
+      "Learn about road safety statistics from around the world and how LETSTOP is working to improve them through incentivized safe driving.",
+  },
+  {
+    title: "LETSTOP Impact Data",
+    path: "/insights",
+    section: "Insights",
+    content: "Data and statistics showing the impact of LETSTOP on road safety in various regions around the world.",
+  },
+
+  // ABOUT PAGE CONTENT
+  {
+    title: "About LETSTOP",
+    path: "/about",
+    section: "About",
+    content:
+      "Learn about our mission, vision, and the team behind LETSTOP. We're dedicated to making roads safer worldwide through innovative technology.",
+  },
+  {
+    title: "Our Mission",
+    path: "/about",
+    section: "About",
+    content:
+      "Our mission is to make roads safer worldwide through incentivized safe driving behavior and innovative technology solutions.",
+  },
+  {
+    title: "Our Vision",
+    path: "/about",
+    section: "About",
+    content:
+      "Our vision is a world where road accidents are minimized through technology and incentives for safe driving practices.",
+  },
+
+  // TEAM MEMBERS
   {
     title: "Team Members",
     path: "/about",
     section: "Team",
     content:
-      "Meet our dedicated team of professionals working to make roads safer, including Itay, Cfir, Itamar, Dor, Almog, Nikita, Ore, Tomer, Tom, and Yakir.",
+      "Meet our dedicated team of professionals working to make roads safer, including Itay, Cfir, Dor, Almog, Nikita, Ore, Tomer, Tom, and Yakir.",
+  },
+  {
+    title: "Itay - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Itay is a key member of the LETSTOP team, contributing to our mission of making roads safer worldwide.",
+  },
+  {
+    title: "Cfir - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Cfir is a valued member of the LETSTOP team, working to revolutionize road safety through technology.",
+  },
+  {
+    title: "Dor - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Dor is an essential part of the LETSTOP team, contributing to our technology and vision for safer roads.",
+  },
+  {
+    title: "Almog - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Almog plays a crucial role in the LETSTOP team, helping to build our platform and expand our reach.",
+  },
+  {
+    title: "Nikita - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content:
+      "Nikita brings valuable skills to the LETSTOP team, contributing to our mission of incentivizing safe driving.",
+  },
+  {
+    title: "Ore - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Ore is a dedicated member of the LETSTOP team, working to make our vision of safer roads a reality.",
+  },
+  {
+    title: "Tomer - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Tomer contributes expertise to the LETSTOP team, helping to develop our innovative road safety platform.",
+  },
+  {
+    title: "Tom - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content: "Tom is a valued member of the LETSTOP team, working on solutions to improve road safety worldwide.",
+  },
+  {
+    title: "Yakir - LETSTOP Team",
+    path: "/about",
+    section: "Team",
+    content:
+      "Yakir brings passion and skills to the LETSTOP team, contributing to our mission of safer roads through technology.",
   },
 
-  // Legal pages
+  // FAQ PAGE CONTENT
+  {
+    title: "Frequently Asked Questions",
+    path: "/faq",
+    section: "FAQ",
+    content: "Find answers to common questions about LETSTOP, the app, and the STOP token.",
+  },
+  {
+    title: "LETSTOP Credits",
+    path: "/faq",
+    section: "FAQ",
+    content:
+      "LETSTOP credits are earned through safe driving and can be converted to STOP tokens. Learn how to earn and use credits in the app.",
+  },
+  {
+    title: "Experience Points",
+    path: "/faq",
+    section: "FAQ",
+    content:
+      "Experience points track your progress in the LETSTOP app. Earn XP through consistent safe driving and unlock new features and rewards.",
+  },
+  {
+    title: "App Features FAQ",
+    path: "/faq",
+    section: "FAQ",
+    content: "Learn about the features of the LETSTOP app including tracking, rewards, social elements, and more.",
+  },
+  {
+    title: "Cryptocurrency FAQ",
+    path: "/faq",
+    section: "FAQ",
+    content:
+      "Answers to common questions about cryptocurrency in the LETSTOP ecosystem, including how to earn, store, and use STOP tokens.",
+  },
+  {
+    title: "Referral System",
+    path: "/faq",
+    section: "FAQ",
+    content:
+      "Learn how to refer friends to LETSTOP and earn rewards for each successful referral. Our referral program helps grow the community while rewarding existing users.",
+  },
+  {
+    title: "Wallet FAQ",
+    path: "/faq",
+    section: "FAQ",
+    content:
+      "Information about the LETSTOP wallet, including how to set up, secure, and use it for managing your STOP tokens.",
+  },
+
+  // CONTACT PAGE CONTENT
+  {
+    title: "Contact Us",
+    path: "/contact",
+    section: "Contact",
+    content:
+      "Get in touch with the LETSTOP team for support, partnerships, or general inquiries. We're here to help with any questions about our app or ecosystem.",
+  },
+  {
+    title: "Support and Help",
+    path: "/contact",
+    section: "Contact",
+    content:
+      "Need help with the LETSTOP app or have questions about our services? Contact our support team for assistance.",
+  },
+  {
+    title: "Partnership Opportunities",
+    path: "/contact",
+    section: "Contact",
+    content:
+      "Interested in partnering with LETSTOP? Contact us to discuss potential collaboration opportunities and how we can work together.",
+  },
+
+  // LEGAL PAGES
   {
     title: "Privacy Policy",
     path: "/privacy-policy",
     section: "Legal",
-    content: "Our privacy policy explains how we collect, use, and protect your personal information.",
+    content:
+      "Our privacy policy explains how we collect, use, and protect your personal information when you use the LETSTOP app and website.",
   },
   {
     title: "Terms of Service",
     path: "/terms",
     section: "Legal",
-    content: "Our terms of service outline the rules and guidelines for using the LETSTOP platform.",
+    content: "Our terms of service outline the rules and guidelines for using the LETSTOP platform, app, and website.",
   },
   {
     title: "Wallet Terms",
     path: "/wallet-terms",
     section: "Legal",
-    content: "Specific terms related to the use of the LETSTOP wallet and cryptocurrency features.",
+    content:
+      "Specific terms related to the use of the LETSTOP wallet and cryptocurrency features within our ecosystem.",
   },
   {
     title: "Token Terms",
     path: "/token-terms",
     section: "Legal",
-    content: "Terms and conditions specific to the STOP token and its usage within our ecosystem.",
+    content: "Terms and conditions specific to the STOP token and its usage within the LETSTOP ecosystem.",
   },
   {
     title: "Cookie Policy",
     path: "/cookies",
     section: "Legal",
-    content: "Information about how LETSTOP uses cookies and similar technologies on our website and app.",
+    content:
+      "Information about how LETSTOP uses cookies and similar technologies on our website and app to improve user experience.",
+  },
+
+  // WHITEPAPER
+  {
+    title: "Whitepaper",
+    path: "https://whitepaper.letstop.io",
+    section: "Documentation",
+    external: true,
+    content:
+      "Read our comprehensive whitepaper detailing the LETSTOP ecosystem, tokenomics, and roadmap for the future.",
   },
 ]
 
@@ -264,10 +506,4 @@ export function extractContentFromDOM(): SearchResultItem[] {
     console.error("Error extracting content from DOM:", error)
     return []
   }
-}
-
-// Combine core index with dynamically extracted content
-export function getFullSearchIndex(): SearchResultItem[] {
-  const dynamicContent = extractContentFromDOM()
-  return [...coreSearchIndex, ...dynamicContent]
 }
