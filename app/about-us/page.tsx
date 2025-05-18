@@ -21,61 +21,61 @@ const useInfiniteAutoScroll = (
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
     if (!scrollContainer) return
-
+    
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-
-    // For mobile, enable touch scrolling but still allow our auto-scroll
+    
+    // For mobile, completely disable our touch event handling and let native behavior work
     if (isMobile.current) {
       // Enable native scrolling behaviors
-      scrollContainer.style.overflowX = "auto"
-      scrollContainer.style.overflowY = "visible"
-      scrollContainer.style.touchAction = "pan-x"
-
+      scrollContainer.style.overflowX = 'auto';
+      scrollContainer.style.overflowY = 'visible';
+      scrollContainer.style.touchAction = 'auto';
+      
       // Remove any pointer events that might block scrolling
-      const parentElement = scrollContainer.parentElement
+      const parentElement = scrollContainer.parentElement;
       if (parentElement) {
-        parentElement.style.pointerEvents = "auto"
+        parentElement.style.pointerEvents = 'auto';
       }
     }
-
+    
     // Setup the carousel structure without hardcoded names
     const setupCarousel = () => {
       if (setupComplete.current) return
-
+      
       // Get the flex container that contains all team cards
-      const flexContainer = scrollContainer.querySelector("div.flex") as HTMLElement
+      const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
       if (!flexContainer) return
-
+      
       // Get all original cards
-      const originalCards = Array.from(flexContainer.children)
-
+      const originalCards = Array.from(flexContainer.children);
+      
       // Store original cards in array
-      const originalCardsArray = [] as HTMLElement[]
-      originalCards.forEach((card) => {
-        originalCardsArray.push(card.cloneNode(true) as HTMLElement)
-      })
-
+      const originalCardsArray = [] as HTMLElement[];
+      originalCards.forEach(card => {
+        originalCardsArray.push(card.cloneNode(true) as HTMLElement);
+      });
+      
       // Clear the container
-      flexContainer.innerHTML = ""
-
+      flexContainer.innerHTML = '';
+      
       // Add back all original cards in their original order
-      originalCardsArray.forEach((card) => {
-        flexContainer.appendChild(card)
-      })
-
+      originalCardsArray.forEach(card => {
+        flexContainer.appendChild(card);
+      });
+      
       // For desktop, add duplicates for infinite scroll
       if (!isMobile.current) {
-        originalCardsArray.forEach((card) => {
-          flexContainer.appendChild(card.cloneNode(true) as HTMLElement)
-        })
+        originalCardsArray.forEach(card => {
+          flexContainer.appendChild(card.cloneNode(true) as HTMLElement);
+        });
       }
-
-      setupComplete.current = true
+      
+      setupComplete.current = true;
     }
-
+    
     // Run setup
-    setupCarousel()
+    setupCarousel();
 
     // Only use these handlers for desktop
     const handleMouseEnter = () => {
@@ -90,83 +90,86 @@ const useInfiniteAutoScroll = (
     let isMouseDown = false
     let startX = 0
     let scrollLeft = 0
-
+    
     const handleMouseDown = (e: MouseEvent) => {
       if (isMobile.current) return
-
+      
       isMouseDown = true
       startX = e.pageX - scrollContainer.offsetLeft
       scrollLeft = scrollContainer.scrollLeft
       setIsPaused(true)
-      scrollContainer.style.cursor = "grabbing"
+      scrollContainer.style.cursor = 'grabbing'
     }
-
+    
     const handleMouseUp = () => {
       if (isMobile.current) return
-
+      
       isMouseDown = false
       setTimeout(() => setIsPaused(false), 1000)
-      scrollContainer.style.cursor = "grab"
+      scrollContainer.style.cursor = 'grab'
     }
-
+    
     const handleMouseMove = (e: MouseEvent) => {
       if (isMobile.current || !isMouseDown) return
-
+      
       e.preventDefault()
       const x = e.pageX - scrollContainer.offsetLeft
       const walk = (x - startX) * 2
-
+      
       scrollContainer.scrollLeft = scrollLeft - walk
     }
-
+    
     const handleMouseLeaveDoc = () => {
       if (isMobile.current) return
-
+      
       if (isMouseDown) {
         isMouseDown = false
         setTimeout(() => setIsPaused(false), 1000)
-        scrollContainer.style.cursor = "grab"
+        scrollContainer.style.cursor = 'grab'
       }
     }
 
     const animate = () => {
-      if (scrollContainer) {
-        // For both mobile and desktop when not paused
-        if (!isPaused) {
-          // Get the flex container
-          const flexContainer = scrollContainer.querySelector("div.flex") as HTMLElement
-          if (!flexContainer) {
-            animationRef.current = requestAnimationFrame(animate)
-            return
-          }
-
-          // Increment scroll position
-          scrollContainer.scrollLeft += speed
-
-          // Get total number of cards
-          const cards = flexContainer.children
-          const numOriginalCards = isMobile.current ? cards.length : cards.length / 2
-
-          // Check if we've scrolled past all original members
-          if (cards.length >= numOriginalCards) {
-            const firstCardWidth = (cards[0] as HTMLElement).offsetWidth
-            const cardMargin = isMobile.current ? 12 : 24 // Adjust margin based on device
-            const totalOriginalWidth = numOriginalCards * (firstCardWidth + cardMargin)
-
-            if (scrollContainer.scrollLeft >= totalOriginalWidth) {
-              scrollContainer.scrollLeft = 0
-            }
+      // Skip animation for mobile
+      if (isMobile.current) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+      
+      if (scrollContainer && !isPaused) {
+        // Get the flex container
+        const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
+        if (!flexContainer) {
+          animationRef.current = requestAnimationFrame(animate)
+          return
+        }
+        
+        // Increment scroll position
+        scrollContainer.scrollLeft += speed
+        
+        // Get total number of cards (should be consistent)
+        const cards = flexContainer.children
+        const numOriginalCards = cards.length / 2 // Half are original, half are duplicates
+        
+        // Check if we've scrolled past all original members
+        if (cards.length >= numOriginalCards * 2) {
+          const firstCardWidth = (cards[0] as HTMLElement).offsetWidth
+          const cardMargin = 24 // 6rem = 24px spacing (adjust based on your actual margin)
+          const totalOriginalWidth = numOriginalCards * (firstCardWidth + cardMargin)
+          
+          if (scrollContainer.scrollLeft >= totalOriginalWidth) {
+            scrollContainer.scrollLeft = 0
           }
         }
       }
-
+      
       animationRef.current = requestAnimationFrame(animate)
     }
 
     // Set desktop cursor
     if (!isMobile.current) {
-      scrollContainer.style.cursor = "grab"
-
+      scrollContainer.style.cursor = 'grab'
+      
       // Add event listeners for desktop only
       scrollContainer.addEventListener("mouseenter", handleMouseEnter)
       scrollContainer.addEventListener("mouseleave", handleMouseLeave)
@@ -174,7 +177,7 @@ const useInfiniteAutoScroll = (
       scrollContainer.addEventListener("mouseup", handleMouseUp)
       scrollContainer.addEventListener("mousemove", handleMouseMove)
       document.addEventListener("mouseup", handleMouseLeaveDoc)
-
+      
       // Start animation for desktop
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -184,7 +187,7 @@ const useInfiniteAutoScroll = (
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
-
+      
       if (!isMobile.current) {
         scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
         scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
@@ -193,9 +196,6 @@ const useInfiniteAutoScroll = (
         scrollContainer.removeEventListener("mousemove", handleMouseMove)
         document.removeEventListener("mouseup", handleMouseLeaveDoc)
       }
-
-      // Start animation for both mobile and desktop
-      animationRef.current = requestAnimationFrame(animate)
     }
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
@@ -337,8 +337,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-bold mb-4">Safety First</h3>
                   <p className="text-gray-300">
-                    Safety is at the core of everything we do. Our technology is designed to make roads safer for
-                    everyone.
+                    Safety is at the core of everything we do. Our technology is designed to make roads safer for everyone.
                   </p>
                 </div>
               </div>
@@ -538,7 +537,7 @@ export default function AboutPage() {
                 className="overflow-x-auto scrollbar-hide pb-6 touch-pan-x"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
-                <div className="flex space-x-6 md:space-x-6 space-x-3 px-4 min-w-max">
+                <div className="flex space-x-6 px-4 min-w-max">
                   {/* Nikita */}
                   <div className="bg-gradient-to-br from-black/80 to-black/40 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-500 w-[280px] transform hover:-translate-y-2 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)]">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
