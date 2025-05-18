@@ -136,8 +136,11 @@ const useInfiniteAutoScroll = (
     }
 
     const animate = () => {
-      // Skip animation for mobile
+      // Apply simple scrolling for mobile too (no reset logic)
       if (isMobile.current) {
+        if (scrollContainer && !isPaused) {
+          scrollContainer.scrollLeft += speed * 0.5
+        }
         animationRef.current = requestAnimationFrame(animate)
         return
       }
@@ -172,7 +175,7 @@ const useInfiniteAutoScroll = (
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    // Set desktop cursor
+    // Set desktop cursor and start animation for all devices
     if (!isMobile.current) {
       scrollContainer.style.cursor = 'grab'
       
@@ -183,10 +186,10 @@ const useInfiniteAutoScroll = (
       scrollContainer.addEventListener("mouseup", handleMouseUp)
       scrollContainer.addEventListener("mousemove", handleMouseMove)
       document.addEventListener("mouseup", handleMouseLeaveDoc)
-      
-      // Start animation for desktop
-      animationRef.current = requestAnimationFrame(animate)
     }
+    
+    // Start animation for all devices
+    animationRef.current = requestAnimationFrame(animate)
 
     // Cleanup
     return () => {
@@ -206,7 +209,6 @@ const useInfiniteAutoScroll = (
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
   return { isPaused, setIsPaused }
-}
 
 export default function AboutPage() {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
