@@ -337,7 +337,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-bold mb-4">Safety First</h3>
                   <p className="text-gray-300">
-                    We're committed to creating safer roads through technology and positive reinforcement.
+                    Safety is at the core of everything we do. Our technology is designed to make roads safer for everyone.
                   </p>
                 </div>
               </div>
@@ -351,7 +351,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-bold mb-4">Rewarding Responsibility</h3>
                   <p className="text-gray-300">
-                    We believe good driving habits deserve recognition and tangible rewards.
+                    Good driving habits matter. We turn responsible behavior into real-world rewards.
                   </p>
                 </div>
               </div>
@@ -365,7 +365,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-bold mb-4">Global Impact</h3>
                   <p className="text-gray-300">
-                    We're building a worldwide movement of safer drivers through innovative technology.
+                    Our mission is to drive change worldwide by combining innovation with purpose.
                   </p>
                 </div>
               </div>
@@ -379,7 +379,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-bold mb-4">Community Driven</h3>
                   <p className="text-gray-300">
-                    We're fostering a community that values and promotes road safety together.
+                    This is more than an app. Together, we’re building a culture of road safety.
                   </p>
                 </div>
               </div>
