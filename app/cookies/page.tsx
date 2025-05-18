@@ -11,8 +11,6 @@ export default function CookiesPage() {
       <div className="container mx-auto px-4 max-w-4xl">
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">Cookie Policy</h1>
         <div className="text-gray-300 space-y-6">
-          <div className="text-sm text-gray-400 mb-8">Last updated: 18 January 2025</div>
-
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-white">1. Introduction</h2>
             <p>

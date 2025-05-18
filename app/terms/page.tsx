@@ -4,7 +4,7 @@ export default function TermsPage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">Terms of Use</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">Terms of Use</h1>
             <div className="prose prose-invert max-w-none">
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mt-8 mb-4">1. General</h2>
