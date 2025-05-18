@@ -182,6 +182,14 @@ export default function Footer() {
                   Privacy Policy
                 </Link>
               </li>
+              <li>
+                <button
+                  id="cookie-settings-btn"
+                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors cursor-pointer"
+                >
+                  Cookie Policy
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -220,6 +228,45 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      {/* Cookie Settings Script */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            document.addEventListener('DOMContentLoaded', function() {
+              const cookieSettingsBtn = document.getElementById('cookie-settings-btn');
+              if (cookieSettingsBtn) {
+                cookieSettingsBtn.addEventListener('click', function() {
+                  // Show cookie settings by setting the consent to shown again
+                  const savedConsent = localStorage.getItem('cookie-consent');
+                  if (savedConsent) {
+                    try {
+                      const parsedConsent = JSON.parse(savedConsent);
+                      parsedConsent.shown = true;
+                      localStorage.setItem('cookie-consent', JSON.stringify(parsedConsent));
+                      window.location.reload();
+                    } catch (e) {
+                      console.error('Error parsing cookie consent', e);
+                    }
+                  } else {
+                    // If no consent exists, create a new one with default values
+                    const defaultConsent = {
+                      necessary: true,
+                      functional: false,
+                      analytics: false,
+                      advertising: false,
+                      social: false,
+                      accepted: false,
+                      shown: true
+                    };
+                    localStorage.setItem('cookie-consent', JSON.stringify(defaultConsent));
+                    window.location.reload();
+                  }
+                });
+              }
+            });
+          `,
+        }}
+      />
     </footer>
   )
 }

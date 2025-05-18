@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { usePathname } from "next/navigation"
+import CookieConsent from "@/components/cookie-consent"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,6 +37,8 @@ export default function ClientLayout({
             {!isWelcomeScreen && <Navbar />}
             <main className="flex-grow">{children}</main>
             {!isWelcomeScreen && <Footer />}
+            {/* Cookie Consent Banner */}
+            <CookieConsent />
           </div>
         </ThemeProvider>
       </body>
