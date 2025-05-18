@@ -32,6 +32,12 @@ const useInfiniteAutoScroll = (
       scrollContainer.style.overflowY = 'visible';
       scrollContainer.style.touchAction = 'auto';
       
+      // Reduce spacing between team tabs on mobile
+      const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
+      if (flexContainer) {
+        flexContainer.style.gap = '0.75rem'; // Reduced spacing for mobile
+      }
+      
       // Remove any pointer events that might block scrolling
       const parentElement = scrollContainer.parentElement;
       if (parentElement) {
@@ -180,9 +186,41 @@ const useInfiniteAutoScroll = (
       
       // Start animation for desktop
       animationRef.current = requestAnimationFrame(animate)
+    } else {
+      // Add auto-scroll behavior for mobile with timer-based approach
+      let mobileScrollInterval = setInterval(() => {
+        if (scrollContainer) {
+          scrollContainer.scrollLeft += 0.5;
+          
+          // Reset when reaching the end
+          const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
+          if (flexContainer && flexContainer.scrollWidth > 0) {
+            if (scrollContainer.scrollLeft >= flexContainer.scrollWidth - scrollContainer.clientWidth) {
+              scrollContainer.scrollLeft = 0;
+            }
+          }
+        }
+      }, 50);
+      
+      // Clean up the interval when component unmounts
+      return () => {
+        clearInterval(mobileScrollInterval);
+        if (animationRef.current) {
+          cancelAnimationFrame(animationRef.current);
+        }
+        
+        if (!isMobile.current) {
+          scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+          scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+          scrollContainer.removeEventListener("mousedown", handleMouseDown)
+          scrollContainer.removeEventListener("mouseup", handleMouseUp)
+          scrollContainer.removeEventListener("mousemove", handleMouseMove)
+          document.removeEventListener("mouseup", handleMouseLeaveDoc)
+        }
+      }
     }
 
-    // Cleanup
+    // Cleanup for desktop
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
