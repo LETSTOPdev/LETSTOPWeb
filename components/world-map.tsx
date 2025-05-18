@@ -97,7 +97,18 @@ const topoToDatasetMapping: Record<string, string> = {
   Vietnam: "Viet Nam",
   "South Korea": "Korea, Republic of",
   "North Korea": "Korea, Democratic People's Republic of",
+  Palestine: "Israel",
+  "W. Sahara": "Western Sahara",
 }
+
+// Add this mapping near the top of the file with the other mapping objects
+const specialRegionMapping: Record<string, string> = {
+  Palestine: "Israel",
+  "West Bank": "Israel",
+}
+
+// List of Palestine-related territories in the map data
+const palestineTerritories = ["Palestine", "West Bank", "Gaza", "Gaza Strip", "Palestinian Territories"]
 
 // Comprehensive dataset of LETSTOP users by country
 const letstopUserData: Record<string, number> = {
@@ -290,7 +301,7 @@ const letstopUserData: Record<string, number> = {
   "São Tomé & Príncipe": 4,
   "British Indian Ocean Territory": 3,
   Montserrat: 2,
-  "St. Barthélemy": 1
+  "St. Barthélemy": 1,
 }
 
 export default function WorldMap() {
@@ -449,6 +460,17 @@ export default function WorldMap() {
             const countryName = d.properties.name
             const countryId = d.id
 
+            // Check if this is Palestine or related territories
+            const isPalestineTerritory = palestineTerritories.includes(countryName)
+
+            // If it's Palestine or related territory, use Israel's color
+            if (isPalestineTerritory) {
+              // Get Israel's data value
+              const israelValue = countryData["Israel"] || 0
+              // Use the color scale based on Israel's value
+              return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+            }
+
             // Get the dataset name for this country
             const datasetName = topoToDatasetMapping[countryName] || countryName
 
@@ -475,15 +497,38 @@ export default function WorldMap() {
             // Use the color scale based on the value
             return value > 0 ? colorScale(value) : "#1f1f1f" // Use dark gray for countries with no data
           })
-          .attr("stroke", "#0a0a0a") // Dark border matching background
-          .attr("stroke-width", 0.5)
+          .attr("stroke", (d: any) => {
+            const countryName = d.properties.name
+
+            // If it's Palestine or related territory, use the same stroke color as the fill to hide borders
+            if (palestineTerritories.includes(countryName)) {
+              const israelValue = countryData["Israel"] || 0
+              return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+            }
+
+            return "#0a0a0a" // Default dark border matching background
+          })
+          .attr("stroke-width", (d: any) => {
+            // If it's a border between Israel and Palestine territories, make it invisible
+            const countryName = d.properties.name
+            if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+              return 0.1 // Very thin border to visually merge them
+            }
+            return 0.5 // Normal border width for other countries
+          })
           .attr("data-country", (d: any) => d.properties.name)
           .style("filter", (d: any) => {
             const countryName = d.properties.name
             const datasetName = topoToDatasetMapping[countryName] || countryName
 
             // Apply glow effect to countries with significant data
-            if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
+            if (
+              datasetName === "United States of America" ||
+              datasetName === "Turkey" ||
+              datasetName === "India" ||
+              datasetName === "Israel" ||
+              palestineTerritories.includes(countryName)
+            ) {
               return "url(#glow)"
             }
             return "none"
@@ -497,9 +542,16 @@ export default function WorldMap() {
               .style("filter", "url(#glow)")
 
             const countryName = d.properties.name
-            const datasetName = topoToDatasetMapping[countryName] || countryName
 
-            setHoveredCountry(countryName)
+            // Check if this is Palestine or related territories and map to Israel
+            const displayCountryName = specialRegionMapping[countryName] || countryName
+
+            // Get the dataset name, prioritizing the special mapping for Palestine regions
+            const datasetName = specialRegionMapping[countryName]
+              ? topoToDatasetMapping[specialRegionMapping[countryName]] || specialRegionMapping[countryName]
+              : topoToDatasetMapping[countryName] || countryName
+
+            setHoveredCountry(displayCountryName)
             setHoveredCountryData(countryData[datasetName] || 0)
 
             // Get mouse position relative to the SVG container
@@ -526,11 +578,30 @@ export default function WorldMap() {
             d3.select(this)
               .transition()
               .duration(200)
-              .attr("stroke", "#0a0a0a")
-              .attr("stroke-width", 0.5)
+              .attr("stroke", (d: any) => {
+                // If it's Palestine or related territory, use the same stroke color as the fill to hide borders
+                if (palestineTerritories.includes(countryName)) {
+                  const israelValue = countryData["Israel"] || 0
+                  return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+                }
+                return "#0a0a0a" // Default dark border
+              })
+              .attr("stroke-width", (d: any) => {
+                // If it's a border between Israel and Palestine territories, make it invisible
+                if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+                  return 0.1 // Very thin border to visually merge them
+                }
+                return 0.5 // Normal border width for other countries
+              })
               .style("filter", () => {
                 // Maintain glow effect on key countries
-                if (datasetName === "United States of America" || datasetName === "Turkey" || datasetName === "India") {
+                if (
+                  datasetName === "United States of America" ||
+                  datasetName === "Turkey" ||
+                  datasetName === "India" ||
+                  datasetName === "Israel" ||
+                  palestineTerritories.includes(countryName)
+                ) {
                   return "url(#glow)"
                 }
                 return "none"
@@ -547,14 +618,28 @@ export default function WorldMap() {
               .attr("stroke-width", 2)
               .transition()
               .duration(200)
-              .attr("stroke-width", 0.5)
+              .attr("stroke-width", (d: any) => {
+                const countryName = d.properties.name
+                if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+                  return 0.1 // Very thin border to visually merge them
+                }
+                return 0.5 // Normal border width for other countries
+              })
 
             const countryName = d.properties.name
-            const datasetName = topoToDatasetMapping[countryName] || countryName
+
+            // Check if this is Palestine or related territories and map to Israel
+            const displayCountryName = specialRegionMapping[countryName] || countryName
+
+            // Get the dataset name, prioritizing the special mapping for Palestine regions
+            const datasetName = specialRegionMapping[countryName]
+              ? topoToDatasetMapping[specialRegionMapping[countryName]] || specialRegionMapping[countryName]
+              : topoToDatasetMapping[countryName] || countryName
+
             const isBlocked = blockedCountries.includes(datasetName) || blockedCountries.includes(countryName)
 
             setSelectedCountry({
-              name: countryName,
+              name: displayCountryName,
               users: countryData[datasetName] || 0,
               isBlocked: isBlocked,
               rank: countryRankings[datasetName] || 0,
@@ -565,6 +650,10 @@ export default function WorldMap() {
         const zoom = d3
           .zoom()
           .scaleExtent([1, 8])
+          .translateExtent([
+            [-width * 0.5, -height * 0.5],
+            [width * 1.5, height * 1.5],
+          ]) // This limits panning to stay within the globe area
           .on("zoom", (event) => {
             mapGroup.attr("transform", event.transform)
             setZoomLevel(event.transform.k)
