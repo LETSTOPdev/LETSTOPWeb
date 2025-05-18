@@ -15,8 +15,7 @@ const useInfiniteAutoScroll = (
 ) => {
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
-  const resetScrollTimeout = useRef<NodeJS.Timeout>()
-  const initialSetupDone = useRef(false)
+  const setupComplete = useRef(false)
   const isMobile = useRef(false)
 
   useEffect(() => {
@@ -25,30 +24,56 @@ const useInfiniteAutoScroll = (
     
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-
-    // Setup proper team order
-    const setupTeamOrder = () => {
-      if (initialSetupDone.current) return
+    
+    // Completely rebuild the carousel structure to fix the order
+    const fixTeamOrder = () => {
+      if (setupComplete.current) return
       
-      const contentContainer = scrollContainer.firstElementChild as HTMLElement
-      if (!contentContainer) return
+      // Get the flex container that contains all team cards
+      const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
+      if (!flexContainer) return
       
-      // Get all original team cards
-      const allCards = Array.from(contentContainer.children)
+      // Remove all current elements
+      const originalCards = Array.from(flexContainer.children)
+      flexContainer.innerHTML = ''
       
-      // For desktop: ensure we have a full duplicate set to enable infinite scroll
+      // We need to display all team members in the correct order
+      // Add each member one by one to ensure correct order
+      const teamOrder = [
+        'Nikita', 'Itay', 'Tom', 'Yakir', 'Cfir', 'Ore', 'Tomer'
+      ]
+      
+      // Find cards by their heading content and add them in correct order
+      teamOrder.forEach(name => {
+        const card = originalCards.find(el => {
+          const headingEl = el.querySelector('h4')
+          return headingEl && headingEl.textContent === name
+        })
+        
+        if (card) {
+          flexContainer.appendChild(card.cloneNode(true))
+        }
+      })
+      
+      // For desktop, add duplicates for infinite scroll (in the correct order)
       if (!isMobile.current) {
-        // Add full duplicate set of original cards
-        allCards.forEach(card => {
-          contentContainer.appendChild(card.cloneNode(true))
+        teamOrder.forEach(name => {
+          const card = originalCards.find(el => {
+            const headingEl = el.querySelector('h4')
+            return headingEl && headingEl.textContent === name
+          })
+          
+          if (card) {
+            flexContainer.appendChild(card.cloneNode(true))
+          }
         })
       }
       
-      initialSetupDone.current = true
+      setupComplete.current = true
     }
     
-    // Run setup
-    setupTeamOrder()
+    // Fix the team order
+    fixTeamOrder()
 
     const handleMouseEnter = () => {
       if (pauseOnHover) setIsPaused(true)
@@ -58,31 +83,29 @@ const useInfiniteAutoScroll = (
       setIsPaused(false)
     }
 
-    // Touch event handlers for swipe functionality
+    // Touch event handlers for mobile
     let touchStartX = 0
     let touchEndX = 0
 
     const handleTouchStart = (e: TouchEvent) => {
       touchStartX = e.changedTouches[0].screenX
-      setIsPaused(true) // Pause auto-scroll when user touches
+      setIsPaused(true)
     }
 
     const handleTouchMove = (e: TouchEvent) => {
       touchEndX = e.changedTouches[0].screenX
       const diffX = touchStartX - touchEndX
-      scrollContainer.scrollLeft += diffX / 5 // Divide for smoother scrolling
+      scrollContainer.scrollLeft += diffX / 5
       touchStartX = touchEndX
     }
 
     const handleTouchEnd = () => {
-      // On mobile devices, don't resume auto-scrolling
-      if (isMobile.current) return
-      
-      // Resume auto-scroll after a short delay
-      setTimeout(() => setIsPaused(false), 1500)
+      if (!isMobile.current) {
+        setTimeout(() => setIsPaused(false), 1500)
+      }
     }
 
-    // For desktop: enable mouse drag scrolling
+    // Mouse drag for desktop
     let isMouseDown = false
     let startX = 0
     let scrollLeft = 0
@@ -97,7 +120,7 @@ const useInfiniteAutoScroll = (
     
     const handleMouseUp = () => {
       isMouseDown = false
-      setTimeout(() => setIsPaused(false), 1000) // Resume auto-scroll after delay
+      setTimeout(() => setIsPaused(false), 1000)
       scrollContainer.style.cursor = 'grab'
     }
     
@@ -106,7 +129,7 @@ const useInfiniteAutoScroll = (
       
       e.preventDefault()
       const x = e.pageX - scrollContainer.offsetLeft
-      const walk = (x - startX) * 2 // Scroll speed multiplier
+      const walk = (x - startX) * 2
       
       scrollContainer.scrollLeft = scrollLeft - walk
     }
@@ -120,39 +143,43 @@ const useInfiniteAutoScroll = (
     }
 
     const animate = () => {
-      // Don't auto-scroll on mobile
+      // Skip animation for mobile
       if (isMobile.current) {
         animationRef.current = requestAnimationFrame(animate)
         return
       }
       
       if (scrollContainer && !isPaused) {
-        // Get the content container
-        const contentContainer = scrollContainer.firstElementChild as HTMLElement
-        if (!contentContainer) {
+        // Get the flex container
+        const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
+        if (!flexContainer) {
           animationRef.current = requestAnimationFrame(animate)
           return
         }
         
         // Increment scroll position
         scrollContainer.scrollLeft += speed
-
-        // Calculate halfway point - this is essential to ensure we don't see repeats
-        const originalWidth = contentContainer.scrollWidth / 2
         
-        // If we've scrolled past the original set of team members
-        if (scrollContainer.scrollLeft >= originalWidth) {
-          // Reset to beginning (with a small delay to avoid visual glitch)
-          if (resetScrollTimeout.current) clearTimeout(resetScrollTimeout.current)
-          resetScrollTimeout.current = setTimeout(() => {
+        // Calculate the exact halfway point (after all 7 team members)
+        const cards = flexContainer.children
+        const numOriginalCards = 7 // All 7 team members
+        
+        // Check if we've scrolled past all original members
+        if (cards.length >= numOriginalCards * 2) {
+          const firstCardWidth = (cards[0] as HTMLElement).offsetWidth
+          const cardMargin = 24 // 6rem = 24px spacing (adjust based on your actual margin)
+          const totalOriginalWidth = numOriginalCards * (firstCardWidth + cardMargin)
+          
+          if (scrollContainer.scrollLeft >= totalOriginalWidth) {
             scrollContainer.scrollLeft = 0
-          }, 50)
+          }
         }
       }
+      
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    // For desktop: set cursor style
+    // Set desktop cursor
     if (!isMobile.current) {
       scrollContainer.style.cursor = 'grab'
     }
@@ -164,13 +191,12 @@ const useInfiniteAutoScroll = (
     scrollContainer.addEventListener("touchmove", handleTouchMove)
     scrollContainer.addEventListener("touchend", handleTouchEnd)
     
-    // Desktop mouse drag events
     scrollContainer.addEventListener("mousedown", handleMouseDown)
     scrollContainer.addEventListener("mouseup", handleMouseUp)
     scrollContainer.addEventListener("mousemove", handleMouseMove)
     document.addEventListener("mouseup", handleMouseLeaveDoc)
 
-    // Start animation (only for desktop)
+    // Start animation for desktop
     if (!isMobile.current) {
       animationRef.current = requestAnimationFrame(animate)
     }
@@ -180,21 +206,17 @@ const useInfiniteAutoScroll = (
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
-      if (resetScrollTimeout.current) {
-        clearTimeout(resetScrollTimeout.current)
-      }
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
-        scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
-        scrollContainer.removeEventListener("touchstart", handleTouchStart)
-        scrollContainer.removeEventListener("touchmove", handleTouchMove)
-        scrollContainer.removeEventListener("touchend", handleTouchEnd)
-        
-        scrollContainer.removeEventListener("mousedown", handleMouseDown)
-        scrollContainer.removeEventListener("mouseup", handleMouseUp)
-        scrollContainer.removeEventListener("mousemove", handleMouseMove)
-        document.removeEventListener("mouseup", handleMouseLeaveDoc)
-      }
+      
+      scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+      scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+      scrollContainer.removeEventListener("touchstart", handleTouchStart)
+      scrollContainer.removeEventListener("touchmove", handleTouchMove)
+      scrollContainer.removeEventListener("touchend", handleTouchEnd)
+      
+      scrollContainer.removeEventListener("mousedown", handleMouseDown)
+      scrollContainer.removeEventListener("mouseup", handleMouseUp)
+      scrollContainer.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseLeaveDoc)
     }
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
