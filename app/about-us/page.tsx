@@ -25,6 +25,12 @@ const useInfiniteAutoScroll = (
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     
+    // Apply specific CSS for mobile to enable vertical scrolling
+    if (isMobile.current) {
+      // Set touch-action to allow vertical panning but handle horizontal ourselves
+      scrollContainer.style.touchAction = "pan-y";
+    }
+    
     // Completely rebuild the carousel structure to fix the order
     const fixTeamOrder = () => {
       if (setupComplete.current) return
@@ -83,66 +89,56 @@ const useInfiniteAutoScroll = (
       setIsPaused(false)
     }
 
-    // Improved touch handling for mobile
-    let touchStartX = 0
-    let touchStartY = 0
-    let initialScrollLeft = 0
-    let isHorizontalScroll = false
-    let isTouchHandled = false
+    // Completely revised touch handling for mobile
+    let touchStartX = 0;
+    let initialScrollLeft = 0;
+    let isScrollingHorizontally = false;
+    const minHorizontalMove = 10; // Threshold to consider horizontal scrolling
 
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.touches[0].clientX
-      touchStartY = e.touches[0].clientY
-      initialScrollLeft = scrollContainer.scrollLeft
+      // Store initial position
+      touchStartX = e.touches[0].clientX;
+      initialScrollLeft = scrollContainer.scrollLeft;
+      isScrollingHorizontally = false;
       
-      // Reset flags
-      isHorizontalScroll = false
-      isTouchHandled = false
-      
-      setIsPaused(true)
+      // Don't pause auto-scroll on mobile as we're not auto-scrolling
+      if (!isMobile.current) {
+        setIsPaused(true);
+      }
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!e.touches[0]) return
+      if (!e.touches[0]) return;
       
-      // If we haven't determined direction yet
-      if (!isTouchHandled) {
-        const touchX = e.touches[0].clientX
-        const touchY = e.touches[0].clientY
-        
-        const deltaX = Math.abs(touchStartX - touchX)
-        const deltaY = Math.abs(touchStartY - touchY)
-        
-        // If horizontal movement is greater, mark as horizontal scroll
-        // Use a threshold to determine if it's a deliberate horizontal scroll
-        if (deltaX > deltaY && deltaX > 10) {
-          isHorizontalScroll = true
-          isTouchHandled = true
-        } 
-        // If vertical movement is greater, allow normal vertical scrolling
-        else if (deltaY > deltaX && deltaY > 10) {
-          isHorizontalScroll = false
-          isTouchHandled = true
+      const currentX = e.touches[0].clientX;
+      const diffX = touchStartX - currentX;
+      
+      // Determine if this is clearly a horizontal scroll
+      if (!isScrollingHorizontally) {
+        if (Math.abs(diffX) > minHorizontalMove) {
+          isScrollingHorizontally = true;
+        } else {
+          // Not enough horizontal movement yet, let native scrolling handle it
+          return;
         }
       }
       
-      // Only handle horizontal scrolling in our code
-      if (isHorizontalScroll) {
-        const touchX = e.touches[0].clientX
-        const diffX = touchStartX - touchX
+      // Only if we're definitely scrolling horizontally
+      if (isScrollingHorizontally) {
+        // Apply the horizontal scroll
+        scrollContainer.scrollLeft = initialScrollLeft + diffX;
         
-        // Apply horizontal scrolling to the container
-        scrollContainer.scrollLeft = initialScrollLeft + diffX
-        
-        // Prevent default to avoid page scrolling while horizontally scrolling the carousel
-        e.preventDefault()
+        // Only prevent default for horizontal scrolling to allow vertical
+        // This is critical for allowing vertical page scrolling
+        if (Math.abs(diffX) > minHorizontalMove) {
+          e.preventDefault();
+        }
       }
-      // Otherwise, let the browser handle vertical scrolling normally
     }
 
     const handleTouchEnd = () => {
       if (!isMobile.current) {
-        setTimeout(() => setIsPaused(false), 1500)
+        setTimeout(() => setIsPaused(false), 1500);
       }
     }
 
@@ -228,8 +224,13 @@ const useInfiniteAutoScroll = (
     // Add event listeners
     scrollContainer.addEventListener("mouseenter", handleMouseEnter)
     scrollContainer.addEventListener("mouseleave", handleMouseLeave)
-    scrollContainer.addEventListener("touchstart", handleTouchStart)
+    
+    // Use passive for touchstart to improve performance
+    scrollContainer.addEventListener("touchstart", handleTouchStart, { passive: true })
+    
+    // Non-passive for touchmove to allow preventDefault only when needed
     scrollContainer.addEventListener("touchmove", handleTouchMove, { passive: false })
+    
     scrollContainer.addEventListener("touchend", handleTouchEnd)
     
     scrollContainer.addEventListener("mousedown", handleMouseDown)
