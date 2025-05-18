@@ -25,17 +25,14 @@ const useInfiniteAutoScroll = (
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     
-    // Prevent auto-scroll pausing on mobile
-    if (isMobile.current) setIsPaused(false)
-    
-    // For mobile, set up for auto-scroll but keep touch functionality
+    // For mobile, completely disable our touch event handling and let native behavior work
     if (isMobile.current) {
-      // Enable auto-scroll with touch
-      scrollContainer.style.overflowX = 'hidden'; // Hide scrollbar
+      // Enable native scrolling behaviors
+      scrollContainer.style.overflowX = 'auto';
       scrollContainer.style.overflowY = 'visible';
-      scrollContainer.style.touchAction = 'pan-x'; // Allow horizontal pan
+      scrollContainer.style.touchAction = 'auto';
       
-      // Keep pointer events intact for touch interaction
+      // Remove any pointer events that might block scrolling
       const parentElement = scrollContainer.parentElement;
       if (parentElement) {
         parentElement.style.pointerEvents = 'auto';
@@ -139,18 +136,10 @@ const useInfiniteAutoScroll = (
     }
 
     const animate = () => {
-      // Apply simple scrolling for mobile too (no reset logic)
+      // Skip animation for mobile
       if (isMobile.current) {
-        if (scrollContainer && !isPaused) {
-          scrollContainer.scrollLeft += speed * 0.3;
-          // Reset if we reach the end
-          const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-          if (scrollContainer.scrollLeft >= maxScroll) {
-            scrollContainer.scrollLeft = 0;
-          }
-        }
-        animationRef.current = requestAnimationFrame(animate);
-        return;
+        animationRef.current = requestAnimationFrame(animate)
+        return
       }
       
       if (scrollContainer && !isPaused) {
@@ -183,7 +172,7 @@ const useInfiniteAutoScroll = (
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    // Set desktop cursor and start animation for all devices
+    // Set desktop cursor
     if (!isMobile.current) {
       scrollContainer.style.cursor = 'grab'
       
@@ -194,10 +183,10 @@ const useInfiniteAutoScroll = (
       scrollContainer.addEventListener("mouseup", handleMouseUp)
       scrollContainer.addEventListener("mousemove", handleMouseMove)
       document.addEventListener("mouseup", handleMouseLeaveDoc)
+      
+      // Start animation for desktop
+      animationRef.current = requestAnimationFrame(animate)
     }
-    
-    // Start animation for all devices
-    animationRef.current = requestAnimationFrame(animate)
 
     // Cleanup
     return () => {
