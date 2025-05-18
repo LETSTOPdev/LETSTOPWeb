@@ -8,8 +8,14 @@ export default function AppPage() {
   const [activeSection, setActiveSection] = useState(0)
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([])
   const [scrollY, setScrollY] = useState(0)
+  const [imagesLoaded, setImagesLoaded] = useState(false)
 
   useEffect(() => {
+    // Set images as loaded after a short delay to prevent layout shifts
+    const timer = setTimeout(() => {
+      setImagesLoaded(true)
+    }, 100)
+
     const handleScroll = () => {
       setScrollY(window.scrollY)
 
@@ -32,7 +38,10 @@ export default function AppPage() {
     }
 
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      clearTimeout(timer)
+    }
   }, [])
 
   return (
@@ -61,6 +70,7 @@ export default function AppPage() {
                     width={256}
                     height={76}
                     className="relative z-10 w-36 sm:w-44 md:w-48 lg:w-56"
+                    priority
                   />
                 </a>
                 <a
@@ -77,6 +87,7 @@ export default function AppPage() {
                     width={256}
                     height={76}
                     className="relative z-10 w-36 sm:w-44 md:w-48 lg:w-56"
+                    priority
                   />
                 </a>
               </div>
@@ -85,23 +96,29 @@ export default function AppPage() {
             {/* Right side - Phone mockups */}
             <div className="md:w-1/2 relative flex justify-center md:block">
               {/* Mobile view */}
-              <div className="md:hidden flex justify-center gap-4 w-full max-w-[350px]">
+              <div className="md:hidden flex justify-center gap-4 w-full max-w-[280px]">
                 <div className="w-1/2">
                   <Image
                     src="/images/ride2.png"
                     alt="LETSTOP App Navigation"
-                    width={400}
-                    height={800}
+                    width={200}
+                    height={400}
                     className="w-full"
+                    priority
+                    loading="eager"
+                    sizes="(max-width: 768px) 140px, 200px"
                   />
                 </div>
                 <div className="w-1/2">
                   <Image
                     src="/images/profile.png"
                     alt="LETSTOP App Interface"
-                    width={400}
-                    height={800}
+                    width={200}
+                    height={400}
                     className="w-full"
+                    priority
+                    loading="eager"
+                    sizes="(max-width: 768px) 140px, 200px"
                   />
                 </div>
               </div>
@@ -114,6 +131,9 @@ export default function AppPage() {
                   width={400}
                   height={800}
                   className="w-full max-w-[300px] absolute top-0 right-0 z-20 transform translate-x-4 -translate-y-4"
+                  priority
+                  loading="eager"
+                  sizes="(max-width: 768px) 140px, 300px"
                 />
                 <Image
                   src="/images/ride2.png"
@@ -121,6 +141,9 @@ export default function AppPage() {
                   width={400}
                   height={800}
                   className="w-full max-w-[300px] relative z-10"
+                  priority
+                  loading="eager"
+                  sizes="(max-width: 768px) 140px, 300px"
                 />
               </div>
             </div>
@@ -185,12 +208,14 @@ export default function AppPage() {
                     <Image
                       src="/images/welcome.png"
                       alt="LETSTOP Sign Up Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -238,12 +263,14 @@ export default function AppPage() {
                     <Image
                       src="/images/ride2.png"
                       alt="LETSTOP Driving Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -291,12 +318,14 @@ export default function AppPage() {
                     <Image
                       src="/images/store.png"
                       alt="LETSTOP Store Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -345,12 +374,14 @@ export default function AppPage() {
                     <Image
                       src="/images/subscription.png"
                       alt="LETSTOP Subscription Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -399,12 +430,14 @@ export default function AppPage() {
                     <Image
                       src="/images/profile.png"
                       alt="LETSTOP Profile Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -452,12 +485,14 @@ export default function AppPage() {
                     <Image
                       src="/images/referral.png"
                       alt="LETSTOP Referral Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -505,12 +540,14 @@ export default function AppPage() {
                     <Image
                       src="/images/wallet.png"
                       alt="LETSTOP Wallet Screen"
-                      width={400}
-                      height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
+                      width={320}
+                      height={640}
+                      className={`w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 ${!imagesLoaded ? "opacity-0" : "opacity-100"}`}
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
+                      sizes="(max-width: 640px) 240px, (max-width: 768px) 280px, 320px"
+                      loading="lazy"
                     />
                   </div>
                 </div>
@@ -750,6 +787,7 @@ export default function AppPage() {
                     height={76}
                     className="relative z-10"
                     style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
+                    loading="lazy"
                   />
                 </a>
                 <a
@@ -767,6 +805,7 @@ export default function AppPage() {
                     height={76}
                     className="relative z-10"
                     style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
+                    loading="lazy"
                   />
                 </a>
               </div>
