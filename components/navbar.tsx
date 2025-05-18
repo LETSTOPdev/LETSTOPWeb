@@ -97,9 +97,10 @@ export default function Navbar() {
             </a>
           </nav>
 
+          {/* Desktop Search Button */}
           <button
             onClick={toggleSearch}
-            className="text-white hover:text-primary transition-colors ml-6"
+            className="text-white hover:text-primary transition-colors ml-6 hidden md:block"
             aria-label="Search website"
           >
             <Search className="w-5 h-5" />
