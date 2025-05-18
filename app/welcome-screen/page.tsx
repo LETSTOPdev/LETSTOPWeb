@@ -4,6 +4,9 @@ import TypingAnimation from "@/components/typing-animation"
 import Image from "next/image"
 import { PremiumBackground } from "@/components/premium-background"
 
+export const dynamic = "force-static"
+export const revalidate = false
+
 export default function Home() {
   return (
     <>
@@ -47,6 +50,7 @@ export default function Home() {
                           height={41}
                           className="h-14 w-auto relative z-10"
                           style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
+                          priority={true}
                         />
                       </a>
                       <a
@@ -64,6 +68,7 @@ export default function Home() {
                           height={41}
                           className="h-14 w-auto relative z-10"
                           style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
+                          priority={true}
                         />
                       </a>
                     </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useTheme } from "@/components/theme-provider"
@@ -12,9 +12,21 @@ export default function NetworkSphereAnimation() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
+  // Defer initialization of heavy animations until after the page has loaded
+  const [isClientReady, setIsClientReady] = useState(false)
+
+  useEffect(() => {
+    // Use requestIdleCallback or setTimeout to defer non-critical initialization
+    const readyTimer = setTimeout(() => {
+      setIsClientReady(true)
+    }, 100) // Short delay to prioritize visible content first
+
+    return () => clearTimeout(readyTimer)
+  }, [])
+
   useEffect(() => {
     const container = containerRef.current
-    if (!container || !sphereRef.current) return
+    if (!isClientReady || !container || !sphereRef.current) return
 
     let rotationX = 0
     let rotationY = 0
@@ -98,7 +110,7 @@ export default function NetworkSphereAnimation() {
       container.removeEventListener("touchend", handleTouchEnd)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [])
+  }, [isClientReady])
 
   // Adjust sizes based on mobile or desktop
   const containerHeight = isMobile ? "h-[400px]" : "h-[800px]"

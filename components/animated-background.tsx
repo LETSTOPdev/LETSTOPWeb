@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { useTheme } from "@/components/theme-provider"
 
@@ -10,7 +10,21 @@ export default function AnimatedBackground() {
   const { theme } = useTheme()
   const isDark = theme === "dark"
 
+  // Defer initialization of heavy animations until after the page has loaded
+  const [isClientReady, setIsClientReady] = useState(false)
+
   useEffect(() => {
+    // Use requestIdleCallback or setTimeout to defer non-critical initialization
+    const readyTimer = setTimeout(() => {
+      setIsClientReady(true)
+    }, 150) // Short delay to prioritize visible content first
+
+    return () => clearTimeout(readyTimer)
+  }, [])
+
+  useEffect(() => {
+    if (!isClientReady) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -189,7 +203,7 @@ export default function AnimatedBackground() {
       window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [isMobile, theme, isDark])
+  }, [isMobile, theme, isDark, isClientReady])
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" style={{ pointerEvents: "none" }} />
 }
