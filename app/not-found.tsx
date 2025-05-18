@@ -3,10 +3,10 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { useMobile } from "@/hooks/use-mobile"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function NotFound() {
-  const isMobile = useMobile()
+  const isMobile = useIsMobile()
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [loaded, setLoaded] = useState(false)
 
