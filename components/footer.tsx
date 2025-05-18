@@ -187,14 +187,6 @@ export default function Footer() {
                   Cookie Policy
                 </Link>
               </li>
-              <li>
-                <button
-                  id="cookie-settings-btn"
-                  className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors cursor-pointer"
-                >
-                  Cookie Settings
-                </button>
-              </li>
             </ul>
           </div>
 
