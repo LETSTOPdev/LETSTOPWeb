@@ -39,55 +39,43 @@ const useInfiniteAutoScroll = (
       }
     }
     
-    // Completely rebuild the carousel structure to fix the order
-    const fixTeamOrder = () => {
+    // Setup the carousel structure without hardcoded names
+    const setupCarousel = () => {
       if (setupComplete.current) return
       
       // Get the flex container that contains all team cards
       const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
       if (!flexContainer) return
       
-      // Remove all current elements
-      const originalCards = Array.from(flexContainer.children)
-      flexContainer.innerHTML = ''
+      // Get all original cards
+      const originalCards = Array.from(flexContainer.children);
       
-      // We need to display all team members in the correct order
-      // Add each member one by one to ensure correct order
-      const teamOrder = [
-        'Nikita', 'Itay', 'Tom', 'Yakir', 'Cfir', 'Ore', 'Tomer'
-      ]
+      // Store original cards in array
+      const originalCardsArray = [] as HTMLElement[];
+      originalCards.forEach(card => {
+        originalCardsArray.push(card.cloneNode(true) as HTMLElement);
+      });
       
-      // Find cards by their heading content and add them in correct order
-      teamOrder.forEach(name => {
-        const card = originalCards.find(el => {
-          const headingEl = el.querySelector('h4')
-          return headingEl && headingEl.textContent === name
-        })
-        
-        if (card) {
-          flexContainer.appendChild(card.cloneNode(true))
-        }
-      })
+      // Clear the container
+      flexContainer.innerHTML = '';
       
-      // For desktop, add duplicates for infinite scroll (in the correct order)
+      // Add back all original cards in their original order
+      originalCardsArray.forEach(card => {
+        flexContainer.appendChild(card);
+      });
+      
+      // For desktop, add duplicates for infinite scroll
       if (!isMobile.current) {
-        teamOrder.forEach(name => {
-          const card = originalCards.find(el => {
-            const headingEl = el.querySelector('h4')
-            return headingEl && headingEl.textContent === name
-          })
-          
-          if (card) {
-            flexContainer.appendChild(card.cloneNode(true))
-          }
-        })
+        originalCardsArray.forEach(card => {
+          flexContainer.appendChild(card.cloneNode(true) as HTMLElement);
+        });
       }
       
-      setupComplete.current = true
+      setupComplete.current = true;
     }
     
-    // Fix the team order
-    fixTeamOrder()
+    // Run setup
+    setupCarousel();
 
     // Only use these handlers for desktop
     const handleMouseEnter = () => {
@@ -159,9 +147,9 @@ const useInfiniteAutoScroll = (
         // Increment scroll position
         scrollContainer.scrollLeft += speed
         
-        // Calculate the exact halfway point (after all 7 team members)
+        // Get total number of cards (should be consistent)
         const cards = flexContainer.children
-        const numOriginalCards = 7 // All 7 team members
+        const numOriginalCards = cards.length / 2 // Half are original, half are duplicates
         
         // Check if we've scrolled past all original members
         if (cards.length >= numOriginalCards * 2) {
