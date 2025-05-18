@@ -180,14 +180,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/welcome.png"
                       alt="LETSTOP Sign Up Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
@@ -233,14 +233,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row-reverse items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pl-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/ride2.png"
                       alt="LETSTOP Driving Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
@@ -286,14 +286,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/store.png"
                       alt="LETSTOP Store Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
@@ -340,14 +340,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row-reverse items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pl-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/subscription.png"
                       alt="LETSTOP Subscription Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
@@ -394,14 +394,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/profile.png"
                       alt="LETSTOP Profile Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
@@ -447,14 +447,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row-reverse items-center mb-32 relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pl-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/referral.png"
                       alt="LETSTOP Referral Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${-scrollY * 0.005}deg)`,
                       }}
@@ -500,14 +500,14 @@ export default function AppPage() {
             <div className="flex flex-col md:flex-row items-center relative">
               <div className="md:w-1/2 mb-8 md:mb-0 md:pr-12">
                 <div className="relative group">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/10 to-transparent rounded-[40px] blur-xl opacity-30 transition-opacity duration-500"></div>
                   <div className="relative">
                     <Image
                       src="/images/wallet.png"
                       alt="LETSTOP Wallet Screen"
                       width={400}
                       height={800}
-                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] group-hover:shadow-[0_0_40px_rgba(255,19,42,0.3)] transition-all duration-500"
+                      className="w-full max-w-[320px] mx-auto h-auto object-contain relative z-10 rounded-[32px] shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500"
                       style={{
                         transform: `perspective(1000px) rotateY(${scrollY * 0.005}deg)`,
                       }}
