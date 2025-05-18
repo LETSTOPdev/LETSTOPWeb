@@ -58,6 +58,36 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* Font preconnect and preload */}
+        <Script id="font-preconnect" strategy="beforeInteractive">
+          {`
+            // Preconnect to font domains
+            const preconnectGoogle = document.createElement('link');
+            preconnectGoogle.rel = 'preconnect';
+            preconnectGoogle.href = 'https://fonts.googleapis.com';
+            document.head.appendChild(preconnectGoogle);
+
+            const preconnectCDN = document.createElement('link');
+            preconnectCDN.rel = 'preconnect';
+            preconnectCDN.href = 'https://cdn.jsdelivr.net';
+            preconnectCDN.crossOrigin = 'anonymous';
+            document.head.appendChild(preconnectCDN);
+
+            // Preload font CSS
+            const preloadFonts = document.createElement('link');
+            preloadFonts.rel = 'preload';
+            preloadFonts.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+            preloadFonts.as = 'style';
+            document.head.appendChild(preloadFonts);
+
+            // Actually load the font
+            const fontLink = document.createElement('link');
+            fontLink.rel = 'stylesheet';
+            fontLink.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+            document.head.appendChild(fontLink);
+          `}
+        </Script>
+
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -78,11 +108,15 @@ export default function RootLayout({
         </noscript>
 
         {/* Finsweet Cookie Consent */}
-        <Script src="https://cdn.enable.co.il/licenses/enable-L34345hl12wck5f3-1224-66126/init.js" />
+        <Script
+          src="https://cdn.enable.co.il/licenses/enable-L34345hl12wck5f3-1224-66126/init.js"
+          strategy="lazyOnload"
+        />
         <Script
           async
           src="https://cdn.jsdelivr.net/npm/@finsweet/cookie-consent@1/fs-cc.js"
           data-fs-cc-mode="informational"
+          strategy="lazyOnload"
         />
 
         {/* jQuery - Load with beforeInteractive to ensure it's available early */}
@@ -157,7 +191,7 @@ export default function RootLayout({
         </Script>
 
         {/* Google Analytics */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-K2EENPQ3DF" />
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-K2EENPQ3DF" strategy="lazyOnload" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];

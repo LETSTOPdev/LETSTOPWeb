@@ -83,20 +83,61 @@ const useInfiniteAutoScroll = (
       setIsPaused(false)
     }
 
-    // Touch event handlers for mobile
+    // Improved touch handling for mobile
     let touchStartX = 0
-    let touchEndX = 0
+    let touchStartY = 0
+    let initialScrollLeft = 0
+    let isHorizontalScroll = false
+    let isTouchHandled = false
 
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.changedTouches[0].screenX
+      touchStartX = e.touches[0].clientX
+      touchStartY = e.touches[0].clientY
+      initialScrollLeft = scrollContainer.scrollLeft
+      
+      // Reset flags
+      isHorizontalScroll = false
+      isTouchHandled = false
+      
       setIsPaused(true)
     }
 
     const handleTouchMove = (e: TouchEvent) => {
-      touchEndX = e.changedTouches[0].screenX
-      const diffX = touchStartX - touchEndX
-      scrollContainer.scrollLeft += diffX / 5
-      touchStartX = touchEndX
+      if (!e.touches[0]) return
+      
+      // If we haven't determined direction yet
+      if (!isTouchHandled) {
+        const touchX = e.touches[0].clientX
+        const touchY = e.touches[0].clientY
+        
+        const deltaX = Math.abs(touchStartX - touchX)
+        const deltaY = Math.abs(touchStartY - touchY)
+        
+        // If horizontal movement is greater, mark as horizontal scroll
+        // Use a threshold to determine if it's a deliberate horizontal scroll
+        if (deltaX > deltaY && deltaX > 10) {
+          isHorizontalScroll = true
+          isTouchHandled = true
+        } 
+        // If vertical movement is greater, allow normal vertical scrolling
+        else if (deltaY > deltaX && deltaY > 10) {
+          isHorizontalScroll = false
+          isTouchHandled = true
+        }
+      }
+      
+      // Only handle horizontal scrolling in our code
+      if (isHorizontalScroll) {
+        const touchX = e.touches[0].clientX
+        const diffX = touchStartX - touchX
+        
+        // Apply horizontal scrolling to the container
+        scrollContainer.scrollLeft = initialScrollLeft + diffX
+        
+        // Prevent default to avoid page scrolling while horizontally scrolling the carousel
+        e.preventDefault()
+      }
+      // Otherwise, let the browser handle vertical scrolling normally
     }
 
     const handleTouchEnd = () => {
@@ -188,7 +229,7 @@ const useInfiniteAutoScroll = (
     scrollContainer.addEventListener("mouseenter", handleMouseEnter)
     scrollContainer.addEventListener("mouseleave", handleMouseLeave)
     scrollContainer.addEventListener("touchstart", handleTouchStart)
-    scrollContainer.addEventListener("touchmove", handleTouchMove)
+    scrollContainer.addEventListener("touchmove", handleTouchMove, { passive: false })
     scrollContainer.addEventListener("touchend", handleTouchEnd)
     
     scrollContainer.addEventListener("mousedown", handleMouseDown)

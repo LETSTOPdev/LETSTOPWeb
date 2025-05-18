@@ -1,11 +1,17 @@
 import { Twitter } from "lucide-react"
-import NetworkSphereAnimation from "@/components/network-sphere-animation"
 import TypingAnimation from "@/components/typing-animation"
 import Image from "next/image"
 import { PremiumBackground } from "@/components/premium-background"
+import dynamic from "next/dynamic"
 
-export const dynamic = "force-static"
+// Dynamically import components that aren't needed for initial render
+const NetworkSphereAnimation = dynamic(() => import("@/components/network-sphere-animation"), {
+  ssr: true,
+  loading: () => <div className="w-full max-w-6xl mx-auto h-[400px] flex items-center justify-center" />,
+})
+
 export const revalidate = false
+// export const dynamic = "force-static" // Removed redeclaration of dynamic
 
 export default function Home() {
   return (
@@ -51,6 +57,7 @@ export default function Home() {
                           className="h-14 w-auto relative z-10"
                           style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
                           priority={true}
+                          fetchPriority="high"
                         />
                       </a>
                       <a
@@ -69,6 +76,7 @@ export default function Home() {
                           className="h-14 w-auto relative z-10"
                           style={{ filter: "drop-shadow(0 0 10px rgba(255, 19, 42, 0.3))" }}
                           priority={true}
+                          fetchPriority="high"
                         />
                       </a>
                     </div>
@@ -102,6 +110,8 @@ export default function Home() {
                       width={150}
                       height={40}
                       className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 250px"
                     />
                   </a>
                   <a
@@ -116,6 +126,8 @@ export default function Home() {
                       width={180}
                       height={40}
                       className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 250px"
                     />
                   </a>
                   <a
@@ -130,6 +142,8 @@ export default function Home() {
                       width={150}
                       height={40}
                       className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, 250px"
                     />
                   </a>
                 </div>
@@ -149,6 +163,8 @@ export default function Home() {
                     width={150}
                     height={40}
                     className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 50vw, 33vw"
                   />
                 </a>
                 <a
@@ -163,6 +179,8 @@ export default function Home() {
                     width={180}
                     height={40}
                     className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 50vw, 33vw"
                   />
                 </a>
                 <a
@@ -177,6 +195,8 @@ export default function Home() {
                     width={150}
                     height={40}
                     className="h-auto w-auto object-contain max-h-16 transition-transform duration-300 hover:scale-110"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 50vw, 33vw"
                   />
                 </a>
               </div>
@@ -219,6 +239,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Solana Foundation</h3>
@@ -248,6 +270,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">VeChain</h3>
@@ -268,6 +292,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Beitar Jerusalem</h3>
@@ -288,6 +314,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">NVIDIA</h3>
@@ -328,6 +356,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Ten</h3>
@@ -349,6 +379,8 @@ export default function Home() {
                         width={180}
                         height={60}
                         className="h-auto max-h-20 w-auto object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 100vw, 180px"
                       />
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Airalo</h3>
@@ -389,6 +421,8 @@ export default function Home() {
                           width={240}
                           height={80}
                           className="h-auto w-full object-contain"
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, 240px"
                         />
                       </div>
                       <h3 className="text-2xl font-bold mb-4 text-white">Backed by IBC Group</h3>
@@ -416,6 +450,8 @@ export default function Home() {
                           width={600}
                           height={400}
                           className="w-full h-auto"
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, 600px"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                           <p className="text-white text-sm">LETSTOP team with Mario Nawfal</p>
