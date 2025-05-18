@@ -8,6 +8,7 @@ import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
+
 const useInfiniteAutoScroll = (
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   speed = 0.5,
@@ -209,6 +210,7 @@ const useInfiniteAutoScroll = (
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
   return { isPaused, setIsPaused }
+}
 
 export default function AboutPage() {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
