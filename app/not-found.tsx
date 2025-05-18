@@ -2,15 +2,17 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useIsMobile } from "@/hooks/use-mobile"
+import { ChevronRight } from "lucide-react"
 
 export default function NotFound() {
   const isMobile = useIsMobile()
   const [astronautPos, setAstronautPos] = useState({ x: 0, y: 0 })
   const [loaded, setLoaded] = useState(false)
+  const starsCanvasRef = useRef<HTMLCanvasElement>(null)
 
-  // Create stars across the entire page
+  // Handle animations and stars
   useEffect(() => {
     setLoaded(true)
 
@@ -26,56 +28,73 @@ export default function NotFound() {
       requestAnimationFrame(floatAnimation)
     }
 
-    // Create stars
-    const createStars = () => {
-      const container = document.getElementById("stars-container")
-      if (!container) return
+    const animationId = requestAnimationFrame(floatAnimation)
 
-      // Clear existing stars
-      container.innerHTML = ""
+    // Create stars with canvas (more efficient than DOM elements)
+    const canvas = starsCanvasRef.current
+    if (!canvas) return
 
-      // More stars on desktop, fewer on mobile
-      const starCount = isMobile ? 50 : 150
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
 
-      for (let i = 0; i < starCount; i++) {
-        const star = document.createElement("div")
-        star.classList.add("star")
-
-        // Random position across entire viewport
-        star.style.left = `${Math.random() * 100}%`
-        star.style.top = `${Math.random() * 100}%`
-
-        // Random size
-        const size = Math.random() * 2 + 1
-        star.style.width = `${size}px`
-        star.style.height = `${size}px`
-
-        // Random opacity
-        star.style.opacity = `${Math.random() * 0.7 + 0.3}`
-
-        // Random twinkle animation
-        star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite`
-
-        container.appendChild(star)
-      }
+    // Set canvas to full screen
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
     }
 
-    const animationId = requestAnimationFrame(floatAnimation)
-    createStars()
+    resizeCanvas()
+    window.addEventListener("resize", resizeCanvas)
 
-    // Recreate stars on window resize
-    window.addEventListener("resize", createStars)
+    // Create stars
+    const starCount = isMobile ? 100 : 200
+    const stars = Array.from({ length: starCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 1.5 + 0.5,
+      speed: Math.random() * 0.3 + 0.1,
+      opacity: Math.random() * 0.7 + 0.3,
+      direction: Math.random() * Math.PI * 2,
+    }))
+
+    // Animate stars
+    const animateStars = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      stars.forEach((star) => {
+        // Move star
+        star.x += Math.cos(star.direction) * star.speed
+        star.y += Math.sin(star.direction) * star.speed
+
+        // Wrap around edges
+        if (star.x < 0) star.x = canvas.width
+        if (star.x > canvas.width) star.x = 0
+        if (star.y < 0) star.y = canvas.height
+        if (star.y > canvas.height) star.y = 0
+
+        // Draw star
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`
+        ctx.fill()
+      })
+
+      requestAnimationFrame(animateStars)
+    }
+
+    const starsAnimationId = requestAnimationFrame(animateStars)
 
     return () => {
       cancelAnimationFrame(animationId)
-      window.removeEventListener("resize", createStars)
+      cancelAnimationFrame(starsAnimationId)
+      window.removeEventListener("resize", resizeCanvas)
     }
   }, [isMobile])
 
   return (
     <div className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Stars background covering the entire screen */}
-      <div id="stars-container" className="fixed inset-0 pointer-events-none z-0"></div>
+      {/* Stars background using canvas (more efficient) */}
+      <canvas ref={starsCanvasRef} className="fixed inset-0 pointer-events-none z-0" />
 
       {/* Red glow effect */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/5 blur-[150px] opacity-70 z-0"></div>
@@ -125,25 +144,12 @@ export default function NotFound() {
         <p className="text-xl md:text-2xl text-gray-300 mb-8">We could not find that page.</p>
         <Link
           href="/welcome-screen"
-          className="inline-block bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-red-500/20"
+          className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg transition-all duration-300 flex items-center group mx-auto w-fit"
         >
-          Go to Homepage
+          <span>Go to Homepage</span>
+          <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
-
-      <style jsx global>{`
-        .star {
-          position: absolute;
-          background-color: white;
-          border-radius: 50%;
-          pointer-events: none;
-        }
-        
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-      `}</style>
     </div>
   )
 }
