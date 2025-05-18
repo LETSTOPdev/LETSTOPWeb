@@ -337,7 +337,7 @@ export default function TokenPage() {
                 <ChevronRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="https://whitepaper.letstop.io/"
+                href="https://whitepaper.letstop.io/usdstop-token/token-details"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-black/40 backdrop-blur-md border border-primary/30 hover:border-primary text-white px-8 py-3 rounded-lg transition-all duration-300 flex items-center group"
@@ -358,22 +358,23 @@ export default function TokenPage() {
           <h2 className="text-3xl font-bold mb-12 text-center text-white">Listed On</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {/* BingX */}
+
+            {/* Bybit */}
             <div className="group relative overflow-hidden rounded-xl transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="bg-black/60 backdrop-blur-sm border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
                 <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-24">
                   <Image
-                    src="/images/bingx-logo.png"
-                    alt="BingX Exchange"
+                    src="/images/bybit-logo.png"
+                    alt="Bybit Exchange"
                     width={180}
                     height={60}
                     className="h-auto max-h-16 w-auto object-contain"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-white">BingX</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">Bybit</h3>
                 <a
-                  href="https://bingx.com/en-us/spot/STOPUSDT/"
+                  href="https://www.bybit.com/en-US/trade/spot/STOP/USDT"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 text-primary flex items-center hover:underline"
@@ -383,7 +384,6 @@ export default function TokenPage() {
                 </a>
               </div>
             </div>
-
             {/* Raydium */}
             <div className="group relative overflow-hidden rounded-xl transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -409,23 +409,22 @@ export default function TokenPage() {
                 </a>
               </div>
             </div>
-
-            {/* Bybit */}
+            {/* BingX */}
             <div className="group relative overflow-hidden rounded-xl transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="bg-black/60 backdrop-blur-sm border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
                 <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-24">
                   <Image
-                    src="/images/bybit-logo.png"
-                    alt="Bybit Exchange"
+                    src="/images/bingx-logo.png"
+                    alt="BingX Exchange"
                     width={180}
                     height={60}
                     className="h-auto max-h-16 w-auto object-contain"
                   />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-white">Bybit</h3>
+                <h3 className="text-xl font-bold mb-2 text-white">BingX</h3>
                 <a
-                  href="https://www.bybit.com/en-US/trade/spot/STOP/USDT"
+                  href="https://bingx.com/en-us/spot/STOPUSDT/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 text-primary flex items-center hover:underline"
