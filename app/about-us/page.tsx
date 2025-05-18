@@ -25,18 +25,12 @@ const useInfiniteAutoScroll = (
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     
-    // For mobile, make tabs closer together and enable auto-scroll
+    // For mobile, completely disable our touch event handling and let native behavior work
     if (isMobile.current) {
-      // Enable smoother scrolling but keep auto-scroll working
+      // Enable native scrolling behaviors
       scrollContainer.style.overflowX = 'auto';
       scrollContainer.style.overflowY = 'visible';
-      scrollContainer.style.touchAction = 'pan-x';
-      
-      // Reduce the space between team tabs on mobile
-      const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
-      if (flexContainer) {
-        flexContainer.style.gap = '0.75rem'; // Reduced spacing for mobile
-      }
+      scrollContainer.style.touchAction = 'auto';
       
       // Remove any pointer events that might block scrolling
       const parentElement = scrollContainer.parentElement;
@@ -70,10 +64,12 @@ const useInfiniteAutoScroll = (
         flexContainer.appendChild(card);
       });
       
-      // Add duplicates for infinite scroll (for both mobile and desktop now)
-      originalCardsArray.forEach(card => {
-        flexContainer.appendChild(card.cloneNode(true) as HTMLElement);
-      });
+      // For desktop, add duplicates for infinite scroll
+      if (!isMobile.current) {
+        originalCardsArray.forEach(card => {
+          flexContainer.appendChild(card.cloneNode(true) as HTMLElement);
+        });
+      }
       
       setupComplete.current = true;
     }
@@ -134,6 +130,12 @@ const useInfiniteAutoScroll = (
     }
 
     const animate = () => {
+      // Skip animation for mobile
+      if (isMobile.current) {
+        animationRef.current = requestAnimationFrame(animate)
+        return
+      }
+      
       if (scrollContainer && !isPaused) {
         // Get the flex container
         const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement
@@ -142,8 +144,8 @@ const useInfiniteAutoScroll = (
           return
         }
         
-        // Increment scroll position (for both mobile and desktop now)
-        scrollContainer.scrollLeft += speed * (isMobile.current ? 0.5 : 1) // Slower on mobile
+        // Increment scroll position
+        scrollContainer.scrollLeft += speed
         
         // Get total number of cards (should be consistent)
         const cards = flexContainer.children
@@ -152,7 +154,7 @@ const useInfiniteAutoScroll = (
         // Check if we've scrolled past all original members
         if (cards.length >= numOriginalCards * 2) {
           const firstCardWidth = (cards[0] as HTMLElement).offsetWidth
-          const cardMargin = isMobile.current ? 12 : 24 // Smaller margin for mobile
+          const cardMargin = 24 // 6rem = 24px spacing (adjust based on your actual margin)
           const totalOriginalWidth = numOriginalCards * (firstCardWidth + cardMargin)
           
           if (scrollContainer.scrollLeft >= totalOriginalWidth) {
@@ -175,10 +177,10 @@ const useInfiniteAutoScroll = (
       scrollContainer.addEventListener("mouseup", handleMouseUp)
       scrollContainer.addEventListener("mousemove", handleMouseMove)
       document.addEventListener("mouseup", handleMouseLeaveDoc)
+      
+      // Start animation for desktop
+      animationRef.current = requestAnimationFrame(animate)
     }
-    
-    // Start animation for both mobile and desktop
-    animationRef.current = requestAnimationFrame(animate)
 
     // Cleanup
     return () => {
