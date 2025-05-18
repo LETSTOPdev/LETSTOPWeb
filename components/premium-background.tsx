@@ -206,40 +206,6 @@ export function PremiumBackground() {
       })
     }
 
-    // Draw light beams
-    const drawLightBeams = () => {
-      const beamCount = isMobile ? 2 : 3
-      const angles = [30, 150, 270]
-
-      for (let i = 0; i < beamCount; i++) {
-        const angle = (angles[i] * Math.PI) / 180
-
-        // Beam origin at edge of screen
-        const centerX = window.innerWidth / 2
-        const centerY = window.innerHeight / 2
-        const distance = Math.sqrt(centerX * centerX + centerY * centerY) * 1.5
-
-        const startX = centerX
-        const startY = centerY
-        const endX = centerX + Math.cos(angle) * distance
-        const endY = centerY + Math.sin(angle) * distance
-
-        // Create a pulsing effect
-        const pulseIntensity = 0.04 + Math.sin(time * 0.0003 + i) * 0.02
-
-        const beamGradient = ctx.createLinearGradient(startX, startY, endX, endY)
-        beamGradient.addColorStop(0, `rgba(255, 30, 50, ${pulseIntensity * 1.5})`)
-        beamGradient.addColorStop(1, "rgba(255, 30, 50, 0)")
-
-        ctx.strokeStyle = beamGradient
-        ctx.lineWidth = 30 + Math.sin(time * 0.0003 + i) * 10
-        ctx.beginPath()
-        ctx.moveTo(startX, startY)
-        ctx.lineTo(endX, endY)
-        ctx.stroke()
-      }
-    }
-
     // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
@@ -247,7 +213,6 @@ export function PremiumBackground() {
 
       // Draw layers
       drawBackground()
-      drawLightBeams()
       drawAccentGlows()
 
       // Update and draw particles
