@@ -235,7 +235,7 @@ export default function Home() {
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
                     <div className="bg-black/40 rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 transition-transform group-hover:scale-105">
                       <Image
-                        src="/images/vechain-logo.svg"
+                        src="/images/vechain-logo.png"
                         alt="VeChain"
                         width={180}
                         height={60}
