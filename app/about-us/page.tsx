@@ -37,6 +37,12 @@ const useInfiniteAutoScroll = (
       if (parentElement) {
         parentElement.style.pointerEvents = 'auto';
       }
+      
+      // Reduce spacing between team cards on mobile
+      const flexContainer = scrollContainer.querySelector('div.flex') as HTMLElement;
+      if (flexContainer) {
+        flexContainer.style.gap = '0.75rem'; // Smaller gap for mobile
+      }
     }
     
     // Setup the carousel structure without hardcoded names
