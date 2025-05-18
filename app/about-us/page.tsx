@@ -25,10 +25,18 @@ const useInfiniteAutoScroll = (
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     
-    // Apply specific CSS for mobile to enable vertical scrolling
+    // For mobile, completely disable our touch event handling and let native behavior work
     if (isMobile.current) {
-      // Set touch-action to allow vertical panning but handle horizontal ourselves
-      scrollContainer.style.touchAction = "pan-y";
+      // Enable native scrolling behaviors
+      scrollContainer.style.overflowX = 'auto';
+      scrollContainer.style.overflowY = 'visible';
+      scrollContainer.style.touchAction = 'auto';
+      
+      // Remove any pointer events that might block scrolling
+      const parentElement = scrollContainer.parentElement;
+      if (parentElement) {
+        parentElement.style.pointerEvents = 'auto';
+      }
     }
     
     // Completely rebuild the carousel structure to fix the order
@@ -81,65 +89,13 @@ const useInfiniteAutoScroll = (
     // Fix the team order
     fixTeamOrder()
 
+    // Only use these handlers for desktop
     const handleMouseEnter = () => {
-      if (pauseOnHover) setIsPaused(true)
+      if (!isMobile.current && pauseOnHover) setIsPaused(true)
     }
 
     const handleMouseLeave = () => {
-      setIsPaused(false)
-    }
-
-    // Completely revised touch handling for mobile
-    let touchStartX = 0;
-    let initialScrollLeft = 0;
-    let isScrollingHorizontally = false;
-    const minHorizontalMove = 10; // Threshold to consider horizontal scrolling
-
-    const handleTouchStart = (e: TouchEvent) => {
-      // Store initial position
-      touchStartX = e.touches[0].clientX;
-      initialScrollLeft = scrollContainer.scrollLeft;
-      isScrollingHorizontally = false;
-      
-      // Don't pause auto-scroll on mobile as we're not auto-scrolling
-      if (!isMobile.current) {
-        setIsPaused(true);
-      }
-    }
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!e.touches[0]) return;
-      
-      const currentX = e.touches[0].clientX;
-      const diffX = touchStartX - currentX;
-      
-      // Determine if this is clearly a horizontal scroll
-      if (!isScrollingHorizontally) {
-        if (Math.abs(diffX) > minHorizontalMove) {
-          isScrollingHorizontally = true;
-        } else {
-          // Not enough horizontal movement yet, let native scrolling handle it
-          return;
-        }
-      }
-      
-      // Only if we're definitely scrolling horizontally
-      if (isScrollingHorizontally) {
-        // Apply the horizontal scroll
-        scrollContainer.scrollLeft = initialScrollLeft + diffX;
-        
-        // Only prevent default for horizontal scrolling to allow vertical
-        // This is critical for allowing vertical page scrolling
-        if (Math.abs(diffX) > minHorizontalMove) {
-          e.preventDefault();
-        }
-      }
-    }
-
-    const handleTouchEnd = () => {
-      if (!isMobile.current) {
-        setTimeout(() => setIsPaused(false), 1500);
-      }
+      if (!isMobile.current) setIsPaused(false)
     }
 
     // Mouse drag for desktop
@@ -148,6 +104,8 @@ const useInfiniteAutoScroll = (
     let scrollLeft = 0
     
     const handleMouseDown = (e: MouseEvent) => {
+      if (isMobile.current) return
+      
       isMouseDown = true
       startX = e.pageX - scrollContainer.offsetLeft
       scrollLeft = scrollContainer.scrollLeft
@@ -156,13 +114,15 @@ const useInfiniteAutoScroll = (
     }
     
     const handleMouseUp = () => {
+      if (isMobile.current) return
+      
       isMouseDown = false
       setTimeout(() => setIsPaused(false), 1000)
       scrollContainer.style.cursor = 'grab'
     }
     
     const handleMouseMove = (e: MouseEvent) => {
-      if (!isMouseDown) return
+      if (isMobile.current || !isMouseDown) return
       
       e.preventDefault()
       const x = e.pageX - scrollContainer.offsetLeft
@@ -172,6 +132,8 @@ const useInfiniteAutoScroll = (
     }
     
     const handleMouseLeaveDoc = () => {
+      if (isMobile.current) return
+      
       if (isMouseDown) {
         isMouseDown = false
         setTimeout(() => setIsPaused(false), 1000)
@@ -219,27 +181,16 @@ const useInfiniteAutoScroll = (
     // Set desktop cursor
     if (!isMobile.current) {
       scrollContainer.style.cursor = 'grab'
-    }
-
-    // Add event listeners
-    scrollContainer.addEventListener("mouseenter", handleMouseEnter)
-    scrollContainer.addEventListener("mouseleave", handleMouseLeave)
-    
-    // Use passive for touchstart to improve performance
-    scrollContainer.addEventListener("touchstart", handleTouchStart, { passive: true })
-    
-    // Non-passive for touchmove to allow preventDefault only when needed
-    scrollContainer.addEventListener("touchmove", handleTouchMove, { passive: false })
-    
-    scrollContainer.addEventListener("touchend", handleTouchEnd)
-    
-    scrollContainer.addEventListener("mousedown", handleMouseDown)
-    scrollContainer.addEventListener("mouseup", handleMouseUp)
-    scrollContainer.addEventListener("mousemove", handleMouseMove)
-    document.addEventListener("mouseup", handleMouseLeaveDoc)
-
-    // Start animation for desktop
-    if (!isMobile.current) {
+      
+      // Add event listeners for desktop only
+      scrollContainer.addEventListener("mouseenter", handleMouseEnter)
+      scrollContainer.addEventListener("mouseleave", handleMouseLeave)
+      scrollContainer.addEventListener("mousedown", handleMouseDown)
+      scrollContainer.addEventListener("mouseup", handleMouseUp)
+      scrollContainer.addEventListener("mousemove", handleMouseMove)
+      document.addEventListener("mouseup", handleMouseLeaveDoc)
+      
+      // Start animation for desktop
       animationRef.current = requestAnimationFrame(animate)
     }
 
@@ -249,16 +200,14 @@ const useInfiniteAutoScroll = (
         cancelAnimationFrame(animationRef.current)
       }
       
-      scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
-      scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
-      scrollContainer.removeEventListener("touchstart", handleTouchStart)
-      scrollContainer.removeEventListener("touchmove", handleTouchMove)
-      scrollContainer.removeEventListener("touchend", handleTouchEnd)
-      
-      scrollContainer.removeEventListener("mousedown", handleMouseDown)
-      scrollContainer.removeEventListener("mouseup", handleMouseUp)
-      scrollContainer.removeEventListener("mousemove", handleMouseMove)
-      document.removeEventListener("mouseup", handleMouseLeaveDoc)
+      if (!isMobile.current) {
+        scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+        scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+        scrollContainer.removeEventListener("mousedown", handleMouseDown)
+        scrollContainer.removeEventListener("mouseup", handleMouseUp)
+        scrollContainer.removeEventListener("mousemove", handleMouseMove)
+        document.removeEventListener("mouseup", handleMouseLeaveDoc)
+      }
     }
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
