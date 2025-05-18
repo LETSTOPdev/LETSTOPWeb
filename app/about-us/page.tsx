@@ -8,7 +8,6 @@ import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
-
 const useInfiniteAutoScroll = (
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   speed = 0.5,
@@ -26,14 +25,17 @@ const useInfiniteAutoScroll = (
     // Check if mobile device
     isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     
-    // For mobile, completely disable our touch event handling and let native behavior work
+    // Prevent auto-scroll pausing on mobile
+    if (isMobile.current) setIsPaused(false)
+    
+    // For mobile, set up for auto-scroll but keep touch functionality
     if (isMobile.current) {
-      // Enable native scrolling behaviors
-      scrollContainer.style.overflowX = 'auto';
+      // Enable auto-scroll with touch
+      scrollContainer.style.overflowX = 'hidden'; // Hide scrollbar
       scrollContainer.style.overflowY = 'visible';
-      scrollContainer.style.touchAction = 'auto';
+      scrollContainer.style.touchAction = 'pan-x'; // Allow horizontal pan
       
-      // Remove any pointer events that might block scrolling
+      // Keep pointer events intact for touch interaction
       const parentElement = scrollContainer.parentElement;
       if (parentElement) {
         parentElement.style.pointerEvents = 'auto';
@@ -140,10 +142,15 @@ const useInfiniteAutoScroll = (
       // Apply simple scrolling for mobile too (no reset logic)
       if (isMobile.current) {
         if (scrollContainer && !isPaused) {
-          scrollContainer.scrollLeft += speed * 0.5
+          scrollContainer.scrollLeft += speed * 0.3;
+          // Reset if we reach the end
+          const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+          if (scrollContainer.scrollLeft >= maxScroll) {
+            scrollContainer.scrollLeft = 0;
+          }
         }
-        animationRef.current = requestAnimationFrame(animate)
-        return
+        animationRef.current = requestAnimationFrame(animate);
+        return;
       }
       
       if (scrollContainer && !isPaused) {
