@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Coins, Award, Smartphone, Bitcoin, Share2, Wallet } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
 export default function FaqPage() {
@@ -46,40 +46,52 @@ export default function FaqPage() {
         {/* FAQ Categories */}
         <div className="mb-12 flex flex-wrap justify-center gap-4">
           <button
-            className={`${activeCategory === "credits" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "credits" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "credits" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("credits")}
+            aria-label="LETSTOP Credits"
           >
-            LETSTOP Credits
+            <Coins className={`h-4 w-4 ${activeCategory === "credits" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "credits" && "LETSTOP Credits"}
           </button>
           <button
-            className={`${activeCategory === "xp" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "xp" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "xp" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("xp")}
+            aria-label="Experience Points"
           >
-            Experience Points
+            <Award className={`h-4 w-4 ${activeCategory === "xp" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "xp" && "Experience Points"}
           </button>
           <button
-            className={`${activeCategory === "app" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "app" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "app" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("app")}
+            aria-label="App Features"
           >
-            App Features
+            <Smartphone className={`h-4 w-4 ${activeCategory === "app" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "app" && "App Features"}
           </button>
           <button
-            className={`${activeCategory === "crypto" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "crypto" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "crypto" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("crypto")}
+            aria-label="Cryptocurrency"
           >
-            Cryptocurrency
+            <Bitcoin className={`h-4 w-4 ${activeCategory === "crypto" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "crypto" && "Cryptocurrency"}
           </button>
           <button
-            className={`${activeCategory === "referral" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "referral" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "referral" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("referral")}
+            aria-label="Referral System"
           >
-            Referral System
+            <Share2 className={`h-4 w-4 ${activeCategory === "referral" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "referral" && "Referral System"}
           </button>
           <button
-            className={`${activeCategory === "wallet" ? "bg-primary" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white px-4 py-2 rounded-full text-sm transition-colors shadow-md`}
+            className={`${activeCategory === "wallet" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "wallet" ? "px-4" : "w-10 h-10 justify-center"}`}
             onClick={() => setCategory("wallet")}
+            aria-label="Wallet"
           >
-            Wallet
+            <Wallet className={`h-4 w-4 ${activeCategory === "wallet" ? "text-white" : "text-primary"}`} />
+            {activeCategory === "wallet" && "Wallet"}
           </button>
         </div>
 
@@ -87,7 +99,10 @@ export default function FaqPage() {
         {activeCategory === "credits" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">LETSTOP Credits</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Coins className="h-5 w-5 text-primary" />
+                LETSTOP Credits
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -300,7 +315,10 @@ export default function FaqPage() {
         {activeCategory === "xp" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">Experience Points (XP)</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Award className="h-5 w-5 text-primary" />
+                Experience Points (XP)
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -350,7 +368,10 @@ export default function FaqPage() {
         {activeCategory === "app" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">App Features</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Smartphone className="h-5 w-5 text-primary" />
+                App Features
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -559,7 +580,10 @@ export default function FaqPage() {
         {activeCategory === "crypto" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">Cryptocurrency</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Bitcoin className="h-5 w-5 text-primary" />
+                Cryptocurrency
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -673,7 +697,10 @@ export default function FaqPage() {
         {activeCategory === "referral" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">Referral System</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Share2 className="h-5 w-5 text-primary" />
+                Referral System
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -813,7 +840,10 @@ export default function FaqPage() {
         {activeCategory === "wallet" && (
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
-              <h2 className="text-xl font-semibold">Wallet</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <Wallet className="h-5 w-5 text-primary" />
+                Wallet
+              </h2>
             </div>
 
             <div className="divide-y divide-gray-800/50">
@@ -1130,9 +1160,7 @@ export default function FaqPage() {
                   className="flex justify-between items-center w-full text-left"
                   onClick={() => toggleItem("wallet-16")}
                 >
-                  <h3 className="text-lg font-medium">
-                    How can I deposit, receive, or send tokens?t, receive, or send tokens?t, receive, or send tokens?
-                  </h3>
+                  <h3 className="text-lg font-medium">How can I deposit, receive, or send tokens?</h3>
                   <ChevronDown
                     className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-16"] ? "rotate-180" : ""}`}
                   />
@@ -1274,26 +1302,6 @@ export default function FaqPage() {
                     Balance updates can be delayed due to network congestion. If your balance doesn't update
                     immediately, please wait a few moments and check again.
                   </p>
-                </div>
-              </div>
-
-              {/* Wallet FAQ Item 23 */}
-              <div className={`faq-item p-6 ${openItems["wallet-23"] ? "active" : ""}`}>
-                <button
-                  className="flex justify-between items-center w-full text-left"
-                  onClick={() => toggleItem("wallet-23")}
-                >
-                  <h3 className="text-lg font-medium">
-                    I can't find the answer to my question. How do I contact support?
-                  </h3>
-                  <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-23"] ? "rotate-180" : ""}`}
-                  />
-                </button>
-                <div
-                  className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-23"] ? "max-h-[500px]" : "max-h-0"}`}
-                >
-                  <p>For assistance, submit your inquiry here: Contact us.</p>
                 </div>
               </div>
             </div>
