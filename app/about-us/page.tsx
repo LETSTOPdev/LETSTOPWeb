@@ -16,129 +16,195 @@ const useInfiniteAutoScroll = (
   const [isPaused, setIsPaused] = useState(false)
   const animationRef = useRef<number>()
   const initialized = useRef(false)
+  const isMobile = useRef(false)
+  const manualScrollDir = useRef(0) // -1 for left, 1 for right, 0 for auto
   
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current
     if (!scrollContainer) return
-
-    const handleMouseEnter = () => {
-      if (pauseOnHover) setIsPaused(true)
-    }
-
-    const handleMouseLeave = () => {
-      setIsPaused(false)
-    }
-
-    // Touch event handlers for swipe functionality
-    let touchStartX = 0
-    let touchEndX = 0
-
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartX = e.changedTouches[0].screenX
-      setIsPaused(true) // Pause auto-scroll when user touches
-    }
-
-    const handleTouchMove = (e: TouchEvent) => {
-      touchEndX = e.changedTouches[0].screenX
-      const diffX = touchStartX - touchEndX
-      scrollContainer.scrollLeft += diffX / 5 // Divide for smoother scrolling
-      touchStartX = touchEndX
-    }
-
-    const handleTouchEnd = () => {
-      // Resume auto-scroll after a short delay
-      setTimeout(() => setIsPaused(false), 1500)
-    }
-
-    // Setup proper infinite scrolling
+    
+    // Check if it's a mobile device
+    isMobile.current = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+    
     const setupScrolling = () => {
       if (initialized.current) return
       
       const contentContainer = scrollContainer.firstElementChild as HTMLElement
       if (!contentContainer) return
       
-      // Clear any existing clones first
-      const originalCards = Array.from(contentContainer.children).slice(0, 7) // Assuming 7 team members
+      // Get all original team cards
+      const originalCards = Array.from(contentContainer.children)
+      const numOriginalCards = originalCards.length
       
-      // Remove any existing elements
-      while (contentContainer.firstChild) {
-        contentContainer.removeChild(contentContainer.firstChild)
+      if (!isMobile.current) {
+        // For desktop: Add duplicates for infinite scrolling
+        originalCards.forEach(card => {
+          contentContainer.appendChild(card.cloneNode(true))
+        })
       }
-      
-      // Add original cards back
-      originalCards.forEach(card => {
-        contentContainer.appendChild(card.cloneNode(true))
-      })
-      
-      // Then add duplicates of each card
-      originalCards.forEach(card => {
-        contentContainer.appendChild(card.cloneNode(true))
-      })
       
       initialized.current = true
     }
     
     // Call setup function
     setupScrolling()
+    
+    // Mouse event handlers for desktop
+    const handleMouseEnter = () => {
+      if (pauseOnHover) setIsPaused(true)
+    }
+
+    const handleMouseLeave = () => {
+      setIsPaused(false)
+      manualScrollDir.current = 0 // Reset to auto-scrolling
+    }
+    
+    // Mouse down/up handlers for desktop manual scrolling
+    let isMouseDown = false
+    let startX = 0
+    let scrollLeft = 0
+    
+    const handleMouseDown = (e: MouseEvent) => {
+      isMouseDown = true
+      startX = e.pageX - scrollContainer.offsetLeft
+      scrollLeft = scrollContainer.scrollLeft
+      setIsPaused(true)
+      scrollContainer.style.cursor = 'grabbing'
+    }
+    
+    const handleMouseUp = () => {
+      isMouseDown = false
+      setIsPaused(false)
+      scrollContainer.style.cursor = 'grab'
+    }
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isMouseDown) return
+      
+      e.preventDefault()
+      const x = e.pageX - scrollContainer.offsetLeft
+      const walk = (x - startX) * 2 // Scroll speed multiplier
+      
+      // Determine scroll direction
+      if (walk > 0) {
+        manualScrollDir.current = -1 // Going left (scrolling right to left)
+      } else {
+        manualScrollDir.current = 1 // Going right (scrolling left to right)
+      }
+      
+      scrollContainer.scrollLeft = scrollLeft - walk
+    }
+    
+    const handleMouseLeaveDoc = () => {
+      isMouseDown = false
+      setIsPaused(false)
+      scrollContainer.style.cursor = 'grab'
+    }
+
+    // Touch event handlers for mobile
+    let touchStartX = 0
+    let touchScrollLeft = 0
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX
+      touchScrollLeft = scrollContainer.scrollLeft
+      setIsPaused(true)
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return
+      
+      const touchX = e.touches[0].clientX
+      const walk = touchStartX - touchX
+      
+      // Apply the scroll
+      scrollContainer.scrollLeft = touchScrollLeft + walk
+    }
+
+    const handleTouchEnd = () => {
+      // For mobile: no auto-scroll after touch
+      if (isMobile.current) return
+      
+      // For desktop: resume auto-scroll after a short delay
+      setTimeout(() => setIsPaused(false), 1500)
+    }
 
     const animate = () => {
-      if (scrollContainer && !isPaused) {
-        // Increment scroll position
-        scrollContainer.scrollLeft += speed
-        
-        // Calculate card width (assuming all cards have same width)
-        const firstCard = scrollContainer.querySelector('div > div') as HTMLElement
-        if (!firstCard) {
+      if (scrollContainer && !isPaused && !isMobile.current) {
+        const contentContainer = scrollContainer.firstElementChild as HTMLElement
+        if (!contentContainer) {
           animationRef.current = requestAnimationFrame(animate)
           return
         }
         
-        const cardStyle = window.getComputedStyle(firstCard)
-        const cardWidth = firstCard.offsetWidth + 
-                          parseInt(cardStyle.marginLeft || '0') + 
-                          parseInt(cardStyle.marginRight || '0')
+        // Use manual scroll direction if set by user interaction
+        const currentSpeed = manualScrollDir.current === 0 ? speed : 
+                            (manualScrollDir.current * Math.abs(speed))
         
-        // Calculate the number of original cards
-        const numOriginalCards = 7 // Hardcoded for simplicity - total number of unique team members
+        // Increment scroll position based on direction
+        scrollContainer.scrollLeft += currentSpeed
         
-        // Check if we need to reset
-        const totalOriginalWidth = numOriginalCards * cardWidth
+        // Calculate halfway point for resetting
+        const halfwayPoint = contentContainer.scrollWidth / 2
         
-        if (scrollContainer.scrollLeft >= totalOriginalWidth) {
-          // Reset to beginning
+        // Reset logic for infinite scrolling (desktop only)
+        if (currentSpeed > 0 && scrollContainer.scrollLeft >= halfwayPoint) {
+          // Reset to beginning when scrolling right
           scrollContainer.scrollLeft = 0
+        } else if (currentSpeed < 0 && scrollContainer.scrollLeft <= 0) {
+          // Reset to end when scrolling left
+          scrollContainer.scrollLeft = halfwayPoint
         }
       }
+      
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    // Add event listeners
+    // Add event listeners for both desktop and mobile
     scrollContainer.addEventListener("mouseenter", handleMouseEnter)
     scrollContainer.addEventListener("mouseleave", handleMouseLeave)
+    
+    // Desktop mouse drag events
+    scrollContainer.addEventListener("mousedown", handleMouseDown)
+    scrollContainer.addEventListener("mouseup", handleMouseUp)
+    scrollContainer.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("mouseup", handleMouseLeaveDoc)
+    
+    // Mobile touch events
     scrollContainer.addEventListener("touchstart", handleTouchStart)
     scrollContainer.addEventListener("touchmove", handleTouchMove)
     scrollContainer.addEventListener("touchend", handleTouchEnd)
-
-    // Start animation
-    animationRef.current = requestAnimationFrame(animate)
+    
+    // Start animation (only for desktop)
+    if (!isMobile.current) {
+      scrollContainer.style.cursor = 'grab' // Set grabbable cursor for desktop
+      animationRef.current = requestAnimationFrame(animate)
+    }
 
     // Cleanup
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
-      if (scrollContainer) {
-        scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
-        scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
-        scrollContainer.removeEventListener("touchstart", handleTouchStart)
-        scrollContainer.removeEventListener("touchmove", handleTouchMove)
-        scrollContainer.removeEventListener("touchend", handleTouchEnd)
-      }
+      
+      // Remove all event listeners
+      scrollContainer.removeEventListener("mouseenter", handleMouseEnter)
+      scrollContainer.removeEventListener("mouseleave", handleMouseLeave)
+      
+      scrollContainer.removeEventListener("mousedown", handleMouseDown)
+      scrollContainer.removeEventListener("mouseup", handleMouseUp)
+      scrollContainer.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseLeaveDoc)
+      
+      scrollContainer.removeEventListener("touchstart", handleTouchStart)
+      scrollContainer.removeEventListener("touchmove", handleTouchMove)
+      scrollContainer.removeEventListener("touchend", handleTouchEnd)
     }
   }, [isPaused, pauseOnHover, speed, scrollContainerRef])
 
   return { isPaused, setIsPaused }
 }
+
 export default function AboutPage() {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
   const observerRefs = useRef<Map<string, HTMLElement>>(new Map())
