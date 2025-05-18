@@ -5,13 +5,38 @@ import Link from "next/link"
 import Image from "next/image"
 import { Menu, X, Search, ChevronRight } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { type SearchResultItem, coreSearchIndex, extractContentFromDOM, searchIndex } from "@/lib/search-index"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [searchResults, setSearchResults] = useState<SearchResultItem[]>([])
+  const [searchData, setSearchData] = useState<SearchResultItem[]>(coreSearchIndex)
   const router = useRouter()
+
+  // Initialize search index with dynamic content when component mounts
+  useEffect(() => {
+    // Only run in browser environment
+    if (typeof window !== "undefined") {
+      // Add event listener for content changes
+      const observer = new MutationObserver(() => {
+        // Update search index when DOM changes
+        const dynamicContent = extractContentFromDOM()
+        setSearchData([...coreSearchIndex, ...dynamicContent])
+      })
+
+      // Start observing the document with the configured parameters
+      observer.observe(document.body, { childList: true, subtree: true })
+
+      // Initial extraction
+      const dynamicContent = extractContentFromDOM()
+      setSearchData([...coreSearchIndex, ...dynamicContent])
+
+      // Cleanup observer on component unmount
+      return () => observer.disconnect()
+    }
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -22,358 +47,22 @@ export default function Navbar() {
     if (isSearchOpen) {
       setSearchQuery("")
       setSearchResults([])
+    } else {
+      // Update search index when opening search
+      const dynamicContent = extractContentFromDOM()
+      setSearchData([...coreSearchIndex, ...dynamicContent])
     }
   }
-
-  // Enhanced searchable content with more detailed home page content
-  const searchableContent = [
-    // Home page content - expanded with more detailed sections
-    {
-      title: "LETSTOP - Drive Safe, Earn Crypto",
-      path: "/",
-      section: "Home",
-      content:
-        "LETSTOP is a revolutionary road safety app that rewards safe driving with cryptocurrency tokens. Our mission is to make roads safer worldwide through incentivized safe driving behavior.",
-    },
-    {
-      title: "Welcome to LETSTOP",
-      path: "/",
-      section: "Home",
-      content:
-        "LETSTOP is the world's first app that rewards safe driving with cryptocurrency. Drive safely, earn STOP tokens, and join our global community of safe drivers.",
-    },
-    {
-      title: "How LETSTOP Works",
-      path: "/",
-      section: "Home",
-      content:
-        "The LETSTOP app tracks your driving behavior using advanced AI technology. Safe driving earns you STOP tokens that can be exchanged for real-world rewards or traded on cryptocurrency exchanges.",
-    },
-    {
-      title: "STOP Token Utility",
-      path: "/",
-      section: "Home",
-      content:
-        "STOP tokens can be used for in-app purchases, exchanged for rewards, or traded on cryptocurrency exchanges. The token is built on the Solana blockchain for fast and low-cost transactions.",
-    },
-    {
-      title: "LETSTOP Partners",
-      path: "/",
-      section: "Home",
-      content:
-        "LETSTOP has partnered with leading organizations including Solana, VeChain, Beitar Jerusalem FC, NVIDIA, TEN, Airalo, and IBC Group to expand our ecosystem and provide more value to our users.",
-    },
-    {
-      title: "Download LETSTOP App",
-      path: "/",
-      section: "Home",
-      content:
-        "Download the LETSTOP app from the App Store or Google Play Store and start earning rewards for safe driving today.",
-    },
-    {
-      title: "LETSTOP Global Impact",
-      path: "/",
-      section: "Home",
-      content:
-        "LETSTOP is making a global impact on road safety by incentivizing safe driving behavior through cryptocurrency rewards. Join our mission to make roads safer worldwide.",
-    },
-    {
-      title: "LETSTOP Community",
-      path: "/",
-      section: "Home",
-      content:
-        "Join the LETSTOP community of safe drivers and cryptocurrency enthusiasts. Connect with us on social media and participate in our community events.",
-    },
-
-    // App page content
-    {
-      title: "App Features",
-      path: "/app",
-      section: "App",
-      content: "The LETSTOP app tracks your driving behavior and rewards you with STOP tokens for safe driving habits.",
-    },
-    {
-      title: "LETSTOP Mobile Application",
-      path: "/app",
-      section: "App",
-      content:
-        "Our mobile app uses advanced technology to monitor driving behavior and reward safe drivers with cryptocurrency.",
-    },
-    {
-      title: "LETSTOP Rewards and Features",
-      path: "/app",
-      section: "App",
-      content:
-        "Discover the features and rewards available in the LETSTOP app, including cryptocurrency earnings, experience points, and more.",
-    },
-    {
-      title: "Mobile App Download",
-      path: "/app",
-      section: "App",
-      content: "Download the LETSTOP app from the App Store or Google Play Store.",
-    },
-    {
-      title: "Rewards System",
-      path: "/app",
-      section: "App",
-      content: "Learn how the LETSTOP rewards system works and how you can maximize your earnings.",
-    },
-
-    // Token page content
-    {
-      title: "STOP Token",
-      path: "/token",
-      section: "Token",
-      content: "The STOP token is the native cryptocurrency of the LETSTOP ecosystem, built on Solana blockchain.",
-    },
-    {
-      title: "Solana Blockchain",
-      path: "/token",
-      section: "Token",
-      content: "LETSTOP is built on the Solana blockchain, offering fast and low-cost transactions.",
-    },
-    {
-      title: "VeChain Integration",
-      path: "/token",
-      section: "Token",
-      content: "LETSTOP leverages VeChain technology for supply chain transparency and verification.",
-    },
-    {
-      title: "STOP Token Utility and Economics",
-      path: "/token",
-      section: "Token",
-      content:
-        "Learn about the utility and economics of the STOP token, including its use cases, supply, and distribution.",
-    },
-    {
-      title: "How to Buy STOP Tokens",
-      path: "/token",
-      section: "Token",
-      content: "Instructions on how to purchase STOP tokens through exchanges and other platforms.",
-    },
-
-    // Insights page content
-    {
-      title: "Road Safety Insights",
-      path: "/insights",
-      section: "Insights",
-      content: "Explore global road safety statistics and how LETSTOP is making a difference.",
-    },
-    {
-      title: "Global Road Safety Statistics",
-      path: "/insights",
-      section: "Insights",
-      content: "Learn about road safety statistics from around the world and how LETSTOP is working to improve them.",
-    },
-    {
-      title: "LETSTOP Impact Data",
-      path: "/insights",
-      section: "Insights",
-      content: "Data and statistics showing the impact of LETSTOP on road safety in various regions.",
-    },
-
-    // About page content
-    {
-      title: "About LETSTOP",
-      path: "/about",
-      section: "About",
-      content: "Learn about our mission, vision, and the team behind LETSTOP.",
-    },
-    {
-      title: "Team Members",
-      path: "/about",
-      section: "About",
-      content: "Meet our dedicated team of professionals working to make roads safer.",
-    },
-    {
-      title: "LETSTOP Mission and Vision",
-      path: "/about",
-      section: "About",
-      content:
-        "Our mission is to make roads safer worldwide through incentivized safe driving behavior. Our vision is a world where road accidents are minimized through technology and incentives.",
-    },
-    {
-      title: "LETSTOP History",
-      path: "/about",
-      section: "About",
-      content: "The story of how LETSTOP was founded and has evolved to become a leader in road safety technology.",
-    },
-
-    // FAQ page content
-    {
-      title: "Frequently Asked Questions",
-      path: "/faq",
-      section: "FAQ",
-      content: "Find answers to common questions about LETSTOP, the app, and the STOP token.",
-    },
-    {
-      title: "LETSTOP Credits",
-      path: "/faq",
-      section: "FAQ",
-      content: "Learn how LETSTOP credits work and how you can earn them through safe driving.",
-    },
-    {
-      title: "Experience Points",
-      path: "/faq",
-      section: "FAQ",
-      content: "Understand how experience points are calculated and what they mean for your rewards.",
-    },
-    {
-      title: "App Features FAQ",
-      path: "/faq",
-      section: "FAQ",
-      content: "Discover all the features available in the LETSTOP mobile application.",
-    },
-    {
-      title: "Cryptocurrency FAQ",
-      path: "/faq",
-      section: "FAQ",
-      content: "Learn about how cryptocurrency works within the LETSTOP ecosystem.",
-    },
-    {
-      title: "Referral System",
-      path: "/faq",
-      section: "FAQ",
-      content: "Find out how to refer friends and earn additional rewards through our referral program.",
-    },
-    {
-      title: "Wallet FAQ",
-      path: "/faq",
-      section: "FAQ",
-      content: "Learn about the LETSTOP wallet and how to manage your STOP tokens.",
-    },
-
-    // Contact page content
-    {
-      title: "Contact Us",
-      path: "/contact",
-      section: "Contact",
-      content: "Get in touch with the LETSTOP team for support, partnerships, or general inquiries.",
-    },
-    {
-      title: "Support and Help",
-      path: "/contact",
-      section: "Contact",
-      content: "Need help with the LETSTOP app or have questions about our services? Contact our support team.",
-    },
-    {
-      title: "Partnership Opportunities",
-      path: "/contact",
-      section: "Contact",
-      content: "Interested in partnering with LETSTOP? Contact us to discuss potential collaboration opportunities.",
-    },
-
-    // Documentation
-    {
-      title: "Whitepaper",
-      path: "https://whitepaper.letstop.io",
-      section: "Documentation",
-      external: true,
-      content: "Read our comprehensive whitepaper detailing the LETSTOP ecosystem, tokenomics, and roadmap.",
-    },
-
-    // Legal pages
-    {
-      title: "Privacy Policy",
-      path: "/privacy-policy",
-      section: "Legal",
-      content: "Our privacy policy explains how we collect, use, and protect your personal information.",
-    },
-    {
-      title: "Terms of Service",
-      path: "/terms",
-      section: "Legal",
-      content: "Our terms of service outline the rules and guidelines for using the LETSTOP platform.",
-    },
-    {
-      title: "Wallet Terms",
-      path: "/wallet-terms",
-      section: "Legal",
-      content: "Specific terms related to the use of the LETSTOP wallet and cryptocurrency features.",
-    },
-    {
-      title: "Token Terms",
-      path: "/token-terms",
-      section: "Legal",
-      content: "Terms and conditions specific to the STOP token and its usage within our ecosystem.",
-    },
-    {
-      title: "Cookie Policy",
-      path: "/cookies",
-      section: "Legal",
-      content: "Information about how LETSTOP uses cookies and similar technologies on our website and app.",
-    },
-  ]
 
   // Search function that runs on each keystroke
   useEffect(() => {
     if (searchQuery.trim().length > 1) {
-      const query = searchQuery.toLowerCase()
-
-      // Score-based search results
-      const scoredResults = searchableContent.map((item) => {
-        let score = 0
-
-        // Title match (highest priority)
-        if (item.title.toLowerCase().includes(query)) {
-          score += 10
-          // Exact title match or starts with query
-          if (item.title.toLowerCase() === query) {
-            score += 5
-          } else if (item.title.toLowerCase().startsWith(query)) {
-            score += 3
-          }
-        }
-
-        // Content match
-        if (item.content.toLowerCase().includes(query)) {
-          score += 5
-
-          // Find the position of the query in the content for excerpt
-          const position = item.content.toLowerCase().indexOf(query)
-          const start = Math.max(0, position - 30)
-          const end = Math.min(item.content.length, position + query.length + 30)
-
-          // Create excerpt with highlighted query
-          const before = item.content.substring(start, position)
-          const match = item.content.substring(position, position + query.length)
-          const after = item.content.substring(position + query.length, end)
-
-          item.excerpt = start > 0 ? "..." : ""
-          item.excerpt += before
-          item.excerpt += match // This will be highlighted in the UI
-          item.excerpt += after
-          item.excerpt += end < item.content.length ? "..." : ""
-
-          // Store match position for highlighting
-          item.matchStart = before.length + (start > 0 ? 3 : 0)
-          item.matchEnd = before.length + match.length + (start > 0 ? 3 : 0)
-        }
-
-        // Section match
-        if (item.section.toLowerCase().includes(query)) {
-          score += 3
-        }
-
-        // Path match (for direct URL searches)
-        if (item.path.toLowerCase().includes(query)) {
-          score += 2
-        }
-
-        return { ...item, score }
-      })
-
-      // Filter out zero scores and sort by score (descending)
-      const filteredResults = scoredResults
-        .filter((item) => item.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 8) // Limit to top 8 results
-
-      setSearchResults(filteredResults)
+      const results = searchIndex(searchQuery, searchData)
+      setSearchResults(results)
     } else {
       setSearchResults([])
     }
-  }, [searchQuery])
+  }, [searchQuery, searchData])
 
   const navigateToResult = (path: string, external = false) => {
     toggleSearch()
@@ -574,11 +263,11 @@ export default function Navbar() {
                         <div className="text-lg font-medium">{result.title}</div>
                         {result.excerpt && (
                           <p className="text-sm text-gray-300 mt-1">
-                            {result.excerpt.substring(0, result.matchStart)}
+                            {result.excerpt.substring(0, result.matchStart!)}
                             <span className="bg-primary/20 text-primary font-medium px-1 rounded">
-                              {result.excerpt.substring(result.matchStart, result.matchEnd)}
+                              {result.excerpt.substring(result.matchStart!, result.matchEnd!)}
                             </span>
-                            {result.excerpt.substring(result.matchEnd)}
+                            {result.excerpt.substring(result.matchEnd!)}
                           </p>
                         )}
                       </button>
