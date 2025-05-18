@@ -57,10 +57,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="preload" href="/images/network-sphere.png" as="image" type="image/png" fetchpriority="high" />
-        <link rel="preload" href="/images/letstop-logo.png" as="image" type="image/png" fetchpriority="high" />
-      </head>
       <body>
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
@@ -162,7 +158,7 @@ export default function RootLayout({
 
         {/* Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-K2EENPQ3DF" />
-        <Script id="google-analytics" strategy="lazyOnload">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -172,7 +168,7 @@ export default function RootLayout({
         </Script>
 
         {/* Samsung Browser Detection */}
-        <Script id="samsung-detection" strategy="lazyOnload">
+        <Script id="samsung-detection" strategy="afterInteractive">
           {`
             document.addEventListener('DOMContentLoaded', function() {
               if (navigator.userAgent.includes('SamsungBrowser')) {
@@ -183,7 +179,7 @@ export default function RootLayout({
         </Script>
 
         {/* Smartlook - Fixed to properly initialize */}
-        <Script id="smartlook" strategy="lazyOnload">
+        <Script id="smartlook" strategy="afterInteractive">
           {`
             (function(d) {
               var o = function() {};
@@ -209,7 +205,7 @@ export default function RootLayout({
         </Script>
 
         {/* Meta Pixel Code */}
-        <Script id="meta-pixel" strategy="lazyOnload">
+        <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -234,7 +230,7 @@ export default function RootLayout({
         </noscript>
 
         {/* Outbrain */}
-        <Script id="outbrain" strategy="lazyOnload" data-obct type="text/javascript">
+        <Script id="outbrain" strategy="afterInteractive" data-obct type="text/javascript">
           {`
             /* DO NOT MODIFY THIS CODE*/
             !function(_window, _document) {
@@ -265,7 +261,7 @@ export default function RootLayout({
         </Script>
 
         {/* Taboola Pixel Code */}
-        <Script id="taboola" strategy="lazyOnload">
+        <Script id="taboola" strategy="afterInteractive">
           {`
             window._tfa = window._tfa || [];
             window._tfa.push({notify: 'event', name: 'page_view', id: 1663936});
