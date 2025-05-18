@@ -65,22 +65,19 @@ const useInfiniteAutoScroll = (
       // Clear the container
       flexContainer.innerHTML = '';
       
-      // Add back all original cards in their original order, but only 7 on mobile
-      if (isMobile.current) {
-        // Only add the first 7 cards for mobile
-        for (let i = 0; i < Math.min(7, originalCardsArray.length); i++) {
-          flexContainer.appendChild(originalCardsArray[i]);
+      // Only add the first 7 cards for both mobile and desktop
+      const cardsToShow = Math.min(7, originalCardsArray.length);
+      
+      // Add the first 7 cards
+      for (let i = 0; i < cardsToShow; i++) {
+        flexContainer.appendChild(originalCardsArray[i]);
+      }
+      
+      // For desktop only, add duplicates of these 7 cards for infinite scroll
+      if (!isMobile.current) {
+        for (let i = 0; i < cardsToShow; i++) {
+          flexContainer.appendChild(originalCardsArray[i].cloneNode(true) as HTMLElement);
         }
-      } else {
-        // Add all cards for desktop
-        originalCardsArray.forEach(card => {
-          flexContainer.appendChild(card);
-        });
-        
-        // For desktop, add duplicates for infinite scroll
-        originalCardsArray.forEach(card => {
-          flexContainer.appendChild(card.cloneNode(true) as HTMLElement);
-        });
       }
       
       setupComplete.current = true;
