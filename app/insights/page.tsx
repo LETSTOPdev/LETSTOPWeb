@@ -42,7 +42,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 // Calculate base values based on the current date
 function calculateBaseValuesForDate() {
   // Reference date (e.g., January 1, 2023)
-  const referenceDate = new Date(2025, 1, 5).getTime()
+  const referenceDate = new Date(2025, 4, 1).getTime()
 
   // Reference base values on that date
   const referenceDownloads = 1000000
@@ -161,7 +161,7 @@ export default function InsightsPage() {
       <PremiumBackground />
 
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center justify-center px-4 py-20 overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center justify-center px-4 pt-20 pb-10 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 z-0">
           {/* Radial gradient background */}
@@ -185,11 +185,11 @@ export default function InsightsPage() {
       </section>
 
       {/* Our Key Statistics Section */}
-      <section ref={statsRef} className="py-20 px-4 relative">
+      <section ref={statsRef} className="pt-10 pb-20 px-4 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black"></div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               <span className="relative">
                 Our Key Statistics
@@ -323,7 +323,7 @@ export default function InsightsPage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               <span className="relative">
-                Road Safety Insights
+               The State of Road Safety
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
               </span>
             </h2>
