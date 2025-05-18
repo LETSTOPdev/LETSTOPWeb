@@ -590,10 +590,10 @@ export default function AppPage() {
         </div>
       </section>
 
-      <div className="w-full max-w-md mx-auto my-16 border-b border-primary/10"></div>
+      <div className="w-full max-w-md mx-auto my-8 border-b border-primary/10"></div>
 
       {/* LETSTOP Rewards and */}
-      <section ref={(el) => (sectionRefs.current[1] = el)} className="py-20 px-4 relative bg-black/80">
+      <section ref={(el) => (sectionRefs.current[1] = el)} className="py-10 px-4 relative bg-black/80">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black"></div>
 
         {/* Animated background elements */}
@@ -603,7 +603,7 @@ export default function AppPage() {
         </div>
 
         <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               <span className="relative">
                 LETSTOP Rewards and Features
@@ -612,7 +612,7 @@ export default function AppPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
             {/* Drive Scores */}
             <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative group hover:border-primary/30 transition-all duration-300 transform hover:-translate-y-1">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/0 rounded-xl blur opacity-0 group-hover:opacity-100 group-hover:bg-primary/20 transition-all duration-500"></div>
@@ -744,7 +744,7 @@ export default function AppPage() {
         </div>
       </section>
 
-      <div className="w-full max-w-md mx-auto my-16 border-b border-primary/10"></div>
+      <div className="w-full max-w-md mx-auto my-8 border-b border-primary/10"></div>
 
       {/* CTA Section */}
       <section className="py-20 px-4 relative overflow-hidden">
