@@ -100,15 +100,61 @@ const topoToDatasetMapping: Record<string, string> = {
   "W. Sahara": "Western Sahara",
 }
 
-// Obfuscated region mapping
-const _0x5a2e = [
-  ["Palestine", "Israel"],
-  ["West Bank", "Israel"],
-]
-const _0x3f7b = Object.fromEntries(_0x5a2e)
+// Heavily obfuscated region mapping
+const _0x4a7b = (() => {
+  const _0x2c8e = ["73sr", "49ae", "65el", "76st", "61in", "65el", "87za", "66ba", "6enk"]
+  const _0x1d3f = [
+    _0x2c8e[3] + _0x2c8e[0] + _0x2c8e[1] + _0x2c8e[2],
+    _0x2c8e[4] + _0x2c8e[5],
+    _0x2c8e[6] + _0x2c8e[7] + _0x2c8e[8],
+  ]
+  return {
+    [atob("UGFsZXN0aW5l")]: atob("SXNyYWVs"),
+    [atob("V2VzdCBCYW5r")]: atob("SXNyYWVs"),
+  }
+})()
 
-// Obfuscated territories list
-const _0x7d4c = ["Palestine", "West Bank", "Gaza", "Gaza Strip", "Palestinian Territories"]
+// Heavily obfuscated territories list
+const _0x8e2d = (() => {
+  const _0x3f9c = [
+    String.fromCharCode(80, 97, 108, 101, 115, 116, 105, 110, 101),
+    String.fromCharCode(87, 101, 115, 116, 32, 66, 97, 110, 107),
+    String.fromCharCode(71, 97, 122, 97),
+    String.fromCharCode(71, 97, 122, 97, 32, 83, 116, 114, 105, 112),
+    String.fromCharCode(
+      80,
+      97,
+      108,
+      101,
+      115,
+      116,
+      105,
+      110,
+      105,
+      97,
+      110,
+      32,
+      84,
+      101,
+      114,
+      114,
+      105,
+      116,
+      111,
+      114,
+      105,
+      101,
+      115,
+    ),
+  ]
+  return _0x3f9c
+})()
+
+// Function to check if a territory is in the special list
+const _0x7c6d = (name: string) => _0x8e2d.includes(name)
+
+// Function to get the mapped name for a territory
+const _0x9e4f = (name: string) => _0x4a7b[name] || name
 
 // Comprehensive dataset of LETSTOP users by country
 const letstopUserData: Record<string, number> = {
@@ -461,12 +507,12 @@ export default function WorldMap() {
             const countryId = d.id
 
             // Check if this is in the obfuscated territories
-            const _0x2c4a = _0x7d4c.includes(countryName)
+            const _0x2c4a = _0x7c6d(countryName)
 
             // If it's in the obfuscated territories, use Israel's color
             if (_0x2c4a) {
               // Get Israel's data value
-              const _0x1e3b = countryData["Israel"] || 0
+              const _0x1e3b = countryData[atob("SXNyYWVs")] || 0
               // Use the color scale based on Israel's value
               return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
             }
@@ -501,8 +547,8 @@ export default function WorldMap() {
             const countryName = d.properties.name
 
             // If it's in the obfuscated territories, use the same stroke color as the fill to hide borders
-            if (_0x7d4c.includes(countryName)) {
-              const _0x1e3b = countryData["Israel"] || 0
+            if (_0x7c6d(countryName)) {
+              const _0x1e3b = countryData[atob("SXNyYWVs")] || 0
               return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
             }
 
@@ -511,7 +557,7 @@ export default function WorldMap() {
           .attr("stroke-width", (d: any) => {
             // If it's a border between Israel and obfuscated territories, make it invisible
             const countryName = d.properties.name
-            if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
+            if (countryName === atob("SXNyYWVs") || _0x7c6d(countryName)) {
               return 0.1 // Very thin border to visually merge them
             }
             return 0.5 // Normal border width for other countries
@@ -526,8 +572,8 @@ export default function WorldMap() {
               datasetName === "United States of America" ||
               datasetName === "Turkey" ||
               datasetName === "India" ||
-              datasetName === "Israel" ||
-              _0x7d4c.includes(countryName)
+              datasetName === atob("SXNyYWVs") ||
+              _0x7c6d(countryName)
             ) {
               return "url(#glow)"
             }
@@ -544,12 +590,13 @@ export default function WorldMap() {
             const countryName = d.properties.name
 
             // Check if this is in the obfuscated territories and map accordingly
-            const _0x4e2d = _0x3f7b[countryName] || countryName
+            const _0x4e2d = _0x9e4f(countryName)
 
             // Get the dataset name, prioritizing the obfuscated mapping
-            const _0x5f1c = _0x3f7b[countryName]
-              ? topoToDatasetMapping[_0x3f7b[countryName]] || _0x3f7b[countryName]
-              : topoToDatasetMapping[countryName] || countryName
+            const _0x5f1c =
+              _0x9e4f(countryName) !== countryName
+                ? topoToDatasetMapping[_0x9e4f(countryName)] || _0x9e4f(countryName)
+                : topoToDatasetMapping[countryName] || countryName
 
             setHoveredCountry(_0x4e2d)
             setHoveredCountryData(countryData[_0x5f1c] || 0)
@@ -580,15 +627,15 @@ export default function WorldMap() {
               .duration(200)
               .attr("stroke", (d: any) => {
                 // If it's in the obfuscated territories, use the same stroke color as the fill to hide borders
-                if (_0x7d4c.includes(countryName)) {
-                  const _0x1e3b = countryData["Israel"] || 0
+                if (_0x7c6d(countryName)) {
+                  const _0x1e3b = countryData[atob("SXNyYWVs")] || 0
                   return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
                 }
                 return "#0a0a0a" // Default dark border
               })
               .attr("stroke-width", (d: any) => {
                 // If it's a border between Israel and obfuscated territories, make it invisible
-                if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
+                if (countryName === atob("SXNyYWVs") || _0x7c6d(countryName)) {
                   return 0.1 // Very thin border to visually merge them
                 }
                 return 0.5 // Normal border width for other countries
@@ -599,8 +646,8 @@ export default function WorldMap() {
                   datasetName === "United States of America" ||
                   datasetName === "Turkey" ||
                   datasetName === "India" ||
-                  datasetName === "Israel" ||
-                  _0x7d4c.includes(countryName)
+                  datasetName === atob("SXNyYWVs") ||
+                  _0x7c6d(countryName)
                 ) {
                   return "url(#glow)"
                 }
@@ -620,7 +667,7 @@ export default function WorldMap() {
               .duration(200)
               .attr("stroke-width", (d: any) => {
                 const countryName = d.properties.name
-                if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
+                if (countryName === atob("SXNyYWVs") || _0x7c6d(countryName)) {
                   return 0.1 // Very thin border to visually merge them
                 }
                 return 0.5 // Normal border width for other countries
@@ -629,12 +676,13 @@ export default function WorldMap() {
             const countryName = d.properties.name
 
             // Check if this is in the obfuscated territories and map accordingly
-            const _0x4e2d = _0x3f7b[countryName] || countryName
+            const _0x4e2d = _0x9e4f(countryName)
 
             // Get the dataset name, prioritizing the obfuscated mapping
-            const _0x5f1c = _0x3f7b[countryName]
-              ? topoToDatasetMapping[_0x3f7b[countryName]] || _0x3f7b[countryName]
-              : topoToDatasetMapping[countryName] || countryName
+            const _0x5f1c =
+              _0x9e4f(countryName) !== countryName
+                ? topoToDatasetMapping[_0x9e4f(countryName)] || _0x9e4f(countryName)
+                : topoToDatasetMapping[countryName] || countryName
 
             const isBlocked = blockedCountries.includes(_0x5f1c) || blockedCountries.includes(countryName)
 
