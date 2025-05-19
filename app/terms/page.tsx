@@ -211,7 +211,6 @@ export default function TermsPage() {
                   </li>
                 </ul>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mt-8 mb-4">8. LETSTOP Credit</h2>
                 <p className="text-gray-300">
@@ -240,7 +239,6 @@ export default function TermsPage() {
                   liable for any loss or damage resulting therefrom.
                 </p>
               </section>
-
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-white mt-8 mb-4">
                   9. Exchange of LETSTOP Credit into gift or rewards
