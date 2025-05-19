@@ -225,9 +225,19 @@ export default function TermsPage() {
                   for purchasing LETSTOP Credit.
                 </p>
                 <p className="text-gray-300">
-                  LETSTOP Credit received from a mystery box is subject to activity-based retention. If a User does not engage in any
-                  driving activity within thirty (30) days from the date of registration, all LETSTOP Credit obtained through a
-                  mystery box may be automatically removed from the User’s Account without further notice.
+                  LETSTOP Credit received by the User through a mystery box may be subject to expiration. If the User does not
+                  perform any driving activity through the Platform within thirty (30) days from the date of registration, any
+                  LETSTOP Credit granted via a mystery box shall be deemed expired and may be automatically removed from the User’s
+                  Account without notice. The Company shall have no obligation to reinstate or compensate the User for any expired
+                  LETSTOP Credit under this Section.
+                </p>
+                <p className="text-gray-300">
+                  If the User does not actively use the Platform by engaging in any driving activity for a continuous period of
+                  thirty (30) days or more, the Company reserves the right to reduce the User’s LETSTOP Credit balance by ten
+                  percent (10%) every seven (7) days of continued inactivity. Such reductions shall continue until the User resumes
+                  driving activity through the Platform or until the LETSTOP Credit balance reaches zero (0), whichever occurs
+                  first. The Company shall have no obligation to notify the User prior to any such reduction, and shall not be
+                  liable for any loss or damage resulting therefrom.
                 </p>
               </section>
 
