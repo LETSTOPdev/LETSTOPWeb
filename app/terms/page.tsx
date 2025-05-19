@@ -224,6 +224,11 @@ export default function TermsPage() {
                   You acknowledge that LETSTOP may, from time to time, at Company's sole discretion, change the price
                   for purchasing LETSTOP Credit.
                 </p>
+                <p className="text-gray-300">
+                  LETSTOP Credit received from a mystery box is subject to activity-based retention. If a User does not engage in any
+                  driving activity within thirty (30) days from the date of registration, all LETSTOP Credit obtained through a
+                  mystery box may be automatically removed from the User’s Account without further notice.
+                </p>
               </section>
 
               <section className="mb-8">
