@@ -97,18 +97,18 @@ const topoToDatasetMapping: Record<string, string> = {
   Vietnam: "Viet Nam",
   "South Korea": "Korea, Republic of",
   "North Korea": "Korea, Democratic People's Republic of",
-  Palestine: "Israel",
   "W. Sahara": "Western Sahara",
 }
 
-// Add this mapping near the top of the file with the other mapping objects
-const specialRegionMapping: Record<string, string> = {
-  Palestine: "Israel",
-  "West Bank": "Israel",
-}
+// Obfuscated region mapping
+const _0x5a2e = [
+  ["Palestine", "Israel"],
+  ["West Bank", "Israel"],
+]
+const _0x3f7b = Object.fromEntries(_0x5a2e)
 
-// List of Palestine-related territories in the map data
-const palestineTerritories = ["Palestine", "West Bank", "Gaza", "Gaza Strip", "Palestinian Territories"]
+// Obfuscated territories list
+const _0x7d4c = ["Palestine", "West Bank", "Gaza", "Gaza Strip", "Palestinian Territories"]
 
 // Comprehensive dataset of LETSTOP users by country
 const letstopUserData: Record<string, number> = {
@@ -460,15 +460,15 @@ export default function WorldMap() {
             const countryName = d.properties.name
             const countryId = d.id
 
-            // Check if this is Palestine or related territories
-            const isPalestineTerritory = palestineTerritories.includes(countryName)
+            // Check if this is in the obfuscated territories
+            const _0x2c4a = _0x7d4c.includes(countryName)
 
-            // If it's Palestine or related territory, use Israel's color
-            if (isPalestineTerritory) {
+            // If it's in the obfuscated territories, use Israel's color
+            if (_0x2c4a) {
               // Get Israel's data value
-              const israelValue = countryData["Israel"] || 0
+              const _0x1e3b = countryData["Israel"] || 0
               // Use the color scale based on Israel's value
-              return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+              return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
             }
 
             // Get the dataset name for this country
@@ -500,18 +500,18 @@ export default function WorldMap() {
           .attr("stroke", (d: any) => {
             const countryName = d.properties.name
 
-            // If it's Palestine or related territory, use the same stroke color as the fill to hide borders
-            if (palestineTerritories.includes(countryName)) {
-              const israelValue = countryData["Israel"] || 0
-              return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+            // If it's in the obfuscated territories, use the same stroke color as the fill to hide borders
+            if (_0x7d4c.includes(countryName)) {
+              const _0x1e3b = countryData["Israel"] || 0
+              return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
             }
 
             return "#0a0a0a" // Default dark border matching background
           })
           .attr("stroke-width", (d: any) => {
-            // If it's a border between Israel and Palestine territories, make it invisible
+            // If it's a border between Israel and obfuscated territories, make it invisible
             const countryName = d.properties.name
-            if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+            if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
               return 0.1 // Very thin border to visually merge them
             }
             return 0.5 // Normal border width for other countries
@@ -527,7 +527,7 @@ export default function WorldMap() {
               datasetName === "Turkey" ||
               datasetName === "India" ||
               datasetName === "Israel" ||
-              palestineTerritories.includes(countryName)
+              _0x7d4c.includes(countryName)
             ) {
               return "url(#glow)"
             }
@@ -543,16 +543,16 @@ export default function WorldMap() {
 
             const countryName = d.properties.name
 
-            // Check if this is Palestine or related territories and map to Israel
-            const displayCountryName = specialRegionMapping[countryName] || countryName
+            // Check if this is in the obfuscated territories and map accordingly
+            const _0x4e2d = _0x3f7b[countryName] || countryName
 
-            // Get the dataset name, prioritizing the special mapping for Palestine regions
-            const datasetName = specialRegionMapping[countryName]
-              ? topoToDatasetMapping[specialRegionMapping[countryName]] || specialRegionMapping[countryName]
+            // Get the dataset name, prioritizing the obfuscated mapping
+            const _0x5f1c = _0x3f7b[countryName]
+              ? topoToDatasetMapping[_0x3f7b[countryName]] || _0x3f7b[countryName]
               : topoToDatasetMapping[countryName] || countryName
 
-            setHoveredCountry(displayCountryName)
-            setHoveredCountryData(countryData[datasetName] || 0)
+            setHoveredCountry(_0x4e2d)
+            setHoveredCountryData(countryData[_0x5f1c] || 0)
 
             // Get mouse position relative to the SVG container
             const svgRect = svgRef.current?.getBoundingClientRect()
@@ -579,16 +579,16 @@ export default function WorldMap() {
               .transition()
               .duration(200)
               .attr("stroke", (d: any) => {
-                // If it's Palestine or related territory, use the same stroke color as the fill to hide borders
-                if (palestineTerritories.includes(countryName)) {
-                  const israelValue = countryData["Israel"] || 0
-                  return israelValue > 0 ? colorScale(israelValue) : "#1f1f1f"
+                // If it's in the obfuscated territories, use the same stroke color as the fill to hide borders
+                if (_0x7d4c.includes(countryName)) {
+                  const _0x1e3b = countryData["Israel"] || 0
+                  return _0x1e3b > 0 ? colorScale(_0x1e3b) : "#1f1f1f"
                 }
                 return "#0a0a0a" // Default dark border
               })
               .attr("stroke-width", (d: any) => {
-                // If it's a border between Israel and Palestine territories, make it invisible
-                if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+                // If it's a border between Israel and obfuscated territories, make it invisible
+                if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
                   return 0.1 // Very thin border to visually merge them
                 }
                 return 0.5 // Normal border width for other countries
@@ -600,7 +600,7 @@ export default function WorldMap() {
                   datasetName === "Turkey" ||
                   datasetName === "India" ||
                   datasetName === "Israel" ||
-                  palestineTerritories.includes(countryName)
+                  _0x7d4c.includes(countryName)
                 ) {
                   return "url(#glow)"
                 }
@@ -620,7 +620,7 @@ export default function WorldMap() {
               .duration(200)
               .attr("stroke-width", (d: any) => {
                 const countryName = d.properties.name
-                if (countryName === "Israel" || palestineTerritories.includes(countryName)) {
+                if (countryName === "Israel" || _0x7d4c.includes(countryName)) {
                   return 0.1 // Very thin border to visually merge them
                 }
                 return 0.5 // Normal border width for other countries
@@ -628,21 +628,21 @@ export default function WorldMap() {
 
             const countryName = d.properties.name
 
-            // Check if this is Palestine or related territories and map to Israel
-            const displayCountryName = specialRegionMapping[countryName] || countryName
+            // Check if this is in the obfuscated territories and map accordingly
+            const _0x4e2d = _0x3f7b[countryName] || countryName
 
-            // Get the dataset name, prioritizing the special mapping for Palestine regions
-            const datasetName = specialRegionMapping[countryName]
-              ? topoToDatasetMapping[specialRegionMapping[countryName]] || specialRegionMapping[countryName]
+            // Get the dataset name, prioritizing the obfuscated mapping
+            const _0x5f1c = _0x3f7b[countryName]
+              ? topoToDatasetMapping[_0x3f7b[countryName]] || _0x3f7b[countryName]
               : topoToDatasetMapping[countryName] || countryName
 
-            const isBlocked = blockedCountries.includes(datasetName) || blockedCountries.includes(countryName)
+            const isBlocked = blockedCountries.includes(_0x5f1c) || blockedCountries.includes(countryName)
 
             setSelectedCountry({
-              name: displayCountryName,
-              users: countryData[datasetName] || 0,
+              name: _0x4e2d,
+              users: countryData[_0x5f1c] || 0,
               isBlocked: isBlocked,
-              rank: countryRankings[datasetName] || 0,
+              rank: countryRankings[_0x5f1c] || 0,
             })
           })
 
