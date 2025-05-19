@@ -47,17 +47,17 @@ export default function Navbar() {
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-sm border-b border-gray-800/50 transition-colors duration-300">
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-black/90 backdrop-blur-sm border-b border-gray-800/50 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center z-[101] relative">
             <Image src="/images/letstop-logo.png" alt="LETSTOP Logo" width={50} height={50} className="mr-2" />
             <span className="text-2xl font-bold text-white transition-colors duration-300">LETSTOP</span>
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex items-center justify-center flex-1 space-x-6">
+          <nav className="hidden md:flex items-center justify-center flex-1 space-x-6 ml-16">
             <Link href="/" className="text-white hover:text-primary transition-colors relative group py-2">
               <span>Home</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -123,7 +123,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-md transition-colors duration-300">
+        <div className="md:hidden bg-black/95 backdrop-blur-md transition-colors duration-300 relative z-[150]">
           <div className="container mx-auto px-4 py-4">
             <nav className="flex flex-col space-y-4">
               <Link
@@ -191,8 +191,8 @@ export default function Navbar() {
 
       {/* Search Modal */}
       {isSearchOpen && (
-        <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-start justify-center pt-20 px-4">
-          <div className="w-full max-w-2xl bg-[#121212] rounded-lg shadow-xl border border-gray-800">
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-md z-[200] flex items-start justify-center pt-20 px-4">
+          <div className="w-full max-w-2xl bg-[#121212] rounded-lg shadow-xl border border-gray-800 overflow-hidden">
             <div className="p-4 flex justify-between items-center border-b border-gray-800">
               <h2 className="text-xl font-bold text-white">Search</h2>
               <button onClick={toggleSearch} className="text-gray-400 hover:text-white">
@@ -217,7 +217,7 @@ export default function Navbar() {
             </div>
 
             {searchResults.length > 0 ? (
-              <div className="p-4 max-h-[60vh] overflow-y-auto">
+              <div className="p-4 max-h-[60vh] overflow-y-auto relative z-[210]">
                 <ul className="space-y-2">
                   {searchResults.map((result, index) => (
                     <li key={index}>
