@@ -351,7 +351,7 @@ export default function Home() {
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
                     <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32">
                       <Image
-                        src="/images/ten-logo-updated.png"
+                        src="/images/ten-logo.png"
                         alt="Ten"
                         width={180}
                         height={60}
@@ -446,7 +446,7 @@ export default function Home() {
                       <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-lg">
                         <Image
                           src="/images/mario-nawfal-letstop.png"
-                          alt="LETSTOP Team with Mario Nawfal"
+                          alt="LETSTOP Founders with Mario Nawfal"
                           width={600}
                           height={400}
                           className="w-full h-auto"
@@ -454,7 +454,7 @@ export default function Home() {
                           sizes="(max-width: 768px) 100vw, 600px"
                         />
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                          <p className="text-white text-sm">LETSTOP team with Mario Nawfal</p>
+                          <p className="text-white text-sm">LETSTOP Founders with Mario Nawfal</p>
                         </div>
                       </div>
                     </div>

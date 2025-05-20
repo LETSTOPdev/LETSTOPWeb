@@ -16,7 +16,7 @@ export function PartnerLogosSection() {
     { name: "VeChain", logo: "/images/vechain-logo.svg", width: 120, height: 60 },
     { name: "Beitar", logo: "/images/beitar-logo-updated.png", width: 120, height: 60 },
     { name: "NVIDIA", logo: "/images/nvidia-logo.png", width: 120, height: 60 },
-    { name: "TEN", logo: "/images/ten-logo-updated.png", width: 120, height: 60 },
+    { name: "TEN", logo: "/images/ten-logo.png", width: 120, height: 60 },
     { name: "Airalo", logo: "/images/airalo-logo.png", width: 120, height: 60 },
     { name: "Raydium", logo: "/images/raydium-logo.svg", width: 120, height: 60 },
     { name: "BingX", logo: "/images/bingx-logo.svg", width: 120, height: 60 },
