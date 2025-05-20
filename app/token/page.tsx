@@ -269,11 +269,127 @@ export default function TokenPage() {
     setChartInstances(newChartInstances)
   }, [isClient])
 
+  // Add this after the other useEffect hooks
+  useEffect(() => {
+    if (!isClient) return
+
+    // Function to hide Spline watermark
+    const hideWatermark = () => {
+      // Try to find the watermark in various ways
+      const splineViewer = document.querySelector("spline-viewer")
+      if (!splineViewer) return
+
+      // Try to access shadow DOM if available
+      if (splineViewer.shadowRoot) {
+        const watermarks = splineViewer.shadowRoot.querySelectorAll('[data-name="watermark"], .watermark, .logo')
+        watermarks.forEach((el) => {
+          if (el) {
+            el.style.display = "none"
+            el.style.opacity = "0"
+            el.style.visibility = "hidden"
+          }
+        })
+      }
+
+      // Also try to find elements by position style
+      const possibleWatermarks = document.querySelectorAll(
+        'div[style*="position: absolute; right: 0px; bottom: 0px"], div[style*="position:absolute;right:0;bottom:0"]',
+      )
+      possibleWatermarks.forEach((el) => {
+        el.style.display = "none"
+      })
+    }
+
+    // Run the function multiple times to catch the element
+    hideWatermark()
+    const timers = [
+      setTimeout(hideWatermark, 500),
+      setTimeout(hideWatermark, 1000),
+      setTimeout(hideWatermark, 2000),
+      setTimeout(hideWatermark, 3000),
+    ]
+
+    // Also run when the window is resized
+    window.addEventListener("resize", hideWatermark)
+
+    return () => {
+      timers.forEach((timer) => clearTimeout(timer))
+      window.removeEventListener("resize", hideWatermark)
+    }
+  }, [isClient])
+
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Spline Background */}
       <div className="fixed inset-0 z-0 w-full h-full overflow-hidden">
+        {/* Custom style to hide Spline watermark */}
+        <style jsx global>{`
+          spline-viewer::part(logo),
+          spline-viewer::part(watermark),
+          spline-viewer [data-name="watermark"],
+          spline-viewer div[style*="position: absolute; right: 0px; bottom: 0px"],
+          spline-viewer div[style*="position:absolute;right:0;bottom:0"],
+          spline-viewer .watermark,
+          spline-viewer .logo {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+          }
+        `}</style>
+
         <spline-viewer url="https://prod.spline.design/MlELXbeLIo0xsOu3/scene.splinecode"></spline-viewer>
+
+        {/* Watermark cover - positioned precisely over the watermark */}
+        <div className="fixed bottom-0 right-0 z-50 w-[200px] h-[60px] bg-black pointer-events-none"></div>
+
+        {/* Script to remove watermark after load */}
+        {isClient && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              function hideSplineWatermark() {
+                const splineViewer = document.querySelector('spline-viewer');
+                if (!splineViewer) return;
+                
+                // Hide any watermark elements
+                const shadowRoot = splineViewer.shadowRoot;
+                if (shadowRoot) {
+                  const style = document.createElement('style');
+                  style.textContent = \`
+                    .watermark, .logo, [data-name="watermark"], 
+                    div[style*="position: absolute; right: 0px; bottom: 0px"],
+                    div[style*="position:absolute;right:0;bottom:0"] {
+                      display: none !important;
+                      opacity: 0 !important;
+                      visibility: hidden !important;
+                    }
+                  \`;
+                  shadowRoot.appendChild(style);
+                }
+                
+                // Try to find and remove watermark elements
+                const elements = document.querySelectorAll('[data-name="watermark"], .watermark, .logo');
+                elements.forEach(el => {
+                  el.style.display = 'none';
+                  el.style.opacity = '0';
+                  el.style.visibility = 'hidden';
+                });
+              }
+              
+              // Run immediately and after a delay to catch elements that load later
+              hideSplineWatermark();
+              setTimeout(hideSplineWatermark, 500);
+              setTimeout(hideSplineWatermark, 1000);
+              setTimeout(hideSplineWatermark, 2000);
+              
+              // Create a MutationObserver to watch for changes
+              const observer = new MutationObserver(hideSplineWatermark);
+              observer.observe(document.body, { childList: true, subtree: true });
+            `,
+            }}
+          />
+        )}
       </div>
 
       {/* Hero Section */}
@@ -308,9 +424,9 @@ export default function TokenPage() {
             </div>
 
             {/* Title */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-glow">
-            <span className="text-white">STOP</span> <span className="text-primary">Token</span>
-          </h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-glow">
+              <span className="text-white">STOP</span> <span className="text-primary">Token</span>
+            </h1>
 
             {/* Description */}
             <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl">
@@ -358,7 +474,6 @@ export default function TokenPage() {
           <h2 className="text-3xl font-bold mb-12 text-center text-white">Listed On</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-
             {/* Bybit */}
             <div className="group relative overflow-hidden rounded-xl transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
