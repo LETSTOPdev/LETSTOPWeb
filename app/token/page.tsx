@@ -566,7 +566,7 @@ export default function TokenPage() {
             {/* Legend */}
             <div className="bg-black/70 backdrop-blur-sm border border-primary/20 rounded-xl overflow-hidden shadow-[0_0_30px_rgba(255,19,42,0.15)]">
               <div className="p-6 border-b border-gray-800">
-                <h3 className="text-xl font-semibold">$STOP Token Distribution</h3>
+                <h3 className="text-xl font-semibold">STOP Token Distribution</h3>
               </div>
               <div className="divide-y divide-gray-800/50">
                 {/* Allocation 1 */}
@@ -803,7 +803,7 @@ export default function TokenPage() {
 
             <div className="text-center">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 text-white">
-                Ready to Start Earning $STOP Tokens?
+                Ready to Start Earning STOP Tokens?
               </h2>
               <p className="text-gray-300 max-w-3xl mx-auto mb-8 text-lg">
                 Join LETSTOP today and turn your safe driving habits into valuable rewards. Start earning tokens and be
