@@ -693,9 +693,8 @@ export default function AppPage() {
                     strokeLinejoin="round"
                     className="text-primary"
                   >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M16 8h-6.5a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 1 0 5H6" />
-                    <path d="M12 18v2M12 6v2" />
+                    <circle cx="12" cy="12" r="8" />
+                    <circle cx="12" cy="12" r="3" />
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold mb-4">LETSTOP Credits</h3>

@@ -832,11 +832,6 @@ export default function TokenPage() {
                 ></iframe>
               </div>
               {/* TradingView Widget END */}
-              <div className="absolute bottom-4 right-4 text-xs text-blue-500">
-                <a href="https://www.tradingview.com/" rel="noreferrer noopener nofollow" target="_blank">
-                  Track all markets on TradingView
-                </a>
-              </div>
             </div>
           </div>
         </div>
