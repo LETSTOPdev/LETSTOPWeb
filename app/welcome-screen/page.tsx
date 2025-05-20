@@ -362,8 +362,7 @@ export default function Home() {
                     </div>
                     <h3 className="text-xl font-bold mb-3 text-white">Ten</h3>
                     <p className="text-gray-300 text-sm text-center">
-                      Partnering with Ten to enhance road safety awareness and provide exclusive rewards for safe
-                      drivers.
+                      Partnering with Ten to promote road safety and offer exclusive rewards to LETSTOP users.
                     </p>
                   </div>
                 </div>
