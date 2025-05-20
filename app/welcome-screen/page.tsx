@@ -561,9 +561,11 @@ export default function Home() {
                       strokeLinejoin="round"
                       className="text-primary"
                     >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M16 8h-6.5a2.5 2.5 0 0 0 0 5h3a2.5 2.5 0 0 1 0 5H6" />
-                      <path d="M12 18v2M12 6v2" />
+                      {/* Smooth car icon */}
+                      <path d="M5 11l2-6h10l2 6" />
+                      <rect x="3" y="11" width="18" height="7" rx="2" />
+                      <circle cx="7" cy="18" r="2" />
+                      <circle cx="17" cy="18" r="2" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-primary transition-colors duration-300">
