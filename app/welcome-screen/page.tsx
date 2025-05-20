@@ -403,7 +403,7 @@ export default function Home() {
                   </span>
                 </h2>
                 <p className="text-gray-300 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">
-                  LETSTOP is proud to be incubated by IBC Group, a global leader in blockchain investment and
+                  LETSTOP is proud to be incubated by the IBC Group, a global leader in blockchain investments and
                   acceleration, led by Mario Nawfal. Together, we're making driving safer and more rewarding through
                   innovative technology and strategic partnerships.
                 </p>
