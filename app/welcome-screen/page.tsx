@@ -11,7 +11,7 @@ const NetworkSphereAnimation = dynamic(() => import("@/components/network-sphere
 })
 
 export const revalidate = false
-// export const dynamic = "force-static" // Removed redeclaration of dynamic
+// export const dynamic = "force_static" // Removed redeclaration of dynamic
 
 export default function Home() {
   return (
@@ -637,7 +637,17 @@ export default function Home() {
                       strokeLinejoin="round"
                       className="text-primary"
                     >
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                      <path d="M12 18h.01" />
+                      <path d="M8 6h.01" />
+                      <path d="M16 6h.01" />
+                      <path d="M12 6h.01" />
+                      <path d="M8 10h.01" />
+                      <path d="M16 10h.01" />
+                      <path d="M12 10h.01" />
+                      <path d="M8 14h.01" />
+                      <path d="M16 14h.01" />
+                      <path d="M12 14h.01" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-primary transition-colors duration-300">
@@ -661,10 +671,9 @@ export default function Home() {
                       strokeLinejoin="round"
                       className="text-primary"
                     >
-                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="9" cy="7" r="4"></circle>
-                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-semibold mb-2 text-white group-hover:text-primary transition-colors duration-300">

@@ -209,7 +209,7 @@ export default function InsightsPage() {
                 {isLoading ? (
                   <div className="h-12 bg-gray-800/50 rounded animate-pulse mb-2"></div>
                 ) : (
-                  <h3 className="text-4xl md:text-5xl font-bold mb-2 text-white">
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white whitespace-normal break-words">
                     {formatNumber(animatedStats.downloads)}
                   </h3>
                 )}
@@ -233,7 +233,7 @@ export default function InsightsPage() {
                 {isLoading ? (
                   <div className="h-12 bg-gray-800/50 rounded animate-pulse mb-2"></div>
                 ) : (
-                  <h3 className="text-4xl md:text-5xl font-bold mb-2 text-white">
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white whitespace-normal break-words">
                     {formatNumber(animatedStats.kilometers)}
                   </h3>
                 )}
@@ -257,7 +257,9 @@ export default function InsightsPage() {
                 {isLoading ? (
                   <div className="h-12 bg-gray-800/50 rounded animate-pulse mb-2"></div>
                 ) : (
-                  <h3 className="text-4xl md:text-5xl font-bold mb-2 text-white">{animatedStats.countries}+</h3>
+                  <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-white whitespace-normal break-words">
+                    {animatedStats.countries}+
+                  </h3>
                 )}
                 <p className="text-gray-300 text-xl">Active Countries</p>
                 <div className="mt-4 h-1 w-full bg-gray-800 rounded-full overflow-hidden">
@@ -323,7 +325,7 @@ export default function InsightsPage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               <span className="relative">
-               The State of Road Safety
+                The State of Road Safety
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
               </span>
             </h2>
@@ -342,7 +344,9 @@ export default function InsightsPage() {
                     {isLoading ? (
                       <div className="h-10 bg-gray-800/50 rounded animate-pulse mb-2 w-24"></div>
                     ) : (
-                      <h3 className="text-4xl font-bold mb-2 text-white">{animatedStats.deaths}M</h3>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white whitespace-normal break-words">
+                        {animatedStats.deaths}M
+                      </h3>
                     )}
                     <p className="text-gray-300 text-xl">Global road accident deaths/year</p>
                   </div>
@@ -368,7 +372,9 @@ export default function InsightsPage() {
                     {isLoading ? (
                       <div className="h-10 bg-gray-800/50 rounded animate-pulse mb-2 w-24"></div>
                     ) : (
-                      <h3 className="text-4xl font-bold mb-2 text-white">{animatedStats.phoneUsers}%</h3>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white whitespace-normal break-words">
+                        {animatedStats.phoneUsers}%
+                      </h3>
                     )}
                     <p className="text-gray-300 text-xl">Of drivers admit they use phones</p>
                   </div>
@@ -394,7 +400,9 @@ export default function InsightsPage() {
                     {isLoading ? (
                       <div className="h-10 bg-gray-800/50 rounded animate-pulse mb-2 w-24"></div>
                     ) : (
-                      <h3 className="text-4xl font-bold mb-2 text-white">{animatedStats.fatalities}%</h3>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white whitespace-normal break-words">
+                        {animatedStats.fatalities}%
+                      </h3>
                     )}
                     <p className="text-gray-300 text-xl">Of all road fatalities are from texting and driving</p>
                   </div>
@@ -420,7 +428,9 @@ export default function InsightsPage() {
                     {isLoading ? (
                       <div className="h-10 bg-gray-800/50 rounded animate-pulse mb-2 w-24"></div>
                     ) : (
-                      <h3 className="text-4xl font-bold mb-2 text-white">{animatedStats.risk}x</h3>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-2 text-white whitespace-normal break-words">
+                        {animatedStats.risk}x
+                      </h3>
                     )}
                     <p className="text-gray-300 text-xl">Risk compared to driving under the influence</p>
                   </div>
