@@ -344,12 +344,12 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto items-start">
                 {/* Ten */}
                 <div className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-[#0066CC] to-[#4D9FFF] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
-                    <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32">
+                    <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 mt-0">
                       <Image
                         src="/images/ten-logo.png"
                         alt="Ten"
@@ -372,7 +372,7 @@ export default function Home() {
                 <div className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-[#FFC107] to-[#E91E63] opacity-50 blur-xl rounded-xl group-hover:opacity-70 transition-opacity duration-300"></div>
                   <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl p-8 relative h-full flex flex-col items-center justify-center group-hover:border-white/30 transition-all duration-300 transform group-hover:-translate-y-1">
-                    <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32">
+                    <div className="bg-white rounded-xl p-6 mb-6 w-full flex items-center justify-center h-32 mt-0">
                       <Image
                         src="/images/airalo-logo.png"
                         alt="AirAlo"
