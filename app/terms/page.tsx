@@ -725,7 +725,7 @@ export default function TermsPage() {
                 <p className="text-gray-300">
                   In case of any questions or comments regarding these Terms, please contact Company at:{" "}
                   <a href="mailto:support@letstop.io" className="text-primary hover:underline">
-                    support@letstop.io
+                    Support@letstop.io
                   </a>
                 </p>
                 <p className="mt-4 text-gray-300">Last updated: December [25], 2023</p>

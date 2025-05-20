@@ -202,7 +202,7 @@ export default function Footer() {
                   href="mailto:support@letstop.io"
                   className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
                 >
-                  support@letstop.io
+                  Support@letstop.io
                 </a>
               </li>
               <li className="flex items-start">

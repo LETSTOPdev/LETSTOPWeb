@@ -469,7 +469,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-gray-300">
                 Email:{" "}
                 <a href="mailto:support@letstop.io" className="text-primary hover:underline">
-                  support@letstop.io
+                  Support@letstop.io
                 </a>
               </p>
 

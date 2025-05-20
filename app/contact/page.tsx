@@ -169,7 +169,7 @@ export default function ContactPage() {
                     href="mailto:support@letstop.io"
                     className={`flex items-center text-sm font-medium ${activeTab === "support" ? "text-primary" : "text-gray-500 dark:text-gray-400"} transition-colors duration-300 hover:underline`}
                   >
-                    <span>support@letstop.io</span>
+                    <span>Support@letstop.io</span>
                     <ChevronRight className="h-4 w-4 ml-1" />
                   </a>
                 </div>

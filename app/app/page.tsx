@@ -624,7 +624,7 @@ export default function AppPage() {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <ChevronRight className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Get a score after every drive based on how safely you drive</span>
+                    <span className="text-gray-300">A driving score based on your driving behaviour</span>
                   </li>
                   <li className="flex items-start">
                     <ChevronRight className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />

@@ -1312,8 +1312,8 @@ export default function FaqPage() {
         <div className="text-center bg-black/50 backdrop-blur-md p-8 rounded-2xl border border-gray-800 shadow-xl">
           <p className="text-gray-200 mb-6 text-lg">
             For more information, contact LETSTOP at{" "}
-            <a href="mailto:support@letstop.io" className="text-primary hover:underline font-medium">
-              support@letstop.io
+            <a href="mailto:Support@letstop.io" className="text-primary hover:underline font-medium">
+              Support@letstop.io
             </a>
           </p>
           <a
