@@ -628,7 +628,7 @@ export default function AppPage() {
                   </li>
                   <li className="flex items-start">
                     <ChevronRight className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Your average score shows your driving habits over time</span>
+                    <span className="text-gray-300">Your average score reflects your driving habits</span>
                   </li>
                   <li className="flex items-start">
                     <ChevronRight className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
@@ -735,7 +735,7 @@ export default function AppPage() {
                   </li>
                   <li className="flex items-start">
                     <ChevronRight className="h-5 w-5 text-primary mr-2 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-300">Redeem credits for partner vouchers</span>
+                    <span className="text-gray-300">Redeem vouchers with your credits</span>
                   </li>
                 </ul>
               </div>
