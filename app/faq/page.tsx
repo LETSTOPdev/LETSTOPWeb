@@ -46,51 +46,51 @@ export default function FaqPage() {
         {/* FAQ Categories */}
         <div className="mb-12 flex flex-wrap justify-center gap-4">
           <button
-            className={`${activeCategory === "credits" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "credits" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "credits" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "credits" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("credits")}
             aria-label="LETSTOP Credits"
           >
-            <Coins className={`h-4 w-4 ${activeCategory === "credits" ? "text-white" : "text-primary"}`} />
+            <Coins className={`h-10 w-10 ${activeCategory === "credits" ? "text-white" : "text-primary"}`} />
             {activeCategory === "credits" && "LETSTOP Credits"}
           </button>
           <button
-            className={`${activeCategory === "xp" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "xp" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "xp" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "xp" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("xp")}
             aria-label="Experience Points"
           >
-            <Award className={`h-4 w-4 ${activeCategory === "xp" ? "text-white" : "text-primary"}`} />
+            <Award className={`h-10 w-10 ${activeCategory === "xp" ? "text-white" : "text-primary"}`} />
             {activeCategory === "xp" && "Experience Points"}
           </button>
           <button
-            className={`${activeCategory === "app" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "app" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "app" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "app" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("app")}
             aria-label="App Features"
           >
-            <Smartphone className={`h-4 w-4 ${activeCategory === "app" ? "text-white" : "text-primary"}`} />
+            <Smartphone className={`h-10 w-10 ${activeCategory === "app" ? "text-white" : "text-primary"}`} />
             {activeCategory === "app" && "App Features"}
           </button>
           <button
-            className={`${activeCategory === "crypto" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "crypto" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "crypto" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "crypto" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("crypto")}
             aria-label="Cryptocurrency"
           >
-            <Bitcoin className={`h-4 w-4 ${activeCategory === "crypto" ? "text-white" : "text-primary"}`} />
+            <Bitcoin className={`h-10 w-10 ${activeCategory === "crypto" ? "text-white" : "text-primary"}`} />
             {activeCategory === "crypto" && "Cryptocurrency"}
           </button>
           <button
-            className={`${activeCategory === "referral" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "referral" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "referral" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "referral" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("referral")}
             aria-label="Referral System"
           >
-            <Share2 className={`h-4 w-4 ${activeCategory === "referral" ? "text-white" : "text-primary"}`} />
+            <Share2 className={`h-10 w-10 ${activeCategory === "referral" ? "text-white" : "text-primary"}`} />
             {activeCategory === "referral" && "Referral System"}
           </button>
           <button
-            className={`${activeCategory === "wallet" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "wallet" ? "px-4" : "w-10 h-10 justify-center"}`}
+            className={`${activeCategory === "wallet" ? "bg-primary px-4" : "bg-black/60 hover:bg-primary/10"} border border-gray-800 text-white py-2 rounded-full text-sm transition-colors shadow-md flex items-center gap-2 ${activeCategory === "wallet" ? "px-4" : "w-20 h-20 justify-center"}`}
             onClick={() => setCategory("wallet")}
             aria-label="Wallet"
           >
-            <Wallet className={`h-4 w-4 ${activeCategory === "wallet" ? "text-white" : "text-primary"}`} />
+            <Wallet className={`h-10 w-10 ${activeCategory === "wallet" ? "text-white" : "text-primary"}`} />
             {activeCategory === "wallet" && "Wallet"}
           </button>
         </div>
@@ -100,7 +100,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Coins className="h-5 w-5 text-primary" />
+                <Coins className="h-10 w-10 text-primary" />
                 LETSTOP Credits
               </h2>
             </div>
@@ -114,7 +114,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I earn credits with the app?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -137,7 +137,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What can I do with LETSTOP credits?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -157,7 +157,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How can I enhance my earnings in the app?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-3"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-3"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -181,7 +181,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What kind of rewards can I expect for good driving behavior?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-4"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-4"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -202,7 +202,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How does leveling up with XP affect my rewards in LETSTOP?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-5"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-5"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -225,7 +225,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How are LETSTOP credits calculated in the app?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-6"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-6"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -249,7 +249,7 @@ export default function FaqPage() {
                     Should I trade my credits right away or is there a benefit to holding on to them?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-7"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-7"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -272,7 +272,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Can I lose LETSTOP credits?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-8"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-8"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -294,7 +294,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Do you have a referral system?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["credits-9"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["credits-9"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -316,7 +316,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Award className="h-5 w-5 text-primary" />
+                <Award className="h-10 w-10 text-primary" />
                 Experience Points (XP)
               </h2>
             </div>
@@ -330,7 +330,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is the role of Experience Points (XP) in the app?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["xp-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["xp-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["xp-1"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -350,7 +350,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I earn more XP?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["xp-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["xp-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["xp-2"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -369,7 +369,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Smartphone className="h-5 w-5 text-primary" />
+                <Smartphone className="h-10 w-10 text-primary" />
                 App Features
               </h2>
             </div>
@@ -383,7 +383,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How does the app promote safer driving?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-1"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -404,7 +404,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How does LETSTOP's AI help me improve my driving behavior?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-2"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -425,7 +425,7 @@ export default function FaqPage() {
                     What are the benefits of using LETSTOP's smart driving technology?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-3"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-3"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-3"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -446,7 +446,7 @@ export default function FaqPage() {
                     Can I link other media systems like Apple Music or Spotify with the app?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-4"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-4"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-4"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -465,7 +465,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is the STOP Store?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-5"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-5"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-5"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -485,7 +485,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What are Mystery Boxes?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-6"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-6"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-6"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -505,7 +505,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How can I obtain a Mystery Box?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-7"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-7"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-7"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -524,7 +524,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What rewards can I find in a Mystery Box?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-8"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-8"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-8"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -543,7 +543,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Is there a limit to how many Mystery Boxes I can purchase?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-9"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-9"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-9"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -562,7 +562,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Can the rewards in Mystery Boxes expire?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["app-10"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["app-10"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["app-10"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -581,7 +581,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Bitcoin className="h-5 w-5 text-primary" />
+                <Bitcoin className="h-10 w-10 text-primary" />
                 Cryptocurrency
               </h2>
             </div>
@@ -595,7 +595,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is cryptocurrency?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["crypto-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["crypto-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["crypto-1"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -615,7 +615,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How does cryptocurrency relate to the app?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["crypto-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["crypto-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["crypto-2"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -634,7 +634,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What's a crypto exchange, and how do I use it?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["crypto-3"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["crypto-3"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["crypto-3"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -656,7 +656,7 @@ export default function FaqPage() {
                     I've never used crypto before. How easy is it to get started with your app?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["crypto-4"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["crypto-4"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["crypto-4"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -678,7 +678,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How can I convert my STOP Tokens into traditional currency?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["crypto-5"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["crypto-5"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["crypto-5"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -698,7 +698,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Share2 className="h-5 w-5 text-primary" />
+                <Share2 className="h-10 w-10 text-primary" />
                 Referral System
               </h2>
             </div>
@@ -712,7 +712,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How does the LETSTOP referral system work?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -735,7 +735,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I refer friends to LETSTOP?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -757,7 +757,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Is there a limit to how many people I can refer to LETSTOP?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-3"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-3"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -781,7 +781,7 @@ export default function FaqPage() {
                     bonus?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-4"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-4"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -802,7 +802,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Can I track the bonuses I earn from referrals?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-5"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-5"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -823,7 +823,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How long will I receive these bonuses?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["referral-6"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["referral-6"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -841,7 +841,7 @@ export default function FaqPage() {
           <div className="bg-black/60 backdrop-blur-md border border-gray-800 rounded-xl overflow-hidden mb-16 shadow-xl">
             <div className="p-6 border-b border-gray-800">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                <Wallet className="h-5 w-5 text-primary" />
+                <Wallet className="h-10 w-10 text-primary" />
                 Wallet
               </h2>
             </div>
@@ -855,7 +855,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What assets can be traded in the wallet?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-1"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-1"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-1"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -874,7 +874,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Which network does the wallet operate on?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-2"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-2"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-2"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -896,7 +896,7 @@ export default function FaqPage() {
                     What is the difference between LETSTOP Credits and STOP Tokens?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-3"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-3"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-3"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -916,7 +916,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is the meaning of "convert"?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-4"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-4"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-4"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -936,7 +936,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Do you have access to my wallet?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-5"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-5"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-5"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -955,7 +955,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What happens if I lose my passcode?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-6"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-6"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-6"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -974,7 +974,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Can I restore my wallet if I lose my Secret Recovery Phrase?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-7"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-7"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-7"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -994,7 +994,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What are the 12 words used for?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-8"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-8"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-8"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -1016,7 +1016,7 @@ export default function FaqPage() {
                     Should I share my Secret Recovery Phrase with staff or anyone who asks?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-9"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-9"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div className={`faq-answer mt-4 text-gray-300 ${openItems["wallet-9"] ? "max-h-[500px]" : "max-h-0"}`}>
@@ -1035,7 +1035,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How many attempts do I have to enter my passcode?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-10"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-10"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1056,7 +1056,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is the minimum amount for a transfer?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-11"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-11"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1077,7 +1077,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How long does a transfer take to complete from the wallet?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-12"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-12"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1098,7 +1098,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Can I transfer other currencies to the LETSTOP Wallet?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-13"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-13"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1120,7 +1120,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How many transactions can I do in a day?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-14"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-14"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1141,7 +1141,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I send credits and tokens?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-15"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-15"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1162,7 +1162,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How can I deposit, receive, or send tokens?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-16"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-16"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1184,7 +1184,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I convert STOP tokens into LETSTOP credits?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-17"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-17"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1206,7 +1206,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Does LETSTOP charge a fee on transactions?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-18"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-18"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1229,7 +1229,7 @@ export default function FaqPage() {
                     I accidentally sent tokens to the wrong wallet. Can I recover the funds?
                   </h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-19"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-19"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1250,7 +1250,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">How do I install the LETSTOP Wallet?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-20"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-20"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1271,7 +1271,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">What is my public address?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-21"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-21"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
@@ -1292,7 +1292,7 @@ export default function FaqPage() {
                 >
                   <h3 className="text-lg font-medium">Why hasn't my balance updated?</h3>
                   <ChevronDown
-                    className={`h-5 w-5 text-primary transition-transform ${openItems["wallet-22"] ? "rotate-180" : ""}`}
+                    className={`h-10 w-10 text-primary transition-transform ${openItems["wallet-22"] ? "rotate-180" : ""}`}
                   />
                 </button>
                 <div
