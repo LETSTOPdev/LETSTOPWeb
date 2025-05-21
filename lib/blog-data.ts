@@ -19,7 +19,13 @@ export interface Article {
   excerpt: string
   content: ArticleParagraph[]
   tags?: string[]
+  author?: {
+    name: string
+    avatar?: string
+  }
+  readTime?: string
 }
+
 
 // Blog articles data
 export const articles: Article[] = [
@@ -28,6 +34,11 @@ export const articles: Article[] = [
     title: "The Future of Road Safety: How AI is Changing the Game",
     category: "Technology",
     date: "May 15, 2025",
+    author: {
+      name: "Itay Shaked",
+      avatar: "/images/itay.png",
+    },
+    readTime: "6 min",
     image: "/futuristic-ai-road-safety.png",
     slug: "future-of-road-safety-ai",
     featured: true,
@@ -143,7 +154,7 @@ export const articles: Article[] = [
       },
       {
         type: "image",
-        src: "/cryptocurrency-blockchain-visualization.png",
+        src: "/cryptocurrency-blockchain-visualization.webp",
         alt: "STOP token distribution visualization",
         caption: "STOP token allocation across different segments of the ecosystem",
       },

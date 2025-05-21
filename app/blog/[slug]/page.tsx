@@ -97,12 +97,21 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{article.title}</h1>
 
-            <div className="flex items-center mb-8">
+          <div className="flex items-center mb-8">
+            {article.author?.avatar ? (
+              <Image
+                src={article.author.avatar}
+                alt={article.author.name}
+                width={40}
+                height={40}
+                className="rounded-full mr-3"
+              />
+            ) : (
               <div className="w-10 h-10 rounded-full bg-gray-700 mr-3"></div>
-              <div>
-                <div className="text-sm font-medium">LETSTOP Team</div>
-                <div className="text-xs text-gray-400">5 min read</div>
-              </div>
+            )}
+            <div>
+              <div className="text-sm font-medium">{article.author?.name || "Unknown Author"}</div>
+              <div className="text-xs text-gray-400">{article.readTime || "Read time not available"}</div>
             </div>
           </div>
         </div>
