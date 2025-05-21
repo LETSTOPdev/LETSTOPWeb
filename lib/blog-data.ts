@@ -165,7 +165,7 @@ export const articles: Article[] = [
       },
       {
         type: "paragraph",
-        text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. <a href="https://medium.com/@letstop?source=post_page---byline--5e1d90298dce---------------------------------------" target="_blank" rel="noopener noreferrer">Read more from LETSTOP on Medium</a>.',
+        text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. <a href="https://medium.com/@letstop?source=post_page---byline--5e1d90298dce" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline hover:text-white transition-colors">Read more from LETSTOP on Medium</a>.',
       },
     ],
 },
