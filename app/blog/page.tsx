@@ -269,7 +269,7 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
+      {/* Newsletter Section 
       <section className="py-20 px-4 relative">
         <div className="container mx-auto max-w-6xl">
           <div
@@ -302,7 +302,8 @@ export default function BlogPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> 
+      */}
 
       {/* Animation styles */}
       <style jsx global>{`
