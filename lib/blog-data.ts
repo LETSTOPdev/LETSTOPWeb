@@ -119,7 +119,7 @@ export const articles: Article[] = [
     title: "STOP Token: Understanding the Tokenomics",
     category: "Token Updates",
     date: "May 10, 2025",
-    image: "/cryptocurrency-token-visualization.png",
+    image: "/cryptocurrency-blockchain-visualization.webp",
     slug: "stop-token-understanding-tokenomics",
     excerpt: "A deep dive into the STOP token ecosystem, its utility, and how it powers the LETSTOP platform.",
     tags: ["Cryptocurrency", "Tokenomics", "Blockchain", "STOP Token"],
