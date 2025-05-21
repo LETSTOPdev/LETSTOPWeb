@@ -147,7 +147,12 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               {article.content.map((paragraph, index) => (
                 <div key={index}>
                   {paragraph.type === "heading" && <h2 className="text-2xl font-bold mt-8 mb-4">{paragraph.text}</h2>}
-                  {paragraph.type === "paragraph" && <p className="mb-6 text-gray-300">{paragraph.text}</p>}
+                  {paragraph.type === "paragraph" && (
+                    <p
+                      className="mb-6 text-gray-300"
+                      dangerouslySetInnerHTML={{ __html: paragraph.text }}
+                    />
+                  )}
                   {paragraph.type === "image" && (
                     <div className="my-8">
                       <div className="relative h-[250px] rounded-lg overflow-hidden">
