@@ -143,7 +143,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               animatedElements.includes("article-content") ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
-            <div className="prose prose-invert prose-lg max-w-none">
+            <div className="prose prose-invert prose-lg max-w-none [&_a]:text-primary [&_a:hover]:underline [&_a:hover]:text-white transition-colors">
               {article.content.map((paragraph, index) => (
                 <div key={index}>
                   {paragraph.type === "heading" && <h2 className="text-2xl font-bold mt-8 mb-4">{paragraph.text}</h2>}
