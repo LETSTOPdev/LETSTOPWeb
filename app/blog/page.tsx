@@ -67,7 +67,7 @@ export default function BlogPage() {
       <PremiumBackground />
 
       {/* Hero Section */}
-      <section className="relative min-h-[20h] flex items-center justify-center px-4 py-12 overflow-hidden">
+      <section className="relative min-h-[40vh] flex items-center justify-center px-4 pt-12 pb-0 overflow-hidden">
         {/* Background effects */}
         <div className="absolute inset-0 z-0">
           {/* Radial gradient background */}
