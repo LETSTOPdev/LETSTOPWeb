@@ -116,6 +116,61 @@ export const articles: Article[] = [
   },
   {
     id: 2,
+    title: "Understanding Blockchain: How Technology Is Changing Industries, Including Road Safety",
+    category: "Technology",
+    date: "May 21, 2025",
+    author: {
+      name: "Itay Shaked",
+      avatar: "/images/itay.png",
+    },
+    readTime: "5 min",
+    image: "/understanding-blockchain-road-safety.png",
+    slug: "understanding-blockchain-road-safety",
+    featured: false,
+    excerpt:
+      "Explore how blockchain technology goes far beyond crypto—transforming industries like supply chain, insurance, and even road safety with real-world impact.",
+    tags: ["Blockchain", "Road Safety", "Technology", "Transparency"],
+    content: [
+      {
+        type: "paragraph",
+        text: "Blockchain has become one of the most talked-about technologies in recent years, with applications that go far beyond cryptocurrency. But how does blockchain technology work, and how can it be applied to industries like road safety?",
+      },
+      {
+        type: "heading",
+        text: "What Is Blockchain?",
+      },
+      {
+        type: "paragraph",
+        text: 'At its core, blockchain is a decentralized, distributed ledger technology that records transactions across many computers so that the record cannot be altered retroactively. This ensures transparency, security, and accountability. [Learn more on Wikipedia](https://en.wikipedia.org/wiki/Blockchain).',
+      },
+      {
+        type: "heading",
+        text: "How Blockchain Can Enhance Road Safety",
+      },
+      {
+        type: "paragraph",
+        text: "Blockchain is already being used in various industries to track and verify data securely, from supply chain management to healthcare. In the context of road safety, blockchain could be used to securely record driving behavior, verify rewards, and ensure transparency in the way data is handled.",
+      },
+      {
+        type: "paragraph",
+        text: 'LETSTOP uses blockchain to track safe driving habits and convert them into tangible rewards, such as vouchers and even cryptocurrency. [Follow us on X](https://x.com/LETST0P)',
+      },
+      {
+        type: "heading",
+        text: "The Future of Blockchain in Road Safety",
+      },
+      {
+        type: "paragraph",
+        text: "Imagine a future where insurance premiums are reduced based on blockchain-verified driving behavior, or where smart contracts automatically reward drivers for responsible actions on the road. The possibilities are endless.",
+      },
+      {
+        type: "paragraph",
+        text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. [Read more from LETSTOP on Medium](https://medium.com/@letstop?source=post_page---byline--5e1d90298dce---------------------------------------)',
+      },
+    ],
+},
+{
+    id: 3,
     title: "STOP Token: Understanding the Tokenomics",
     category: "Token Updates",
     date: "May 10, 2025",
@@ -205,7 +260,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     title: "5 Ways to Improve Your Driving Score",
     category: "Road Safety",
     date: "May 5, 2025",
@@ -295,7 +350,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     title: "How LETSTOP is Building a Global Community of Safe Drivers",
     category: "Community",
     date: "April 28, 2025",
@@ -385,7 +440,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     title: "The Technology Behind Distracted Driving Detection",
     category: "Technology",
     date: "April 20, 2025",
@@ -487,7 +542,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 6,
+    id: 7,
     title: "Road Safety Statistics: Why We Need Innovation Now",
     category: "Road Safety",
     date: "April 15, 2025",
@@ -590,7 +645,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 7,
+    id: 8,
     title: "LETSTOP Partners with Major Transportation Companies",
     category: "Community",
     date: "April 10, 2025",
@@ -688,7 +743,7 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 8,
+    id: 9,
     title: "Q1 2025 STOP Token Performance Report",
     category: "Token Updates",
     date: "April 5, 2025",
