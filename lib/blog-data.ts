@@ -154,7 +154,7 @@ export const articles: Article[] = [
       },
       {
         type: "image",
-        src: "/cryptocurrency-blockchain-visualization.webp",
+        src: "/cryptocurrency-blockchain-visualization.png",
         alt: "STOP token distribution visualization",
         caption: "STOP token allocation across different segments of the ecosystem",
       },
