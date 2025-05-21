@@ -141,7 +141,7 @@ export const articles: Article[] = [
       },
       {
         type: "paragraph",
-        text: 'At its core, blockchain is a decentralized, distributed ledger technology that records transactions across many computers so that the record cannot be altered retroactively. This ensures transparency, security, and accountability. [Learn more on Wikipedia](https://en.wikipedia.org/wiki/Blockchain).',
+        text: 'At its core, blockchain is a decentralized, distributed ledger technology that records transactions across many computers so that the record cannot be altered retroactively. This ensures transparency, security, and accountability. <a href="https://en.wikipedia.org/wiki/Blockchain" target="_blank" rel="noopener noreferrer">Learn more on Wikipedia</a>.',
       },
       {
         type: "heading",
@@ -153,7 +153,7 @@ export const articles: Article[] = [
       },
       {
         type: "paragraph",
-        text: 'LETSTOP uses blockchain to track safe driving habits and convert them into tangible rewards, such as vouchers and even cryptocurrency. [Follow us on X](https://x.com/LETST0P)',
+        text: 'LETSTOP uses blockchain to track safe driving habits and convert them into tangible rewards, such as vouchers and even cryptocurrency. <a href="https://x.com/LETST0P" target="_blank" rel="noopener noreferrer">Follow us on X</a>.',
       },
       {
         type: "heading",
@@ -165,7 +165,7 @@ export const articles: Article[] = [
       },
       {
         type: "paragraph",
-        text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. [Read more from LETSTOP on Medium](https://medium.com/@letstop?source=post_page---byline--5e1d90298dce---------------------------------------)',
+        text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. <a href="https://medium.com/@letstop?source=post_page---byline--5e1d90298dce---------------------------------------" target="_blank" rel="noopener noreferrer">Read more from LETSTOP on Medium</a>.',
       },
     ],
 },
