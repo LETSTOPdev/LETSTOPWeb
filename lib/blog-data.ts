@@ -33,8 +33,8 @@ export const articles: Article[] = [
   {
     id: 1,
     title: "Drive Safely, Earn & Repeat: Introducing LETSTOP and the $STOP Token",
-    category: "Technology",
-    date: "May 21, 2025",
+    category: "Token Updates",
+    date: "May 15, 2025",
     author: {
       name: "Itay Shaked",
       avatar: "/images/itay.png",
@@ -122,7 +122,7 @@ export const articles: Article[] = [
     id: 2,
     title: "Understanding Blockchain: How Technology Is Changing Industries, Including Road Safety",
     category: "Technology",
-    date: "May 21, 2025",
+    date: "May 17, 2025",
     author: {
       name: "Itay Shaked",
       avatar: "/images/itay.png",
@@ -177,7 +177,7 @@ export const articles: Article[] = [
   "id": 3,
   "title": "The Ripple Effect of Safe Driving: Why Every Decision Behind the Wheel Counts",
   "category": "Road Safety",
-  "date": "May 22, 2025",
+  "date": "May 18, 2025",
   "author": {
     "name": "Itay Shaked",
     "avatar": "/images/itay.png"
@@ -235,7 +235,7 @@ export const articles: Article[] = [
   "id": 4,
   "title": "LETSTOP: Revolutionizing Road Safety Through Rewarding Driving Habits",
   "category": "Technology",
-  "date": "May 22, 2025",
+  "date": "May 19, 2025",
   "author": {
     "name": "Itay Shaked",
     "avatar": "/images/itay.png"
@@ -329,7 +329,7 @@ export const articles: Article[] = [
   "id": 5,
   "title": "The Psychology of Rewards: Why Incentivizing Good Driving Works",
   "category": "Psychology",
-  "date": "May 22, 2025",
+  "date": "May 20, 2025",
   "author": {
     "name": "Itay Shaked",
     "avatar": "/images/itay.png"
@@ -379,10 +379,10 @@ export const articles: Article[] = [
   "id": 6,
   "title": "The Science Behind Distracted Driving and How We Can Stay Focused",
   "category": "Road Safety",
-  "date": "May 22, 2025",
+  "date": "May 21, 2025",
   "author": {
-    "name": "Itay Shaked",
-    "avatar": "/images/itay.png"
+    "name": "LETSTOP Team",
+    "avatar": "/images/letstop-logo.png"
   },
   "readTime": "5 min",
   "image": "/blog/Science-Behind-Distracted-Driving.webp",
