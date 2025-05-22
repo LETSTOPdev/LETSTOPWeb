@@ -41,7 +41,6 @@ export const articles: Article[] = [
     readTime: "6 min",
     image: "/futuristic-ai-road-safety.png",
     slug: "future-of-road-safety-ai",
-    featured: true,
     excerpt:
       "Discover how artificial intelligence is revolutionizing road safety and creating a new paradigm for drivers worldwide.",
     tags: ["AI", "Road Safety", "Technology", "Machine Learning"],
