@@ -71,7 +71,7 @@ export default function HorizontalScrollSection() {
             <div className="w-72 flex-shrink-0 bg-black/40 backdrop-blur-sm rounded-lg overflow-hidden group border border-gray-800 hover:border-primary/30 transition-all duration-300">
               <div className="h-40 relative overflow-hidden">
                 <Image
-                  src="/images/network-sphere.png"
+                  src="/images/network-sphere.webp"
                   alt="Connected Vehicles"
                   width={400}
                   height={300}

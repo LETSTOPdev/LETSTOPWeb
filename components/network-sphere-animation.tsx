@@ -143,7 +143,7 @@ export default function NetworkSphereAnimation() {
         style={{ transformStyle: "preserve-3d" }}
       >
         <Image
-          src="/images/network-sphere.png"
+          src="/images/network-sphere.webp"
           alt="Network Sphere"
           width={1000}
           height={1000}

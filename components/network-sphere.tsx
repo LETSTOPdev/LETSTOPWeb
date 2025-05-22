@@ -91,7 +91,7 @@ export default function NetworkSphere() {
       </div>
       <Image
         ref={imageRef as any}
-        src="/images/network-sphere.png"
+        src="/images/network-sphere.webp"
         alt="Interactive Network Sphere"
         width={400}
         height={400}
