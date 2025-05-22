@@ -26,6 +26,7 @@ export interface Article {
   readTime?: string
 }
 
+//   (featured: true,) - for the featured article the thing inside the () 
 
 // Blog articles data
 export const articles: Article[] = [
@@ -123,7 +124,7 @@ export const articles: Article[] = [
       avatar: "/images/itay.png",
     },
     readTime: "5 min",
-    image: "/understanding-blockchain-road-safety.png",
+    image: "/understanding-blockchain-road-safety.webp",
     slug: "understanding-blockchain-road-safety",
     featured: false,
     excerpt:
