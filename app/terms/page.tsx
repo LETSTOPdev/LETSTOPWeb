@@ -424,7 +424,7 @@ export default function TermsPage() {
                     jurisdiction to hold a driver's license
                   </li>
                   <li>
-                    The Platform does not include any features intended to detect, remind, or alert Users about the presence of children or other passengers in the vehicle. It is solely the User’s responsibility to check the vehicle before exiting to ensure no individuals, including children, are left behind. The Company disclaims any and all liability for damages, injuries, or fatalities resulting from the failure to check for occupants in the vehicle after use of the Platform.
+                    While the Platform may include a “forgot my child” or similar reminder feature, the Company assumes no responsibility or liability of any kind related to its use, failure, or effectiveness. The User remains solely responsible for checking the vehicle and ensuring no passengers are left behind.
                   </li>
                   <li>
                     The Company assumes no liability for damage and/or injury caused by the misuse of the Platform while
