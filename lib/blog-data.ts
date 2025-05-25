@@ -328,7 +328,7 @@ export const articles: Article[] = [
   {
   "id": 5,
   "title": "The Psychology of Rewards: Why Incentivizing Good Driving Works",
-  "category": "Psychology",
+  "category": "Road Safety",
   "date": "May 20, 2025",
   "author": {
     "name": "Itay Shaked",
