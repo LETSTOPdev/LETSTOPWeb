@@ -35,6 +35,7 @@ export const articles: Article[] = [
     title: "Drive Safely, Earn & Repeat: Introducing LETSTOP and the $STOP Token",
     category: "Token Updates",
     date: "May 15, 2025",
+    featured: false,
     author: {
       name: "Itay Shaked",
       avatar: "/images/itay.png",
