@@ -47,7 +47,7 @@ export default function BlogPage() {
     }
   }
 
-  const categories = ["All", ...new Set(articles.map((article) => article.category))]
+  const categories = ["All", "Road Safety", "Technology", "Token Updates", "Community"]
 
   const featuredArticle = articles.find((article) => article.featured)
 
