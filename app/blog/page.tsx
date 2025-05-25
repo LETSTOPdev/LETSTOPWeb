@@ -127,7 +127,7 @@ export default function BlogPage() {
                       </Link>
                     </div>
                   </div>
-                  <div className="relative h-64 md:h-auto overflow-hidden">
+                  <div className="relative aspect-[3/2] overflow-hidden">
                     <Image
                       src={featuredArticle.image || "/placeholder.svg"}
                       alt={featuredArticle.title}
@@ -221,7 +221,7 @@ export default function BlogPage() {
                 >
                   <Link href={`/blog/${article.slug}`} className="group">
                     <div className="bg-black/60 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden relative group hover:border-primary/30 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-[0_10px_30px_-5px_rgba(255,19,42,0.3)] h-full flex flex-col">
-                      <div className="relative h-48 overflow-hidden">
+                      <div className="relative aspect-[3/2] overflow-hidden">
                         <Image
                           src={article.image || "/placeholder.svg"}
                           alt={article.title}
