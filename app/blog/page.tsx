@@ -52,6 +52,8 @@ export default function BlogPage() {
   const featuredArticle = articles.find((article) => article.featured)
 
   const filteredArticles = articles
+    .slice() // Prevent mutating original array
+    .sort((a, b) => b.id - a.id) // Sort by ID descending
     .filter((article) => !article.featured || activeFilter !== "All")
     .filter((article) => activeFilter === "All" || article.category === activeFilter)
     .filter(
