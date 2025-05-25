@@ -46,7 +46,9 @@ export default function BlogPage() {
       observerRefs.current.set(id, element)
     }
   }
-
+  // const categories = ["All", ...new Set(articles.map((article) => article.category))] -- This line can be used to dynamically generate categories based on the articles data
+  // You can uncomment the above line to dynamically generate categories based on the articles data
+  // Static categories for filtering
   const categories = ["All", "Road Safety", "Technology", "Token Updates", "Community"]
 
   const featuredArticle = articles.find((article) => article.featured)
