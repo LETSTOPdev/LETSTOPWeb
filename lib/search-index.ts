@@ -304,7 +304,14 @@ export const coreSearchIndex: SearchResultItem[] = [
     content:
       "Interested in partnering with LETSTOP? Contact us to discuss potential collaboration opportunities and how we can work together.",
   },
-
+   // Blog Page
+  {
+    title: "LETSTOP Blog",
+    path: "/blog",
+    section: "Blog",
+    content:
+      "Stay updated with the latest news, partnerships, product updates, and insights from LETSTOP. Discover how we're shaping the future of safe driving.",
+  },
   // LEGAL PAGES
   {
     title: "Privacy Policy",
