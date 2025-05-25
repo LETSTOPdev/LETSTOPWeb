@@ -173,8 +173,8 @@ export const articles: Article[] = [
         text: 'LETSTOP continues to explore and implement blockchain to build a smarter, safer, and more transparent future. <a href="https://medium.com/@letstop?source=post_page---byline--5e1d90298dce" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline hover:text-white transition-colors">Read more from LETSTOP on Medium</a>.',
       },
     ],
-},
-{
+  },
+  {
   "id": 3,
   "title": "The Ripple Effect of Safe Driving: Why Every Decision Behind the Wheel Counts",
   "category": "Road Safety",
@@ -232,7 +232,7 @@ export const articles: Article[] = [
     }
   ]
   },
-{
+  {
   "id": 4,
   "title": "LETSTOP: Revolutionizing Road Safety Through Rewarding Driving Habits",
   "category": "Technology",
@@ -376,7 +376,7 @@ export const articles: Article[] = [
     }
   ]
   },
-{
+  {
   "id": 6,
   "title": "The Science Behind Distracted Driving and How We Can Stay Focused",
   "category": "Road Safety",
