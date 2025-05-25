@@ -86,6 +86,10 @@ export default function Navbar() {
               <span>Contact</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
             </Link>
+            <Link href="/blog" className="text-white hover:text-primary transition-colors relative group py-2">
+              <span>News</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+            </Link>
             <a
               href="https://whitepaper.letstop.io"
               target="_blank"

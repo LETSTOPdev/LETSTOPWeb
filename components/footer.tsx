@@ -135,6 +135,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+                  News
+                </Link>
+              </li>
+              <li>
                 <a
                   href="https://whitepaper.letstop.io/"
                   target="_blank"
