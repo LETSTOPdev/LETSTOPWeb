@@ -179,6 +179,13 @@ export default function Navbar() {
               >
                 Contact
               </Link>
+              <Link
+                href="/blog"
+                className="text-white hover:text-primary transition-colors py-2 border-b border-gray-800/50"
+                onClick={toggleMenu}
+              >
+                News
+              </Link>
               <a
                 href="https://whitepaper.letstop.io"
                 target="_blank"
