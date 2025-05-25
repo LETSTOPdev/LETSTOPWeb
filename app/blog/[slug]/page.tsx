@@ -127,7 +127,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               animatedElements.includes("featured-image") ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
-            <div className="relative h-[300px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden">
+            <div className="relative aspect-[3/2] rounded-xl overflow-hidden">
               <Image src={article.image || "/placeholder.svg"} alt={article.title} fill className="object-cover" />
             </div>
           </div>
@@ -155,13 +155,13 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                   )}
                   {paragraph.type === "image" && (
                     <div className="my-8">
-                      <div className="relative h-[250px] rounded-lg overflow-hidden">
+                      <div className="relative aspect-[3/2] rounded-lg overflow-hidden">
                         <Image
                           src={paragraph.src || "/placeholder.svg"}
                           alt={paragraph.alt || "Article image"}
                           fill
                           className="object-cover"
-                        />
+                      />
                       </div>
                       {paragraph.caption && (
                         <p className="text-sm text-gray-400 text-center mt-2">{paragraph.caption}</p>
