@@ -890,7 +890,7 @@ export const articles: Article[] = [
     }
   ]
   },
-  {
+ {
   "id": 11,
   "title": "How Solana Is Inspiring a New Era of Road Safety Through LETSTOP",
   "category": "Web3 Innovation",
@@ -903,12 +903,12 @@ export const articles: Article[] = [
   "image": "/blog/solana-road-safety-letstop.webp",
   "slug": "solana-road-safety-letstop",
   "featured": true,
-  "excerpt": "Solana is revolutionizing finance — LETSTOP is transforming road safety. Discover how blockchain meets behavioral science in the world’s first Drive-to-Earn road safety app.",
+  "excerpt": "Solana is revolutionizing finance — LETSTOP is transforming road safety. Discover how blockchain meets behavioral science in the world's first Drive-to-Earn road safety app.",
   "tags": ["Solana", "Web3", "Drive-to-Earn", "LETSTOP", "Blockchain"],
   "content": [
     {
       "type": "paragraph",
-      "text": "Solana is changing finance. LETSTOP is changing the roads. Every 24 seconds, someone dies in a car accident, and one blockchain-powered app is determined to change that. While high-speed Layer 1s like Solana are unlocking new standards in scalability and decentralization, another revolution is quietly emerging on our streets: Drive-to-Earn. And it’s not just about rewards, it’s about saving lives."
+      "text": "<a href=\"https://solana.com\" target=\"_blank\" rel=\"noopener noreferrer\">Solana</a> is changing finance. LETSTOP is changing the roads. Every 24 seconds, someone dies in a car accident, and one blockchain-powered app is determined to change that. While high-speed Layer 1s like <a href=\"https://solana.org/\" target=\"_blank\" rel=\"noopener noreferrer\">Solana Foundation</a> are unlocking new standards in scalability and decentralization, another revolution is quietly emerging on our streets: Drive-to-Earn. And it's not just about rewards, it's about saving lives."
     },
     {
       "type": "heading",
@@ -916,7 +916,7 @@ export const articles: Article[] = [
     },
     {
       "type": "paragraph",
-      "text": "LETSTOP is a Web3 platform that blends AI, blockchain, and behavioral science to reward safe drivers with real-world incentives. Unlike typical traffic apps, LETSTOP doesn’t just track where you go, it tracks how you drive. Whether you maintain a steady speed, avoid phone usage, or obey traffic rules, LETSTOP evaluates your performance and rewards you accordingly."
+      "text": "LETSTOP is a Web3 platform that blends AI, blockchain, and behavioral science to reward safe drivers with real-world incentives. Unlike typical traffic apps, LETSTOP doesn't just track where you go, it tracks how you drive. Whether you maintain a steady speed, avoid phone usage, or obey traffic rules, LETSTOP evaluates your performance and rewards you accordingly."
     },
     {
       "type": "paragraph",
@@ -924,7 +924,7 @@ export const articles: Article[] = [
     },
     {
       "type": "paragraph",
-      "text": "With over 1 million downloads in 180+ countries and more than 300 accidents already prevented, LETSTOP is building the world’s first blockchain-powered road safety network. And it’s only getting started."
+      "text": "With over 1 million downloads in 180+ countries and more than 300 accidents already prevented, LETSTOP is building the world's first blockchain-powered road safety network. And it's only getting started."
     },
     {
       "type": "heading",
@@ -932,7 +932,7 @@ export const articles: Article[] = [
     },
     {
       "type": "paragraph",
-      "text": "Inspired by models like Play-to-Earn and Move-to-Earn, LETSTOP introduces Drive-to-Earn, a mechanism that turns daily driving into a measurable social impact. It’s designed to:"
+      "text": "Inspired by models like Play-to-Earn and Move-to-Earn, LETSTOP introduces Drive-to-Earn, a mechanism that turns daily driving into a measurable social impact. It's designed to:"
     },
     {
       "type": "paragraph",
@@ -948,11 +948,11 @@ export const articles: Article[] = [
     },
     {
       "type": "paragraph",
-      "text": "LETSTOP’s native crypto asset, $STOP, is designed to bring additional liquidity and decentralized utility to the ecosystem. Users will soon be able to convert their credits into $STOP tokens, trade them on supported platforms like BYBIT or BingX, and use them within LETSTOP’s growing marketplace."
+      "text": "LETSTOP's native crypto asset, $STOP, is designed to bring additional liquidity and decentralized utility to the ecosystem. Users will soon be able to convert their credits into $STOP tokens, trade them on supported platforms like <a href=\"https://www.bybit.com/en/trade/spot/STOP/USDT\" target=\"_blank\" rel=\"noopener noreferrer\">BYBIT</a> or <a href=\"https://bingx.com/en/spot/STOPUSDT/\" target=\"_blank\" rel=\"noopener noreferrer\">BingX</a>, and use them within LETSTOP's growing marketplace."
     },
     {
       "type": "paragraph",
-      "text": "Built for real-world impact, $STOP is not just another token, it’s a driver behavior validator, reward currency, and a symbol of safe mobility in the digital age."
+      "text": "Built for real-world impact, $STOP is not just another token, it's a driver behavior validator, reward currency, and a symbol of safe mobility in the digital age."
     },
     {
       "type": "heading",
