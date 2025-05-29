@@ -55,6 +55,11 @@ const nextConfig = {
       source: '/he/terms',
       destination: '/terms',
       permanent: true,
+    },
+    {
+      source: '/he/terms-of-use',
+      destination: '/terms',
+      permanent: true,
     }
    ]
  },
