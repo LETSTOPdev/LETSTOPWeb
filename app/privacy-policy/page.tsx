@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
               <p className="text-gray-300">
                 To the extent that the European General Data Protection Regulation ("GDPR") or the United Kingdom
                 General Data Protection Regulation ("UK GDPR") apply to Personal Data that we process in accordance with
-                this Privacy Policy, we usually act as act as a "data controller" with respect to such processing.
+                this Privacy Policy, we usually act as a "data controller" with respect to such processing.
               </p>
 
               <h2 className="text-2xl font-bold text-white mt-8 mb-4">The Data We Collect About You</h2>
@@ -176,7 +176,7 @@ export default function PrivacyPolicyPage() {
                   rights).
                 </li>
                 <li>
-                  If neccerary, we may also use your Personal Data as: (a) in case it will be required by subpoena, law,
+                  If necessary, we may also use your Personal Data as: (a) in case it will be required by subpoena, law,
                   or other legal process; (b) necessary to assist law enforcement officials or government enforcement
                   agencies; (c) necessary to investigate violations of or otherwise enforce our Terms of Use, to
                   maintain security of the Platform and prevent fraudulent or illegal activity; (d) necessary to protect
@@ -207,7 +207,7 @@ export default function PrivacyPolicyPage() {
 
               <h3 className="text-xl font-bold text-white mt-6 mb-3">Cookies and Other Tracking Technologies</h3>
               <p className="text-gray-300">
-                Our Platform and Website use cookies and other tracking technologies, as expelained below. A cookie is a
+                Our Platform and Website use cookies and other tracking technologies, as explained below. A cookie is a
                 small piece of data or a text file that is downloaded to your computer or mobile device when you access
                 certain websites. Cookies may contain text that can be read by the web server that delivered the cookie
                 to you. The text contained in the cookie generally consists of a sequence of letters and numbers that
@@ -256,6 +256,14 @@ export default function PrivacyPolicyPage() {
                   remembering users' choices and preferences when using a website or to target advertising to them.
                 </li>
               </ul>
+
+              <p className="text-gray-300">
+                Our app integrates Google’s User Messaging Platform (UMP SDK) to request your consent for storing cookies and serving ads, in compliance with the EU ePrivacy Directive and GDPR.
+              </p>
+
+              <p className="text-gray-300">
+                You may update your consent preferences at any time by accessing the in-app privacy settings or contacting us directly.
+              </p>
 
               <p className="text-gray-300">
                 Most web browsers can be set to disable the use of cookies. However, if you disable cookies, you may not
@@ -313,8 +321,8 @@ export default function PrivacyPolicyPage() {
                 </a>
                 . We may also utilize Facebook's remarketing services to deliver tailored advertisements to individuals
                 who have previously interacted with our Website. Facebook collects certain information from your device,
-                such as your IP address, browser information, and actions taken on our Website. To receivce additional
-                information on how Facebook collects and processes your data and to adjust you preferences, visit{" "}
+                such as your IP address, browser information, and actions taken on our Website. To receive additional
+                information on how Facebook collects and processes your data and to adjust your preferences, visit{" "}
                 <a href="https://www.facebook.com/help/568137493302217" className="text-primary hover:underline">
                   https://www.facebook.com/help/568137493302217
                 </a>
@@ -334,6 +342,7 @@ export default function PrivacyPolicyPage() {
                 responsible for their privacy statements; we therefore recommend that you read the Privacy Policy of
                 every website you visit.
               </p>
+
 
               <h2 className="text-2xl font-bold text-white mt-8 mb-4">Sharing Your Personal Data with Third Parties</h2>
               <p className="text-gray-300">
