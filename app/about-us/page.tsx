@@ -8,6 +8,10 @@ import Link from "next/link"
 import { Shield, Heart, Globe, Award, ChevronRight, Linkedin } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 
+export const metadata = {
+  title: "App | LETSTOP",
+  description: "Discover how the LETSTOP app promotes safer driving through rewards, real-time feedback, and smart integrations.",
+}
 const useInfiniteAutoScroll = (
   scrollContainerRef: React.RefObject<HTMLDivElement>,
   speed = 0.5,
