@@ -7,6 +7,7 @@ type Props = {
   params: { slug: string }
 }
 
+// ✅ Metadata
 export function generateMetadata({ params }: Props): Metadata {
   const article = articles.find((article) => article.slug === params.slug)
 
@@ -44,6 +45,14 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 }
 
+// ✅ Static paths (optional for pre-rendering)
+export function generateStaticParams() {
+  return articles.map((article) => ({
+    slug: article.slug,
+  }))
+}
+
+// ✅ Renders client logic
 export default function BlogPost({ params }: Props) {
   const article = articles.find((article) => article.slug === params.slug)
   if (!article) return notFound()
