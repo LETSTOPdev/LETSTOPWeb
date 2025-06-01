@@ -7,12 +7,8 @@ import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 import { articles } from "@/lib/blog-data"
 
-export default function BlogPostClient({ params }: { params: { slug: string } }) {
-  const [animatedElements, setAnimatedElements] = useState<string[]>([])
-  const { slug } = params
 
-  // Find the article that matches the slug
-  const article = articles.find((article) => article.slug === slug)
+export default function BlogPostClient({ article }: { article: Article }) {
 
   // Animation for elements as they come into view
   useEffect(() => {
