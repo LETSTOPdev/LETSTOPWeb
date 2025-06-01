@@ -7,7 +7,7 @@ import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react"
 import { PremiumBackground } from "@/components/premium-background"
 import { articles } from "@/lib/blog-data"
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPostClient({ params }: { params: { slug: string } }) {
   const [animatedElements, setAnimatedElements] = useState<string[]>([])
   const { slug } = params
 
