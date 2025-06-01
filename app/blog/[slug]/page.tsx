@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation"
 import { articles } from "@/lib/blog-data"
-import type { Metadata } from "next"
 import BlogPostClient from "./BlogPostClient"
+import type { Metadata } from "next"
 
-type Props = {
-  params: { slug: string }
+export function generateStaticParams() {
+  return articles.map((article) => ({
+    slug: article.slug,
+  }))
 }
 
-// ✅ Metadata
-export function generateMetadata({ params }: Props): Metadata {
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const article = articles.find((article) => article.slug === params.slug)
 
   if (!article) {
@@ -45,16 +46,9 @@ export function generateMetadata({ params }: Props): Metadata {
   }
 }
 
-// ✅ Static paths (optional for pre-rendering)
-export function generateStaticParams() {
-  return articles.map((article) => ({
-    slug: article.slug,
-  }))
-}
-
-// ✅ Renders client logic
-export default function BlogPost({ params }: Props) {
+export default function BlogPost({ params }: { params: { slug: string } }) {
   const article = articles.find((article) => article.slug === params.slug)
+
   if (!article) return notFound()
 
   return <BlogPostClient params={params} />
