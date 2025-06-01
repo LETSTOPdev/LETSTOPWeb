@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Terms of Use | LETSTOP",
+  description: "Review the terms and conditions that govern your use of LETSTOP’s services and platform.",
+}
+
 export default function TermsPage() {
   return (
     <main className="min-h-screen bg-black text-white">

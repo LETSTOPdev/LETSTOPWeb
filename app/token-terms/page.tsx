@@ -1,3 +1,8 @@
+export const metadata = {
+  title: "Token Terms of Use | LETSTOP",
+  description: "Understand the terms and conditions related to the use, utility, and distribution of the LETSTOP token.",
+}
+
 export default function TokenTermsPage() {
   return (
     <main className="min-h-screen bg-black text-white">
