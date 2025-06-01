@@ -46,7 +46,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   }
 }
 
-// 👇 Instead of passing just `params`, pass the `article` itself
+// 👇 Instead of passing just `params`, pass the `article` itselffix
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const article = articles.find((article) => article.slug === params.slug)
 
