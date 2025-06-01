@@ -1,3 +1,9 @@
+
+export const metadata = {
+  title: "Privacy Policy | LETSTOP",
+  description: "Learn about how LETSTOP uses cookies and similar technologies to operate and improve our services.",
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-black text-white">
