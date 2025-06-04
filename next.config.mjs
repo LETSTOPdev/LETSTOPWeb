@@ -17,7 +17,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains; preload'
+            value: 'max-age=63072000; includeSubDomains; preload'
           },
           {
             key: 'X-Frame-Options',
@@ -35,22 +35,23 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
           },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://ajax.googleapis.com https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://connect.facebook.net https://amplify.outbrain.com https://cdn.taboola.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-              "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "img-src 'self' data: blob: https: http:",
-              "connect-src 'self' https://www.google-analytics.com https://web-sdk.smartlook.com https://www.facebook.com https://amplify.outbrain.com https://cdn.taboola.com",
-              "frame-src 'self' https://www.googletagmanager.com https://www.facebook.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'"
-            ].join('; ')
-          }
+          // Add this comment above the CSP header and uncomment it once analytics are working.
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: [
+          //     "default-src 'self'",
+          //     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googletagmanager.com https://www.google-analytics.com https://google-analytics.com https://ssl.google-analytics.com https://ajax.googleapis.com https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://connect.facebook.net https://amplify.outbrain.com https://cdn.taboola.com https://www.facebook.com https://facebook.com *.facebook.com *.google.com *.googleapis.com *.gstatic.com",
+          //     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net *.google.com *.googleapis.com",
+          //     "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net *.google.com *.gstatic.com",
+          //     "img-src 'self' data: blob: https: http: *.google.com *.google-analytics.com *.googletagmanager.com *.facebook.com *.doubleclick.net",
+          //     "connect-src 'self' https://www.google-analytics.com https://google-analytics.com https://ssl.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://googletagmanager.com https://web-sdk.smartlook.com https://www.facebook.com https://facebook.com https://amplify.outbrain.com https://cdn.taboola.com *.google.com *.google-analytics.com *.googletagmanager.com *.facebook.com *.doubleclick.net",
+          //     "frame-src 'self' https://www.googletagmanager.com https://googletagmanager.com https://www.facebook.com https://facebook.com *.google.com *.facebook.com",
+          //     "object-src 'none'",
+          //     "base-uri 'self'",
+          //     "form-action 'self'",
+          //     "frame-ancestors 'self'"
+          //   ].join('; ')
+          // }
         ],
       },
     ]
