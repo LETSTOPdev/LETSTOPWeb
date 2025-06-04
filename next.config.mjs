@@ -12,7 +12,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply security headers to all routes
         source: '/(.*)',
         headers: [
           {
@@ -38,43 +37,51 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: [
-              // Allow resources from same origin by default
-              "default-src 'self'",
-              
-              // Scripts - Allow all the analytics and tracking scripts
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.analytics.google.com *.googleapis.com *.gstatic.com *.doubleclick.net *.facebook.net *.facebook.com *.connect.facebook.net *.fbcdn.net cdn.jsdelivr.net cdn.enable.co.il web-sdk.smartlook.com amplify.outbrain.com cdn.taboola.com",
-              
-              // Styles - Allow inline styles and external style sources
-              "style-src 'self' 'unsafe-inline' *.googleapis.com cdn.jsdelivr.net",
-              
-              // Fonts - Allow common font sources
-              "font-src 'self' data: *.gstatic.com cdn.jsdelivr.net",
-              
-              // Images - Very permissive to allow all tracking pixels
+              "default-src 'self' data:",
+
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' " +
+              "https://www.googletagmanager.com " +
+              "https://www.google-analytics.com " +
+              "https://connect.facebook.net " +
+              "https://web-sdk.smartlook.com " +
+              "https://amplify.outbrain.com " +
+              "https://cdn.taboola.com " +
+              "https://cdn.enable.co.il " +
+              "https://cdn.jsdelivr.net " +
+              "https://ajax.googleapis.com",
+
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
+
+              "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
+
               "img-src 'self' data: blob: https: http:",
-              
-              // Connect (XHR/fetch) - Allow analytics endpoints
-              "connect-src 'self' *.google-analytics.com *.analytics.google.com *.googletagmanager.com *.doubleclick.net *.facebook.com *.fbcdn.net web-sdk.smartlook.com amplify.outbrain.com cdn.taboola.com",
-              
-              // Frames - Allow embedding from trusted sources
-              "frame-src 'self' *.googletagmanager.com *.doubleclick.net *.facebook.com",
-              
-              // Object/embed - Restrict for security
+
+              "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com " +
+              "https://connect.facebook.net https://web-sdk.smartlook.com https://amplify.outbrain.com " +
+              "https://cdn.taboola.com",
+
+              "frame-src 'self' https://www.googletagmanager.com https://www.facebook.com",
+
+              "media-src 'self' data: blob:",
+
+              "worker-src 'self' blob:",
+
+              "child-src 'self' blob:",
+
               "object-src 'none'",
-              
-              // Base URI - Restrict to same origin
+
               "base-uri 'self'",
-              
-              // Form submission - Restrict to same origin
-              "form-action 'self'",
-              
-              // Frame ancestors - Prevent clickjacking
-              "frame-ancestors 'self'"
+
+              "form-action 'self' https://www.google-analytics.com https://facebook.com",
+
+              "frame-ancestors 'self'",
+
+              "manifest-src 'self'"
             ].join('; ')
           }
-        ],
-      },
-    ]
+        ]
+      }
+    ];
   },
  async redirects() {
    return [
