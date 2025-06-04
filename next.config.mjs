@@ -38,21 +38,21 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self' data:",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://cdn.enable.co.il https://cdn.jsdelivr.net https://ajax.googleapis.com https://www.facebook.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net",
-              "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net",
-              "img-src 'self' data: blob: https: http:",
-              "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://connect.facebook.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://*.outbrain.com https://*.taboola.com https://www.facebook.com https://*.facebook.com https://cdn.enable.co.il https://api.smartlook.com https://*.smartlook.com https://region1.google-analytics.com https://analytics.google.com",
-              "frame-src 'self' https://www.googletagmanager.com https://www.facebook.com https://*.facebook.com https://*.taboola.com https://cdn.taboola.com",
-              "media-src 'self' data: blob:",
-              "worker-src 'self' blob:",
-              "child-src 'self' blob:",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self' https://www.google-analytics.com https://facebook.com https://*.facebook.com",
-              "frame-ancestors 'self'",
-              "manifest-src 'self'"
-            ].join('; ')
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://cdn.enable.co.il https://cdn.jsdelivr.net https://ajax.googleapis.com https://www.facebook.com;",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net;",
+              "font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net;",
+              "img-src 'self' data: blob: https: http:;",
+              "connect-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://connect.facebook.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://*.outbrain.com https://*.taboola.com https://www.facebook.com https://*.facebook.com https://cdn.enable.co.il https://api.smartlook.com https://*.smartlook.com https://region1.google-analytics.com https://analytics.google.com;",
+              "frame-src 'self' https://www.googletagmanager.com https://www.facebook.com https://*.facebook.com https://*.taboola.com https://cdn.taboola.com;",
+              "media-src 'self' data: blob:;",
+              "worker-src 'self' blob:;",
+              "child-src 'self' blob:;",
+              "object-src 'none';",
+              "base-uri 'self';",
+              "form-action 'self' https://www.google-analytics.com https://facebook.com https://*.facebook.com;",
+              "frame-ancestors 'self';",
+              "manifest-src 'self';"
+            ].join(' ')
           }
         ]
       }
