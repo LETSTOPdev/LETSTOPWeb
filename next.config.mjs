@@ -35,23 +35,43 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
           },
-          // Add this comment above the CSP header and uncomment it once analytics are working.
-          // {
-          //   key: 'Content-Security-Policy',
-          //   value: [
-          //     "default-src 'self'",
-          //     "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googletagmanager.com https://www.google-analytics.com https://google-analytics.com https://ssl.google-analytics.com https://ajax.googleapis.com https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://connect.facebook.net https://amplify.outbrain.com https://cdn.taboola.com https://www.facebook.com https://facebook.com *.facebook.com *.google.com *.googleapis.com *.gstatic.com",
-          //     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net *.google.com *.googleapis.com",
-          //     "font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net *.google.com *.gstatic.com",
-          //     "img-src 'self' data: blob: https: http: *.google.com *.google-analytics.com *.googletagmanager.com *.facebook.com *.doubleclick.net",
-          //     "connect-src 'self' https://www.google-analytics.com https://google-analytics.com https://ssl.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://googletagmanager.com https://web-sdk.smartlook.com https://www.facebook.com https://facebook.com https://amplify.outbrain.com https://cdn.taboola.com *.google.com *.google-analytics.com *.googletagmanager.com *.facebook.com *.doubleclick.net",
-          //     "frame-src 'self' https://www.googletagmanager.com https://googletagmanager.com https://www.facebook.com https://facebook.com *.google.com *.facebook.com",
-          //     "object-src 'none'",
-          //     "base-uri 'self'",
-          //     "form-action 'self'",
-          //     "frame-ancestors 'self'"
-          //   ].join('; ')
-          // }
+          {
+            key: 'Content-Security-Policy',
+            value: [
+              // Allow resources from same origin by default
+              "default-src 'self'",
+              
+              // Scripts - Allow all the analytics and tracking scripts
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.analytics.google.com *.googleapis.com *.gstatic.com *.doubleclick.net *.facebook.net *.facebook.com *.connect.facebook.net *.fbcdn.net cdn.jsdelivr.net cdn.enable.co.il web-sdk.smartlook.com amplify.outbrain.com cdn.taboola.com",
+              
+              // Styles - Allow inline styles and external style sources
+              "style-src 'self' 'unsafe-inline' *.googleapis.com cdn.jsdelivr.net",
+              
+              // Fonts - Allow common font sources
+              "font-src 'self' data: *.gstatic.com cdn.jsdelivr.net",
+              
+              // Images - Very permissive to allow all tracking pixels
+              "img-src 'self' data: blob: https: http:",
+              
+              // Connect (XHR/fetch) - Allow analytics endpoints
+              "connect-src 'self' *.google-analytics.com *.analytics.google.com *.googletagmanager.com *.doubleclick.net *.facebook.com *.fbcdn.net web-sdk.smartlook.com amplify.outbrain.com cdn.taboola.com",
+              
+              // Frames - Allow embedding from trusted sources
+              "frame-src 'self' *.googletagmanager.com *.doubleclick.net *.facebook.com",
+              
+              // Object/embed - Restrict for security
+              "object-src 'none'",
+              
+              // Base URI - Restrict to same origin
+              "base-uri 'self'",
+              
+              // Form submission - Restrict to same origin
+              "form-action 'self'",
+              
+              // Frame ancestors - Prevent clickjacking
+              "frame-ancestors 'self'"
+            ].join('; ')
+          }
         ],
       },
     ]
