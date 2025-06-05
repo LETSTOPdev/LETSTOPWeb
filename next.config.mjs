@@ -95,21 +95,26 @@ const nextConfig = {
        destination: '/terms',
        permanent: true,
      },
-         {
+     { 
       source: '/he/privacy-policy',
       destination: '/privacy-policy',
       permanent: true,
-    },
-    {
+     },
+     {
       source: '/he/terms',
       destination: '/terms',
       permanent: true,
-    },
-    {
+     },
+     {
       source: '/he/terms-of-use',
       destination: '/terms',
       permanent: true,
-    }
+     },
+     {
+      source: '/terms-of-use',
+      destination: '/terms',
+      permanent: true,
+     }     
    ]
  },
 }
