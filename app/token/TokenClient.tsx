@@ -514,7 +514,7 @@ export default function TokenPage() {
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-white">Raydium</h3>
                 <a
-                  href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in"
+                  href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in&inputMint=sol&outputMint=W2bAuFf2Xeb7ZNpJTywFSaCs5jYkaLYtBMR53SzVXUo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 text-primary flex items-center hover:underline"

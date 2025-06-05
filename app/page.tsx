@@ -119,7 +119,7 @@ export default function Home() {
                     />
                   </a>
                   <a
-                    href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in"
+                    href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in&inputMint=sol&outputMint=W2bAuFf2Xeb7ZNpJTywFSaCs5jYkaLYtBMR53SzVXUo"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white backdrop-blur-sm border border-gray-200/20 dark:border-gray-800/50 rounded-xl p-4 flex items-center justify-center hover:border-primary/30 transition-all duration-300 h-24 min-w-[250px] mx-2 snap-center flex-shrink-0"
@@ -172,7 +172,7 @@ export default function Home() {
                   />
                 </a>
                 <a
-                  href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in"
+                  href="https://raydium.io/swap/?inputCurrency=sol&outputCurrency=STOP&fixed=in&inputMint=sol&outputMint=W2bAuFf2Xeb7ZNpJTywFSaCs5jYkaLYtBMR53SzVXUo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white backdrop-blur-sm border border-gray-200/20 dark:border-gray-800/50 rounded-xl p-4 flex items-center justify-center hover:border-primary/30 transition-all duration-300 h-24"
