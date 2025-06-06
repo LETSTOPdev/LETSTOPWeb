@@ -11,16 +11,6 @@ const nextConfig = {
  },
   async headers() {
     return [
-      // Completely permissive CSP for token page only - for debugging
-      {
-        source: '/token',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "default-src * 'unsafe-inline' 'unsafe-eval' data: blob: wss: ws:; script-src * 'unsafe-inline' 'unsafe-eval' data: blob:; style-src * 'unsafe-inline' data:; connect-src * wss: ws: data: blob:; font-src * data: blob:; img-src * data: blob:; media-src * data: blob:; worker-src * data: blob:; child-src * data: blob:; frame-src * data:;"
-          }
-        ]
-      },
       {
         source: '/(.*)',
         headers: [
@@ -47,16 +37,16 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: "default-src 'self' data: blob:; " +
-                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.googleapis.com https://*.gstatic.com https://*.doubleclick.net https://*.facebook.net https://*.facebook.com https://*.connect.facebook.net https://*.fbcdn.net https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://ajax.googleapis.com https://unpkg.com https://*.unpkg.com https://*.tradingview.com https://*.spline.design https://*.splinetool.com https://*.taboola.com https://*.outbrain.com https://*.smartlook.cloud https://prod.spline.design https://tr.outbrain.com https://trc.taboola.com https://wave.outbrain.com https://cdn.spline.design https://my.spline.design; " +
-                   "script-src-elem 'self' 'unsafe-inline' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.googleapis.com https://*.gstatic.com https://*.doubleclick.net https://*.facebook.net https://*.facebook.com https://*.connect.facebook.net https://*.fbcdn.net https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://ajax.googleapis.com https://unpkg.com https://*.unpkg.com https://*.tradingview.com https://*.spline.design https://*.splinetool.com https://*.taboola.com https://*.outbrain.com https://*.smartlook.cloud https://prod.spline.design https://tr.outbrain.com https://trc.taboola.com https://wave.outbrain.com https://cdn.spline.design https://my.spline.design; " +
-                   "style-src 'self' 'unsafe-inline' https://*.googleapis.com https://cdn.jsdelivr.net https://*.spline.design https://cdn.spline.design; " +
-                   "font-src 'self' data: https://*.gstatic.com https://cdn.jsdelivr.net https://*.spline.design https://cdn.spline.design; " +
+                   "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.googleapis.com https://*.gstatic.com https://*.doubleclick.net https://*.facebook.net https://*.facebook.com https://*.connect.facebook.net https://*.fbcdn.net https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://ajax.googleapis.com https://unpkg.com https://*.unpkg.com https://*.tradingview.com https://*.spline.design https://*.splinetool.com https://*.taboola.com https://*.outbrain.com https://*.smartlook.cloud https://prod.spline.design https://tr.outbrain.com https://trc.taboola.com https://wave.outbrain.com; " +
+                   "script-src-elem 'self' 'unsafe-inline' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.googleapis.com https://*.gstatic.com https://*.doubleclick.net https://*.facebook.net https://*.facebook.com https://*.connect.facebook.net https://*.fbcdn.net https://cdn.jsdelivr.net https://cdn.enable.co.il https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://ajax.googleapis.com https://unpkg.com https://*.unpkg.com https://*.tradingview.com https://*.spline.design https://*.splinetool.com https://*.taboola.com https://*.outbrain.com https://*.smartlook.cloud https://prod.spline.design https://tr.outbrain.com https://trc.taboola.com https://wave.outbrain.com; " +
+                   "style-src 'self' 'unsafe-inline' https://*.googleapis.com https://cdn.jsdelivr.net https://*.spline.design; " +
+                   "font-src 'self' data: https://*.gstatic.com https://cdn.jsdelivr.net https://*.spline.design; " +
                    "img-src 'self' data: blob: https: http:; " +
-                   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.facebook.com https://*.fbcdn.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://*.outbrain.com https://*.taboola.com https://*.smartlook.cloud https://*.spline.design https://*.splinetool.com https://prod.spline.design https://region1.google-analytics.com https://analytics.google.com https://tr.outbrain.com https://trc.taboola.com https://manager.eu.smartlook.cloud https://wave.outbrain.com https://cdn.spline.design https://my.spline.design https://engine.spline.design wss://*.spline.design; " +
-                   "frame-src 'self' https://*.googletagmanager.com https://*.doubleclick.net https://*.facebook.com https://*.tradingview.com https://*.taboola.com https://cdn.taboola.com https://*.spline.design https://my.spline.design; " +
-                   "media-src 'self' data: blob: https://*.spline.design https://cdn.spline.design; " +
-                   "worker-src 'self' blob: https://*.spline.design https://cdn.spline.design data:; " +
-                   "child-src 'self' blob: https://*.spline.design https://my.spline.design; " +
+                   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.doubleclick.net https://*.facebook.com https://*.fbcdn.net https://web-sdk.smartlook.com https://amplify.outbrain.com https://cdn.taboola.com https://*.outbrain.com https://*.taboola.com https://*.smartlook.cloud https://*.spline.design https://*.splinetool.com https://prod.spline.design https://region1.google-analytics.com https://analytics.google.com https://tr.outbrain.com https://trc.taboola.com https://manager.eu.smartlook.cloud https://wave.outbrain.com wss://*.spline.design; " +
+                   "frame-src 'self' https://*.googletagmanager.com https://*.doubleclick.net https://*.facebook.com https://*.tradingview.com https://*.taboola.com https://cdn.taboola.com https://*.spline.design; " +
+                   "media-src 'self' data: blob: https://*.spline.design; " +
+                   "worker-src 'self' blob: data: https://*.spline.design; " +
+                   "child-src 'self' blob: https://*.spline.design; " +
                    "object-src 'none'; " +
                    "base-uri 'self'; " +
                    "form-action 'self' https://*.google-analytics.com https://*.facebook.com; " +
