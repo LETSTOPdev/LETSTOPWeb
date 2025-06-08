@@ -39,9 +39,8 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   }
 }
 
-// Calculate base values based on the current date
 function calculateBaseValuesForDate() {
-  // Reference date (e.g., January 1, 2023)
+  // Reference date (e.g., May 1, 2025)
   const referenceDate = new Date(2025, 4, 1).getTime()
 
   // Reference base values on that date
@@ -49,14 +48,14 @@ function calculateBaseValuesForDate() {
   const referenceKilometers = 67000000
 
   // Daily increase rates
-  const dailyDownloads = 4583
-  const dailyKilometers = 21658
+  const dailyDownloads = 1500
+  const dailyKilometers = 161658
 
   // Current date
   const now = new Date()
 
-  // Days since reference date
-  const daysSinceReference = Math.floor((now.getTime() - referenceDate) / (10000 * 60 * 60 * 24))
+  // Days since reference date - FIXED: changed 10000 to 1000
+  const daysSinceReference = Math.floor((now.getTime() - referenceDate) / (1000 * 60 * 60 * 24))
 
   // Calculate current base values
   const currentDownloads = referenceDownloads + daysSinceReference * dailyDownloads
